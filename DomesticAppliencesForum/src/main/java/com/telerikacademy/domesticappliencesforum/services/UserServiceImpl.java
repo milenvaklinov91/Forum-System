@@ -36,8 +36,8 @@ public class UserServiceImpl {
         repository.create(user);
     }
 
-    public void update(User user,String newPassword) {
-        repository.update(user,newPassword);
+    public void update(User user) {
+        repository.update(user);
     }
 
     public void delete(int id) {

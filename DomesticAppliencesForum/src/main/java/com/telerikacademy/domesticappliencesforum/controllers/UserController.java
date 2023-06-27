@@ -50,11 +50,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable int id, @Valid @RequestBody String password) {
+    public User update(@PathVariable int id, @Valid @RequestBody User user) {
 
         try {
-            User user=getUserById(id);
-            service.update(user,password);
+            service.update(user);
             return user;
 
         } catch (DuplicatePasswordException e) {

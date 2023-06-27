@@ -44,8 +44,9 @@ public class UserRepositoryImpl {
     public void create(User user) {
         users.add(user);
     }
-    public void update(User user,String newPassword) {
-        user.setPassword(newPassword);
+    public void update(User user) {
+        User userToUpdate=getUserById(user.getId());
+        userToUpdate.setPassword(user.getPassword());
     }
     public void delete(int id) {
         User userToDelete = getUserById(id);
