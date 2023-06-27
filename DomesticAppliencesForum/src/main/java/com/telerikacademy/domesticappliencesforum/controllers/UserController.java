@@ -50,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable int id, @Valid @RequestBody User user) {
+    public User update( @Valid @RequestBody User user) {
 
         try {
             service.update(user);

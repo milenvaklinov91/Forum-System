@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,13 @@ public class UserRepositoryImpl {
                 .orElseThrow(() -> new EntityNotFoundException("User",  username));
 
     }
+     public User getByPassword(int id,String password){
+        return users.stream()
+                .filter(user->user.getId()==id)
+                .filter(user ->user.getPassword().equals(password))
+                .findFirst()
+                .orElseThrow(()-> new DuplicatePasswordException(password));
+     }
 
 
     public void create(User user) {

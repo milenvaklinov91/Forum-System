@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
@@ -37,6 +38,15 @@ public class UserServiceImpl {
     }
 
     public void update(User user) {
+        boolean duplicatePass=true;
+        try {
+            repository.getByPassword(user.getId(),user.getPassword());
+        } catch (DuplicatePasswordException e) {
+            duplicatePass=false;
+        }
+        if(duplicatePass){
+            throw new DuplicatePasswordException(user.getPassword());
+        }
         repository.update(user);
     }
 
