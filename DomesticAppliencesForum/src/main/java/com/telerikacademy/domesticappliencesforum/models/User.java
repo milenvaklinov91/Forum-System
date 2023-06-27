@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 
 public class User {
     @Positive(message = "Id should be positive" )
-    private int id;
+    private int id = 1;
     @NotNull(message = "Name can't be empty")
     @Size(min = 5, max = 45, message = "Name should be between 5 and 45 symbols")
     private String username;
