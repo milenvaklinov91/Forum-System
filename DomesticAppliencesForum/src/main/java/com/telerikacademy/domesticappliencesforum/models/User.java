@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
+import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 
@@ -23,16 +24,20 @@ public class User {
     private String email;
     private String password;
 
+    private GenderTypes gender;
+
     public User() {
     }
 
-    public User(int id, String username, String firstName, String lastName, String email, String password) {
+    public User(int id, String username, String firstName, String lastName,
+                String email, String password, GenderTypes gender) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -81,5 +86,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public GenderTypes getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderTypes gender) {
+        this.gender = gender;
     }
 }

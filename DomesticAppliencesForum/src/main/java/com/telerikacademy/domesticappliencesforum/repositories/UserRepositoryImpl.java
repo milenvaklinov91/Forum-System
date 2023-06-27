@@ -3,6 +3,7 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,9 +18,9 @@ public class UserRepositoryImpl {
         users = new ArrayList<>();
 
         users.add(new User(1, "milenvaklinov", "milen",
-                "vaklinov", "milen91@abv.bg", "milen91"));
+                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male));
         users.add(new User(2, "ledayovkova", "leda",
-                "yovkova", "leda@abv.bg", "leda123"));
+                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female));
     }
 
     public List<User> getAll() {
