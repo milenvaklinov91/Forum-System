@@ -1,5 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.controllers;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
+import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
@@ -22,15 +24,15 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll(){
+    public List<User> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id){
+    public User getUserById(@PathVariable int id) {
         try {
             return service.getById(id);
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     e.getMessage());
@@ -38,8 +40,35 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody User user){
-        users.add(user);
+    public User create(@Valid @RequestBody User user) {
+        try {
+            service.create(user);
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
         return user;
+    }
+
+    @PutMapping("/{id}")
+    public User update(@PathVariable int id, @Valid @RequestBody String password) {
+
+        try {
+            User user=getUserById(id);
+            service.update(user,password);
+            return user;
+
+        } catch (DuplicatePasswordException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        try {
+            service.delete(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }

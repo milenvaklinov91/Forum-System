@@ -36,9 +36,19 @@ public class UserRepositoryImpl {
         return users.stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User", "username", username));
+                .orElseThrow(() -> new EntityNotFoundException("User",  username));
 
     }
 
 
+    public void create(User user) {
+        users.add(user);
+    }
+    public void update(User user,String newPassword) {
+        user.setPassword(newPassword);
+    }
+    public void delete(int id) {
+        User userToDelete = getUserById(id);
+        users.remove(userToDelete);
+    }
 }
