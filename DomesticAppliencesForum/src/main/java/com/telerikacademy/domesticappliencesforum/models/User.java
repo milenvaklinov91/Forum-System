@@ -4,6 +4,8 @@ import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -15,13 +17,16 @@ public class User {
     @Size(min = 5, max = 45, message = "Name should be between 5 and 45 symbols")
     private String username;
     @NotNull( message = "Name can't be empty")
-    @Size(min = 5, max = 45, message = "Name should be between 5 and 45 symbols")
+    @Size(min = 4, max = 42, message = "Name should be between 4 and 42 symbols")
     private String firstName;
     @NotNull(message = "Name can't be empty")
-    @Size(min = 5, max = 45, message = "Name should be between 5 and 45 symbols")
+    @Size(min = 4, max = 42, message = "Name should be between 4 and 42 symbols")
     private String lastName;
+//TODO Къде и как трябва да излиза 'message-a' в Postman? hint:(създай един user)
     @NotNull(message = "Name can't be empty")
+    @Email (message = "Email is invalid")
     private String email;
+//TODO валидации за password
     private String password;
 
     private GenderTypes gender;
@@ -91,7 +96,7 @@ public class User {
     public GenderTypes getGender() {
         return gender;
     }
-
+//TODO Как да направим GenderType като ENUM в Postman?
     public void setGender(GenderTypes gender) {
         this.gender = gender;
     }

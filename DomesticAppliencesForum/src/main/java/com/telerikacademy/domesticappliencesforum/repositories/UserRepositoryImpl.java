@@ -1,12 +1,10 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
+import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +46,13 @@ public class UserRepositoryImpl {
                 .filter(user -> user.getPassword().equals(password))
                 .findFirst()
                 .orElseThrow(() -> new DuplicatePasswordException(password));
+    }
+
+    public User getByEmail(String email) {
+        return users.stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst()
+                .orElseThrow(() -> new EmailExitsException(email));
     }
 
     public void create(User user) {

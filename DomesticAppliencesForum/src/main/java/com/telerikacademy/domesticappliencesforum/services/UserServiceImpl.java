@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
+import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
@@ -33,6 +34,15 @@ public class UserServiceImpl {
         }
         if (duplicateExists) {
             throw new EntityDuplicateException("User", user.getUsername());
+        }
+        boolean duplicateEmail = true;
+        try {
+            repository.getByEmail(user.getEmail());
+        } catch (EmailExitsException e) {
+            duplicateEmail = false;
+        }
+        if (duplicateEmail) {
+            throw new EmailExitsException(user.getEmail());
         }
         repository.create(user);
     }
