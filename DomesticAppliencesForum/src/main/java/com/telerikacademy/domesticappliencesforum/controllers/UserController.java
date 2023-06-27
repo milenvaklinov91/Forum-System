@@ -1,6 +1,8 @@
-package com.telerikacademy.domesticappliencesforum.controller;
+package com.telerikacademy.domesticappliencesforum.controllers;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,32 +14,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final List<User> users;
+
+    private UserServiceImpl service;
 
     public UserController() {
-        users = new ArrayList<>();
-
-        users.add(new User(1, "milenvaklinov", "milen",
-                "vaklinov", "milen91@abv.bg", "milen91"));
-        users.add(new User(2, "ledayovkova", "leda",
-                "yovkova", "leda@abv.bg", "leda123"));
+        this.service = new UserServiceImpl();
     }
 
     @GetMapping
     public List<User> getAll(){
-        return users;
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id){
-        return users.stream()
-                .filter(user -> user.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                String.format("User with id %d not found.", id)
-        ));
+        try {
+            return service.getById(id);
+        } catch (EntityNotFoundException e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    e.getMessage());
+        }
     }
+
     @PostMapping
     public User create(@Valid @RequestBody User user){
         users.add(user);
