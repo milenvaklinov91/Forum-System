@@ -16,35 +16,35 @@ public class UserServiceImpl {
         this.repository = new UserRepositoryImpl();
     }
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return repository.getAll();
     }
-    public User getById(int id){
+
+    public User getById(int id) {
         return repository.getUserById(id);
     }
-    public void create(User user){
+
+    public void create(User user) {
         boolean duplicateExists = true;
         try {
             repository.getByUsername(user.getUsername());
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
-
         if (duplicateExists) {
             throw new EntityDuplicateException("User", user.getUsername());
         }
-
         repository.create(user);
     }
 
     public void update(User user) {
-        boolean duplicatePass=true;
+        boolean duplicatePass = true;
         try {
-            repository.getByPassword(user.getId(),user.getPassword());
+            repository.getByPassword(user.getId(), user.getPassword());
         } catch (DuplicatePasswordException e) {
-            duplicatePass=false;
+            duplicatePass = false;
         }
-        if(duplicatePass){
+        if (duplicatePass) {
             throw new DuplicatePasswordException(user.getPassword());
         }
         repository.update(user);

@@ -37,25 +37,27 @@ public class UserRepositoryImpl {
         return users.stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User",  username));
+                .orElseThrow(() -> new EntityNotFoundException("User", username));
 
     }
-     public User getByPassword(int id,String password){
-        return users.stream()
-                .filter(user->user.getId()==id)
-                .filter(user ->user.getPassword().equals(password))
-                .findFirst()
-                .orElseThrow(()-> new DuplicatePasswordException(password));
-     }
 
+    public User getByPassword(int id, String password) {
+        return users.stream()
+                .filter(user -> user.getId() == id)
+                .filter(user -> user.getPassword().equals(password))
+                .findFirst()
+                .orElseThrow(() -> new DuplicatePasswordException(password));
+    }
 
     public void create(User user) {
         users.add(user);
     }
+
     public void update(User user) {
-        User userToUpdate=getUserById(user.getId());
+        User userToUpdate = getUserById(user.getId());
         userToUpdate.setPassword(user.getPassword());
     }
+
     public void delete(int id) {
         User userToDelete = getUserById(id);
         users.remove(userToDelete);
