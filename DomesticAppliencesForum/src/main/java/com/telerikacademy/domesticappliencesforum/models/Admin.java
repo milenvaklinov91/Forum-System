@@ -1,21 +1,27 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
-import javax.validation.constraints.Email;
+import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
+
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-public class Admin {
+public class Admin extends User {
 
-    @NotNull( message = "Name can't be empty")
-    @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
-    private String firstName;
-    @NotNull(message = "Name can't be empty")
-    @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
-    private String lastName;
-    @NotNull(message = "Email can't be empty")
-    @Email(message = "Email is invalid")
-    private String email;
     @NotNull(message = "Phone number can't be empty")
     private int phoneNumber;
+
+    public Admin(String username, String firstName, String lastName, String email, String password,
+                 GenderTypes gender, int phoneNumber) {
+        super(username, firstName, lastName, email, password, gender);
+        this.phoneNumber = phoneNumber;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
 
 }
