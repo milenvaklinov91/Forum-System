@@ -9,16 +9,20 @@ import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRepositoryImpl {
+public class UserRepositoryImpl implements UserRepository {
     private final List<User> users;
+
+    private int id = 1;
 
     public UserRepositoryImpl() {
         users = new ArrayList<>();
 
-        users.add(new User(1, "milenvaklinov", "milen",
-                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male));
-        users.add(new User(2, "ledayovkova", "leda",
-                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female));
+        User user1 = new User("milenvaklinov", "milen",
+                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male);
+        user1.setId(id++);
+        User user2 = new User("ledayovkova", "leda",
+                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female);
+        user2.setId(id++);
     }
 
     public List<User> getAll() {
@@ -56,6 +60,7 @@ public class UserRepositoryImpl {
     }
 
     public void create(User user) {
+        user.setId(id++);
         users.add(user);
     }
 

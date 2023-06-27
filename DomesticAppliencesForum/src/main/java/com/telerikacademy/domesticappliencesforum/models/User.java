@@ -17,26 +17,25 @@ public class User {
     @Size(min = 5, max = 45, message = "Name should be between 5 and 45 symbols")
     private String username;
     @NotNull( message = "Name can't be empty")
-    @Size(min = 4, max = 42, message = "Name should be between 4 and 42 symbols")
+    @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
     private String firstName;
     @NotNull(message = "Name can't be empty")
-    @Size(min = 4, max = 42, message = "Name should be between 4 and 42 symbols")
+    @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
     private String lastName;
 //TODO Къде и как трябва да излиза 'message-a' в Postman? hint:(създай един user)
-    @NotNull(message = "Name can't be empty")
+    @NotNull(message = "Email can't be empty")
     @Email (message = "Email is invalid")
     private String email;
 //TODO валидации за password
     private String password;
 
     private GenderTypes gender;
-
+// TODO Защо имаме празен конструктор и каква му е функцията?
     public User() {
     }
 
-    public User(int id, String username, String firstName, String lastName,
+    public User(String username, String firstName, String lastName,
                 String email, String password, GenderTypes gender) {
-        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;

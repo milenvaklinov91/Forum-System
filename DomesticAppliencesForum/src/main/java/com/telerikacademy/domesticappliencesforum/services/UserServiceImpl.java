@@ -9,7 +9,7 @@ import com.telerikacademy.domesticappliencesforum.repositories.UserRepositoryImp
 
 import java.util.List;
 
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     private UserRepositoryImpl repository;
 
@@ -46,6 +46,7 @@ public class UserServiceImpl {
         }
         repository.create(user);
     }
+//TODO Можем ли да добавим всички exception-ни относно създаване на user(username, email), чрез try и catch както е посочено горе?
 
     public void update(User user) {
         boolean duplicatePass = true;
