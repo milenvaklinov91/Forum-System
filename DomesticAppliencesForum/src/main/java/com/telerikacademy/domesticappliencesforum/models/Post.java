@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.time.LocalDate;
 
 public class Post {
-    private int id = 1;
+    private int id;
     private String title;
     private String content;
     private String comment;
