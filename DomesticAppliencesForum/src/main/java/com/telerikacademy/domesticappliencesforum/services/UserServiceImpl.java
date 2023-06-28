@@ -7,6 +7,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepositoryImpl;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

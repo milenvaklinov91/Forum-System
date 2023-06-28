@@ -11,37 +11,42 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class User {
-    @Positive(message = "Id should be positive" )
+    @Positive(message = "Id should be positive")
     private int id = 1;
     @NotNull(message = "Name can't be empty")
     @Size(min = 5, max = 45, message = "Name should be between 5 and 45 symbols")
     private String username;
-    @NotNull( message = "Name can't be empty")
+    @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
     private String firstName;
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
     private String lastName;
-//TODO Къде и как трябва да излиза 'message-a' в Postman? hint:(създай един user)
+    //TODO Къде и как трябва да излиза 'message-a' в Postman? hint:(създай един user)
     @NotNull(message = "Email can't be empty")
-    @Email (message = "Email is invalid")
+    @Email(message = "Email is invalid")
     private String email;
-//TODO валидации за password
+    //TODO валидации за password
     private String password;
-
     private GenderTypes gender;
 // TODO Защо имаме празен конструктор и каква му е функцията?
+
+    private boolean isAdmin;
+   // @NotNull(message = "Phone number can't be empty")
+   // private String phoneNumber;
+
     public User() {
     }
 
     public User(String username, String firstName, String lastName,
-                String email, String password, GenderTypes gender) {
+                String email, String password, GenderTypes gender,boolean isAdmin) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.gender = gender;
+        this.isAdmin = isAdmin;
     }
 
     public int getId() {
@@ -95,8 +100,17 @@ public class User {
     public GenderTypes getGender() {
         return gender;
     }
-//TODO Как да направим GenderType като ENUM в Postman?
+
+    //TODO Как да направим GenderType като ENUM в Postman?
     public void setGender(GenderTypes gender) {
         this.gender = gender;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

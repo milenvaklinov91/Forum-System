@@ -18,11 +18,11 @@ public class UserRepositoryImpl implements UserRepository {
         users = new ArrayList<>();
 
         User user1 = new User("milenvaklinov", "milen",
-                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male);
+                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male,true);
         user1.setId(id++);
         users.add(user1);
         User user2 = new User("ledayovkova", "leda",
-                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female);
+                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female,false);
         user2.setId(id++);
         users.add(user2);
     }
