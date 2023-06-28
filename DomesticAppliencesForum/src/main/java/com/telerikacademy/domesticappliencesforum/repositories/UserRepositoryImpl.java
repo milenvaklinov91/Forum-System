@@ -5,10 +5,12 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     private final List<User> users;
 

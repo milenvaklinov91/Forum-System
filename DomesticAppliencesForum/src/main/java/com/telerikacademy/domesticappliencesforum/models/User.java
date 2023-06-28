@@ -28,18 +28,17 @@ public class User {
     private String email;
     //TODO валидации за password
     private String password;
+
     private GenderTypes gender;
 // TODO Защо имаме празен конструктор и каква му е функцията?
 
     private boolean isAdmin;
-   // @NotNull(message = "Phone number can't be empty")
-   // private String phoneNumber;
 
     public User() {
     }
 
     public User(String username, String firstName, String lastName,
-                String email, String password, GenderTypes gender,boolean isAdmin) {
+                String email, String password, GenderTypes gender, boolean isAdmin) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
