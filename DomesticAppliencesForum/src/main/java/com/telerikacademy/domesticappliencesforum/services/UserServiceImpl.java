@@ -5,6 +5,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepositoryImpl;
 
 import java.util.List;

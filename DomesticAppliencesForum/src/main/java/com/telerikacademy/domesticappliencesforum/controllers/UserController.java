@@ -4,6 +4,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordEx
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.services.UserService;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +58,6 @@ public class UserController {
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
-
     }
 
     @DeleteMapping("/{id}")

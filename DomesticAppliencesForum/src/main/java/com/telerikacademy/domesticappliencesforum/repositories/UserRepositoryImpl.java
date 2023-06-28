@@ -19,11 +19,11 @@ public class UserRepositoryImpl implements UserRepository {
 
         User user1 = new User("milenvaklinov", "milen",
                 "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male);
-        user1.setId(++id);
+        user1.setId(id++);
         users.add(user1);
         User user2 = new User("ledayovkova", "leda",
                 "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female);
-        user2.setId(++id);
+        user2.setId(id++);
         users.add(user2);
     }
 
@@ -62,7 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void create(User user) {
-        user.setId(++id);
+        user.setId(id++);
         users.add(user);
     }
 
