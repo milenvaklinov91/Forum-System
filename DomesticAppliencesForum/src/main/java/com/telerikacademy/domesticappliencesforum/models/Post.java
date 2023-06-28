@@ -8,7 +8,7 @@ public class Post {
     private String title;
     private String content;
     private String comment;
-    private String createdBy;
+    private User createdBy;
     private LocalDate createDate;
 
     //TODO
@@ -18,7 +18,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String content, String createdBy, LocalDate createDate) {
+    public Post(String title, String content, User createdBy, LocalDate createDate) {
         this.title = title;
         this.content = content;
         this.createdBy = createdBy;
@@ -50,11 +50,11 @@ public class Post {
     }
 
 
-    public String getCreatedBy() {
+    public User getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 

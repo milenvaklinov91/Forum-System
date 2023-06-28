@@ -22,7 +22,7 @@ public class User {
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
     private String lastName;
-    //TODO Къде и как трябва да излиза 'message-a' в Postman? hint:(създай един user)
+    //TODO Къде и как трябва да излиза message-a в Postman? hint:(създай един user)
     @NotNull(message = "Email can't be empty")
     @Email(message = "Email is invalid")
     private String email;

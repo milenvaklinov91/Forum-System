@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -15,13 +16,13 @@ public class PostRepositoryImpl implements PostRepository {
     List<Post> posts;
     private int id = 1;
 
-    public PostRepositoryImpl(List<Post> posts) {
+    public PostRepositoryImpl(UserRepository userRepository) {
         this.posts = new ArrayList<>();
 
-        Post post1 = new Post("title","content" ,"username", LocalDate.now());
+        Post post1 = new Post("title","content" ,userRepository.getByUsername("milenvaklinov"), LocalDate.now());
         post1.setId(id++);
         posts.add(post1);
-        Post post2 = new Post("title","content" ,"username1", LocalDate.now());
+        Post post2 = new Post("title","content" ,userRepository.getByUsername("ledayovkova"), LocalDate.now());
         post2.setId(id++);
         posts.add(post2);
 
@@ -59,4 +60,11 @@ public class PostRepositoryImpl implements PostRepository {
         Post postToDelete = getPostById(id);
         posts.remove(postToDelete);
     }
+
+    public List<Post> getByUsername(User user) {
+        return posts.stream()
+                .filter(post -> post.getCreatedBy().equals(user.getUsername()))
+                .collect(Collectors.toList());
+    }
+
 }
