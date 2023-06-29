@@ -35,7 +35,6 @@ public class PostRepositoryImpl implements PostRepository {
                 .orElseThrow(() -> new EntityNotFoundException("Post", id));
     }
 
-
     @Override
     public Post browse(int id) {
         Post postToReturn = getPostById(id);

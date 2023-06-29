@@ -13,8 +13,7 @@ import javax.validation.constraints.Size;
 public class User {
     @Positive(message = "Id should be positive")
     private int id = 1;
-    @NotNull(message = "Name can't be empty")
-    @Size(min = 5, max = 45, message = "Name should be between 5 and 45 symbols")
+    @NotNull(message = "Username can't be empty")
     private String username;
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
@@ -22,19 +21,20 @@ public class User {
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
     private String lastName;
+
     //TODO Къде и как трябва да излиза message-a в Postman? hint:(създай един user)
     @NotNull(message = "Email can't be empty")
     @Email(message = "Email is invalid")
     private String email;
-    //TODO валидации за password
+    //TODO Как да направим валидация за password?
     private String password;
 
     private GenderTypes gender;
-// TODO Защо имаме празен конструктор и каква му е функцията?
-
+    //TODO Как да направим GenderType като ENUM в Postman?
     private boolean isAdmin;
 
     public User() {
+        // TODO Защо имаме празен конструктор и каква му е функцията?
     }
 
     public User(String username, String firstName, String lastName,
@@ -100,7 +100,6 @@ public class User {
         return gender;
     }
 
-    //TODO Как да направим GenderType като ENUM в Postman?
     public void setGender(GenderTypes gender) {
         this.gender = gender;
     }

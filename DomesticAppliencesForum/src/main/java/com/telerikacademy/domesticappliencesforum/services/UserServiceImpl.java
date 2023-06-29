@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         }
         repository.create(user);
     }
-//TODO Можем ли да добавим всички exception-ни относно създаване на user(username, email), чрез try и catch както е посочено горе?
+    //TODO Можем ли да добавим всички exception-ни относно създаване на user(username, email), чрез try и catch както е посочено горе?
 
     public void update(User user) {
         boolean duplicatePass = true;
