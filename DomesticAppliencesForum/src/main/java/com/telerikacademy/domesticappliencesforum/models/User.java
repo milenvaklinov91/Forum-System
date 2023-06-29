@@ -5,15 +5,13 @@ import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class User {
     @Positive(message = "Id should be positive")
     private int id = 1;
     @NotNull(message = "Username can't be empty")
+    @NotBlank
     private String username;
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
