@@ -1,11 +1,14 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.models.Post;
+import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -13,9 +16,13 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    public PostServiceImpl() {
+        this.postRepository = new PostRepositoryImpl();
 
+    }
+    @Override
+    public List<Post> getAllPosts() {
+        return postRepository.getAllPosts();
     }
 
     @Override

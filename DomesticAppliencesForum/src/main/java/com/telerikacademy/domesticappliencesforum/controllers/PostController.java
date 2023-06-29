@@ -3,6 +3,7 @@ package com.telerikacademy.domesticappliencesforum.controllers;
 import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
+import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import com.telerikacademy.domesticappliencesforum.services.PostService;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -21,6 +23,10 @@ public class PostController {
     public PostController(PostService postService, UserRepository userRepository) {
         this.postService = postService;
         this.userRepository = userRepository;
+    }
+    @GetMapping
+    public List<Post> getAllPosts() {
+        return postService.getAllPosts();
     }
 
     @GetMapping("/{id}")
@@ -37,7 +43,6 @@ public class PostController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
         return post;
-        //TODO Не работи!!!!
     }
 
     @PutMapping("/{id}")
@@ -48,13 +53,11 @@ public class PostController {
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
-        //TODO Не работи!!!!
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         postService.delete(id);
     }
-
 
 }

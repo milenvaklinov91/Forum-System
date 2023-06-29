@@ -13,21 +13,27 @@ import java.util.stream.Collectors;
 @Repository
 public class PostRepositoryImpl implements PostRepository {
 
-    List<Post> posts;
-    private int id = 1;
+    private final List<Post> posts;
+    private int id;
 
-    public PostRepositoryImpl(UserRepository userRepository) {
+    public PostRepositoryImpl() {
         this.posts = new ArrayList<>();
 
-        Post post1 = new Post("title","content" ,userRepository.getByUsername("milenvaklinov"), LocalDate.now());
-        post1.setId(id++);
+        Post post1 = new Post("title","content" ,1, LocalDate.now());
+        post1.setId(++id);
         posts.add(post1);
-        Post post2 = new Post("title","content" ,userRepository.getByUsername("ledayovkova"), LocalDate.now());
-        post2.setId(id++);
+        Post post2 = new Post("title","content" ,2, LocalDate.now());
+        post2.setId(++id);
         posts.add(post2);
 
     }
 
+    @Override
+    public List<Post> getAllPosts() {
+        return new ArrayList<>(posts);
+    }
+
+    @Override
     public Post getPostById(int id) {
         return posts.stream()
                 .filter(post -> post.getId() == id)
@@ -43,7 +49,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public void create(Post post) {
-        post.setId(id++);
+        post.setId(++id);
         posts.add(post);
     }
 
@@ -58,12 +64,6 @@ public class PostRepositoryImpl implements PostRepository {
     public void delete(int id) {
         Post postToDelete = getPostById(id);
         posts.remove(postToDelete);
-    }
-
-    public List<Post> getByUsername(User user) {
-        return posts.stream()
-                .filter(post -> post.getCreatedBy().equals(user.getUsername()))
-                .collect(Collectors.toList());
     }
 
 }

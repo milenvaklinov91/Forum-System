@@ -8,7 +8,8 @@ import java.time.LocalDate;
 
 public class Post {
     @Positive(message = "Id should be positive")
-    private int id;
+    private int id = 1;
+    //TODO Защо трябва да го сетнем на 1 ,за да работи?
 
     @NotNull(message = "Title can't be empty")
     @Size(min = 4, max = 32, message = "Title should be between 16 and 64 symbols")
@@ -19,7 +20,7 @@ public class Post {
     //TODO
     //private String comment;
     //todo Трябва ли да е поле в Post или отделен Клас?
-    private User createdBy;
+    private int authorId;
     private LocalDate createDate;
 
     //TODO
@@ -30,10 +31,10 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String content, User createdBy, LocalDate createDate) {
+    public Post(String title, String content, int authorId, LocalDate createDate) {
         this.title = title;
         this.content = content;
-        this.createdBy = createdBy;
+        this.authorId = authorId;
         this.createDate = LocalDate.now();
     }
 
@@ -62,12 +63,12 @@ public class Post {
     }
 
 
-    public User getCreatedBy() {
-        return createdBy;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
     public LocalDate getCreateDate() {

@@ -28,18 +28,18 @@ public class UserRepositoryImpl implements UserRepository {
         user2.setId(++id);
         users.add(user2);
     }
-
+    @Override
     public List<User> getAll() {
-        return users;
+        return new ArrayList<>(users);
     }
-
+    @Override
     public User getUserById(int id) {
         return users.stream()
                 .filter(user -> user.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("User", id));
     }
-
+    @Override
     public User getByUsername(String username) {
         return users.stream()
                 .filter(user -> user.getUsername().equals(username))
@@ -47,7 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .orElseThrow(() -> new EntityNotFoundException("User", username));
 
     }
-
+    @Override
     public User getByPassword(int id, String password) {
         return users.stream()
                 .filter(user -> user.getId() == id)
