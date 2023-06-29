@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     private final List<Post> posts;
     private int id;
-
+    @Autowired
     public PostRepositoryImpl() {
         this.posts = new ArrayList<>();
 

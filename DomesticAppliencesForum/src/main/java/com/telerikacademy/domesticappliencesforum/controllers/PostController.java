@@ -19,7 +19,7 @@ public class PostController {
 
     private final PostService postService;
     private final UserRepository userRepository;
-//TODO @Autowired?
+
     public PostController(PostService postService, UserRepository userRepository) {
         this.postService = postService;
         this.userRepository = userRepository;
@@ -32,7 +32,6 @@ public class PostController {
     @GetMapping("/{id}")
     public Post browse(@PathVariable int id) {
         return postService.browse(id);
-        //TODO По този начин показва много излишни неща относно потребителя,който е създал поста. Трябва да направим DTO класове
     }
 
     @PostMapping

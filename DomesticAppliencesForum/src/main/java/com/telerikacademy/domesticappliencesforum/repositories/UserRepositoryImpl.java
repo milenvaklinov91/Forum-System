@@ -5,6 +5,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,18 +15,18 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepository {
     private final List<User> users;
 
-    private int id;
-
+    private int id = 1;
+    @Autowired
     public UserRepositoryImpl() {
         users = new ArrayList<>();
 
         User user1 = new User("milenvaklinov", "milen",
                 "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male,true);
-        user1.setId(++id);
+        user1.setId(id++);
         users.add(user1);
         User user2 = new User("ledayovkova", "leda",
                 "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female,false);
-        user2.setId(++id);
+        user2.setId(id++);
         users.add(user2);
     }
     @Override
@@ -64,7 +65,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void create(User user) {
-        //todo
         user.setId(id++);
         users.add(user);
     }

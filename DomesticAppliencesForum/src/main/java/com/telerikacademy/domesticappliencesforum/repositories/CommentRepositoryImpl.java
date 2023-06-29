@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class CommentRepositoryImpl implements CommentRepository{
     private List<Comment> comments;
 
     private int commentId;
-
+    @Autowired
     public CommentRepositoryImpl() {
         comments = new ArrayList<>();
 

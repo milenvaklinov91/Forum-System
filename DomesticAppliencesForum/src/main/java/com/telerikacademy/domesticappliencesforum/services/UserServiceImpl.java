@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public void create(User user) {
+        isDuplicateUsername(user);
+        isDuplicateEmail(user);
+    }
+
+    private void isDuplicateUsername(User user) {
         boolean duplicateExists = true;
         try {
             repository.getByUsername(user.getUsername());
@@ -40,6 +45,8 @@ public class UserServiceImpl implements UserService {
         if (duplicateExists) {
             throw new EntityDuplicateException("User", user.getUsername());
         }
+    }
+    private void isDuplicateEmail(User user) {
         boolean duplicateEmail = true;
         try {
             repository.getByEmail(user.getEmail());
@@ -51,7 +58,6 @@ public class UserServiceImpl implements UserService {
         }
         repository.create(user);
     }
-    //TODO Можем ли да добавим всички exception-ни относно създаване на user(username, email), чрез try и catch както е посочено горе?
 
     public void update(User user) {
         boolean duplicatePass = true;

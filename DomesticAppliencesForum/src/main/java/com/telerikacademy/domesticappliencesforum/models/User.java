@@ -15,24 +15,24 @@ public class User {
     private String username;
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
+    @NotBlank
     private String firstName;
     @NotNull(message = "Name can't be empty")
     @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
+    @NotBlank
     private String lastName;
-
-    //TODO Къде и как трябва да излиза message-a в Postman? hint:(създай един user)
     @NotNull(message = "Email can't be empty")
     @Email(message = "Email is invalid")
+    @NotBlank
     private String email;
     //TODO Как да направим валидация за password?
+    @Size(min = 8, message = "Password should be between 8 symbols")
     private String password;
-
     private GenderTypes gender;
-    //TODO Как да направим GenderType като ENUM в Postman?
     private boolean isAdmin;
 
     public User() {
-        // TODO Защо имаме празен конструктор и каква му е функцията?
+
     }
 
     public User(String username, String firstName, String lastName,

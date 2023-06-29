@@ -6,15 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
 
     private final CommentRepository commentRepository;
-@Autowired
+
+    @Autowired
     public CommentServiceImpl(CommentRepository commentRepository) {
-    this.commentRepository = commentRepository;
-}
+        this.commentRepository = commentRepository;
+    }
 
     @Override
     public List<Comment> getAllComments() {
