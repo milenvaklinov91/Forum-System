@@ -3,12 +3,11 @@ package com.telerikacademy.domesticappliencesforum.models;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-import java.text.DateFormat;
 import java.time.LocalDate;
 
 public class Post {
     @Positive(message = "Id should be positive")
-    private int id = 1;
+    private int postId = 1;
     //TODO Защо трябва да го сетнем на 1 ,за да работи?
 
     @NotNull(message = "Title can't be empty")
@@ -18,8 +17,8 @@ public class Post {
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
     //TODO
-    //private String comment;
-    //todo Трябва ли да е поле в Post или отделен Клас?
+    private Comment comment;
+    //todo Трябва ли да е поле в Post или отделен Клас? - май да
     private int authorId;
     private LocalDate createDate;
 
@@ -38,12 +37,12 @@ public class Post {
         this.createDate = LocalDate.now();
     }
 
-    public int getId() {
-        return id;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public String getTitle() {

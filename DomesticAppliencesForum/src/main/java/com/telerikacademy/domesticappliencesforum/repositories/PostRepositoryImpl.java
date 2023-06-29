@@ -2,13 +2,11 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.User;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -20,10 +18,10 @@ public class PostRepositoryImpl implements PostRepository {
         this.posts = new ArrayList<>();
 
         Post post1 = new Post("title","content" ,1, LocalDate.now());
-        post1.setId(++id);
+        post1.setPostId(++id);
         posts.add(post1);
         Post post2 = new Post("title","content" ,2, LocalDate.now());
-        post2.setId(++id);
+        post2.setPostId(++id);
         posts.add(post2);
 
     }
@@ -36,7 +34,7 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Post getPostById(int id) {
         return posts.stream()
-                .filter(post -> post.getId() == id)
+                .filter(post -> post.getPostId() == id)
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Post", id));
     }
@@ -49,13 +47,13 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public void create(Post post) {
-        post.setId(++id);
+        post.setPostId(++id);
         posts.add(post);
     }
 
     @Override
     public void modify(Post post) {
-        Post postToUpdate = getPostById(post.getId());
+        Post postToUpdate = getPostById(post.getPostId());
         postToUpdate.setTitle(post.getTitle());
         postToUpdate.setContent(post.getContent());
     }
