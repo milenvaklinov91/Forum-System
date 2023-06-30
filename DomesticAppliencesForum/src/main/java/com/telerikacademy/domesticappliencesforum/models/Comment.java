@@ -1,8 +1,14 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Comment {
 
     private int commentId = 1;
+    @NotNull(message = "Content can't be empty")
+    @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
     private int authorId;
 
@@ -10,6 +16,7 @@ public class Comment {
 
     public Comment() {
     }
+
     public Comment(String content, int authorId) {
         this.content = content;
         this.authorId = authorId;
