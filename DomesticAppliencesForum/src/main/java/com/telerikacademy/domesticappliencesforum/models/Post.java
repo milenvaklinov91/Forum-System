@@ -1,5 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Post {
+
+    @JsonIgnore
     @Positive(message = "Id should be positive")
     private int postId = 1;
     //TODO Защо трябва да го сетнем на 1 ,за да работи?
@@ -20,9 +24,11 @@ public class Post {
     private String content;
     //TODO
     private int authorId;
+
+    @JsonIgnore
     private LocalDate createDate;
-    private List<Comment> comments;
-    private User createdByUser;
+   // private List<Comment> comments;
+   // private User createdByUser;
 
     //TODO
    // private int like;
@@ -79,18 +85,18 @@ public class Post {
         this.createDate = createDate;
     }
 
-    public List<Comment> getComments() {
-        return new ArrayList<>(comments);
-    }
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public User getCreatedByUser() {
-        return createdByUser;
-    }
-
-    public void setCreatedByUser(User createdByUser) {
-        this.createdByUser = createdByUser;
-    }
+//    public List<Comment> getComments() {
+//        return new ArrayList<>(comments);
+//    }
+//    public void setComments(List<Comment> comments) {
+//        this.comments = comments;
+//    }
+//
+//    public User getCreatedByUser() {
+//        return createdByUser;
+//    }
+//
+//    public void setCreatedByUser(User createdByUser) {
+//        this.createdByUser = createdByUser;
+//    }
 }

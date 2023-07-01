@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
@@ -27,6 +28,8 @@ public class User {
     private String email;
 
     //TODO Как да направим валидация за password?
+
+    @JsonIgnore
     @Size(min = 8, message = "Password should be between 8 symbols")
     private String password;
     private GenderTypes gender;
