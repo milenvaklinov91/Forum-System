@@ -1,9 +1,8 @@
 package com.telerikacademy.domesticappliencesforum.mappers;
 
+import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.services.UserService;
-
-import javax.xml.stream.events.Comment;
 
 public class CommentMapper {
 
@@ -14,7 +13,10 @@ public class CommentMapper {
     }
 
     public Comment fromCommentDto(CommentDto commentDto){
-     //   Comment comment=new Comment();
-        return null;
+        Comment comment=new Comment();
+        comment.setContent(commentDto.getContent());
+        comment.setAuthorId(commentDto.getAuthorId());
+
+        return comment;
     }
 }
