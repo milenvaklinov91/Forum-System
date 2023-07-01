@@ -25,6 +25,7 @@ public class User {
     @Email(message = "Email is invalid")
     @NotBlank
     private String email;
+
     //TODO Как да направим валидация за password?
     @Size(min = 8, message = "Password should be between 8 symbols")
     private String password;

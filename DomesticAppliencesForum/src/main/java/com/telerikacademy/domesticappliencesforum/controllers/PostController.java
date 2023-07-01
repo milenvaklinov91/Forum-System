@@ -43,7 +43,7 @@ public class PostController {
     public Post create(@Valid @RequestBody PostDto postDto) {
         try {
             Post post = postMapper.fromPostDto(postDto);
-            postService.
+            postService.create(post);
             return  post;
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
