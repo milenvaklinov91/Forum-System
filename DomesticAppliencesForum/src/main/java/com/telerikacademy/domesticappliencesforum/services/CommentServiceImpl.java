@@ -25,22 +25,23 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment browse(int id) {
-        return null;
+
+        return commentRepository.browse(id);
     }
 
     @Override
     public void create(Comment comment) {
-
+        commentRepository.create(comment);
     }
 
     @Override
     public void modify(Comment comment) {
-
+        commentRepository.modify(comment);
     }
 
     @Override
     public void delete(int id) {
-
+        commentRepository.delete(id);
     }
 
     @Override

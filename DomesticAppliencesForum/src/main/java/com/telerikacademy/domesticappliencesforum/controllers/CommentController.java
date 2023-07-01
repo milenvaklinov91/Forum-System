@@ -33,19 +33,27 @@ public class CommentController {
         return commentService.getAllComments();
     }
 
-    @GetMapping("/id")
-    public Comment browse(@PathVariable int id){
+    @GetMapping("/{id}")
+    public Comment browse(@PathVariable int id) {
         return commentService.getCommentById(id);
     }
 
     @PostMapping
-    public Comment create(@Valid @RequestBody CommentDto commentDto){
-        try {
-            Comment comment = commentMapper.fromCommentDto(commentDto);
-            commentService.create(comment);
-            return  comment;
-        } catch (EntityDuplicateException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }
+    public Comment create(@Valid @RequestBody CommentDto commentDto) {
+        Comment comment = commentMapper.fromCommentDto(commentDto);
+        commentService.create(comment);
+        return comment;
     }
+    @PutMapping("/{id}")
+    public Comment modify(@Valid @RequestBody CommentDto commentDto){
+        Comment comment = commentMapper.fromCommentDto(commentDto);
+        commentService.modify(comment);
+        return comment;
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id){
+        commentService.delete(id);
+    }
+
 }

@@ -24,11 +24,12 @@ public class PostController {
 
     private PostMapper postMapper;
 
-    public PostController(PostService postService, UserRepository userRepository,PostMapper postMapper) {
+    public PostController(PostService postService, UserRepository userRepository, PostMapper postMapper) {
         this.postService = postService;
         this.userRepository = userRepository;
         this.postMapper = postMapper;
     }
+
     @GetMapping
     public List<Post> getAllPosts() {
         return postService.getAllPosts();
@@ -41,23 +42,18 @@ public class PostController {
 
     @PostMapping
     public Post create(@Valid @RequestBody PostDto postDto) {
-        try {
-            Post post = postMapper.fromPostDto(postDto);
-            postService.create(post);
-            return  post;
-        } catch (EntityDuplicateException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }
+        Post post = postMapper.fromPostDto(postDto);
+        postService.create(post);
+        return post;
+
     }
 
     @PutMapping("/{id}")
-    public Post modify(@Valid @RequestBody Post post) {
-        try {
-            postService.modify(post);
-            return post;
-        } catch (DuplicatePasswordException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }
+    public Post modify(@Valid @RequestBody PostDto postDto) {
+        Post post=postMapper.fromPostDto(postDto);
+        postService.modify(post);
+        return post;
+
     }
 
     @DeleteMapping("/{id}")
