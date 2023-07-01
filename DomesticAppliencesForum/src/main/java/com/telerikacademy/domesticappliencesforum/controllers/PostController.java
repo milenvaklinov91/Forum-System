@@ -2,8 +2,10 @@ package com.telerikacademy.domesticappliencesforum.controllers;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
+import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import com.telerikacademy.domesticappliencesforum.services.PostService;
 import org.springframework.http.HttpStatus;
@@ -20,9 +22,12 @@ public class PostController {
     private final PostService postService;
     private final UserRepository userRepository;
 
-    public PostController(PostService postService, UserRepository userRepository) {
+    private PostMapper postMapper;
+
+    public PostController(PostService postService, UserRepository userRepository,PostMapper postMapper) {
         this.postService = postService;
         this.userRepository = userRepository;
+        this.postMapper = postMapper;
     }
     @GetMapping
     public List<Post> getAllPosts() {
@@ -35,13 +40,14 @@ public class PostController {
     }
 
     @PostMapping
-    public Post create(@Valid @RequestBody Post post) {
+    public Post create(@Valid @RequestBody PostDto postDto) {
         try {
-            postService.create(post);
+            Post post = postMapper.fromPostDto(postDto);
+            postService.
+            return  post;
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
-        return post;
     }
 
     @PutMapping("/{id}")

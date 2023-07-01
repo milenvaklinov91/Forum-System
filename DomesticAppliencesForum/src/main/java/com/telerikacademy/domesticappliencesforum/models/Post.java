@@ -4,6 +4,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Post {
     @Positive(message = "Id should be positive")
@@ -17,10 +19,10 @@ public class Post {
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
     //TODO
-    private Comment comment;
-    //todo Трябва ли да е поле в Post или отделен Клас? - май да
     private int authorId;
     private LocalDate createDate;
+    private List<Comment> comments;
+    private User createdByUser;
 
     //TODO
    // private int like;
@@ -61,7 +63,6 @@ public class Post {
         this.content = content;
     }
 
-
     public int getAuthorId() {
         return authorId;
     }
@@ -78,4 +79,18 @@ public class Post {
         this.createDate = createDate;
     }
 
+    public List<Comment> getComments() {
+        return new ArrayList<>(comments);
+    }
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public User getCreatedByUser() {
+        return createdByUser;
+    }
+
+    public void setCreatedByUser(User createdByUser) {
+        this.createdByUser = createdByUser;
+    }
 }

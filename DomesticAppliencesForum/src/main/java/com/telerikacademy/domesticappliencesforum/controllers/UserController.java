@@ -47,8 +47,8 @@ public class UserController {
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
-            User user = userMapper.fromDto(userDto);
-            service.create(user);
+            User user = userMapper.fromUserDto(userDto);
+            userMapper.fromUserDto(user);
             return  user;
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());

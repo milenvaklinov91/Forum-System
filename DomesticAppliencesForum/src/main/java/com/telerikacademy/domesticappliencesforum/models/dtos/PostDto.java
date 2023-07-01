@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.models.dtos;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.User;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,9 +15,8 @@ public class PostDto {
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
     //TODO
-    private Comment comment;
-    //todo Трябва ли да е поле в Post или отделен Клас? - май да
     private int authorId;
+    private User createdByUser;
     private LocalDate createDate;
 
     public PostDto() {
@@ -56,6 +56,14 @@ public class PostDto {
 
     public LocalDate getCreateDate() {
         return createDate;
+    }
+
+    public User getCreatedByUser() {
+        return createdByUser;
+    }
+
+    public void setCreatedByUser(User createdByUser) {
+        this.createdByUser = createdByUser;
     }
 
     public void setCreateDate(LocalDate createDate) {

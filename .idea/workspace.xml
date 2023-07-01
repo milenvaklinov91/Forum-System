@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="209bd31d-bfa8-4f71-968b-1455907a65a5" name="Changes" comment="" />
+    <list default="true" id="209bd31d-bfa8-4f71-968b-1455907a65a5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,6 +41,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Rtu2O5KCvJiT2zRHqVtWB08wA4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -48,7 +51,11 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/User/IdeaProjects/secondprojectteam12",
+    "last_opened_file_path": "C:/Users/Neli/IdeaProjects/secondprojectteam12/DomesticAppliencesForum",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -70,6 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1688081490659</updated>
       <workItem from="1688081491665" duration="95000" />
+      <workItem from="1688201750140" duration="144000" />
     </task>
     <servers />
   </component>

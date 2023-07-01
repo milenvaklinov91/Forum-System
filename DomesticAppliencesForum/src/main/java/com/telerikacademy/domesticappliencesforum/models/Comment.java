@@ -12,6 +12,8 @@ public class Comment {
     private String content;
     private int authorId;
 
+    //private Post post;
+
     //    private int like;
 
     public Comment() {
