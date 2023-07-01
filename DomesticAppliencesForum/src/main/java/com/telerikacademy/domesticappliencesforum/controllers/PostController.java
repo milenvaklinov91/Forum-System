@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,12 @@ public class PostController {
     }
 
     @GetMapping
-    public List<Post> getAllPosts() {
-        return postService.getAllPosts();
+    public List<Post> getAllPosts(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) int authorId,
+            @RequestParam(required = false) LocalDate localDate
+            ) {
+        return postService.getAllPosts(title,authorId,localDate);
     }
 
     @GetMapping("/{id}")

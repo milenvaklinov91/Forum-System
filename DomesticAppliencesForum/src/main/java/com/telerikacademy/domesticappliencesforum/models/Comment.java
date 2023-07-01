@@ -2,19 +2,17 @@ package com.telerikacademy.domesticappliencesforum.models;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class Comment {
-
+    @Positive(message = "Id should be positive")
     private int commentId = 1;
     @NotNull(message = "Content can't be empty")
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
+    @Positive(message = "Id should be positive")
     private int authorId;
-
-    //private Post post;
-
-    //    private int like;
 
     public Comment() {
     }

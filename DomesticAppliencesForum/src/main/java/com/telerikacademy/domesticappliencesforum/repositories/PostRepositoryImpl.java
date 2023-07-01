@@ -8,27 +8,33 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
 
     private final List<Post> posts;
     private int id;
+
     @Autowired
     public PostRepositoryImpl() {
         this.posts = new ArrayList<>();
 
-        Post post1 = new Post("title","content" ,1, LocalDate.now());
+        Post post1 = new Post("title", "content", 1);
         post1.setPostId(++id);
         posts.add(post1);
-        Post post2 = new Post("title","content" ,2, LocalDate.now());
+        Post post2 = new Post("title", "content", 2);
         post2.setPostId(++id);
         posts.add(post2);
 
     }
 
     @Override
-    public List<Post> getAllPosts() {
+    public List<Post> getAllPosts(String title, int authorId, LocalDate localDate) {
+        List<Post> result = new ArrayList<>(posts);
+        result = filterByAuthor(result, authorId);
+
+
         return new ArrayList<>(posts);
     }
 
@@ -65,4 +71,12 @@ public class PostRepositoryImpl implements PostRepository {
         posts.remove(postToDelete);
     }
 
+    private List<Post> filterByAuthor(List<Post> posts, int authorId) {
+        if (posts != null && authorId > 0) {
+            posts = posts.stream()
+                    .filter(post -> post.getAuthorId() == id)
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
 }

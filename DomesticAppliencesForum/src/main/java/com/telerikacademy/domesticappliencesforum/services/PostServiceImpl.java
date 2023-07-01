@@ -8,6 +8,7 @@ import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,9 +21,10 @@ public class PostServiceImpl implements PostService {
         this.postRepository = new PostRepositoryImpl();
 
     }
+
     @Override
-    public List<Post> getAllPosts() {
-        return postRepository.getAllPosts();
+    public List<Post> getAllPosts(String title, int authorId, LocalDate localDate) {
+        return postRepository.getAllPosts(title, authorId, localDate);
     }
 
     @Override

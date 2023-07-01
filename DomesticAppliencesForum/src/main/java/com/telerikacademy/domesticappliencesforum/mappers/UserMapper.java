@@ -18,8 +18,10 @@ public class UserMapper {
     public User fromUserDto(UserDto userDto){
         User user = new User();
         user.setUsername(userDto.getUsername());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setGender(userDto.getGender());
+        user.setPassword(userDto.getPassword());
         return user;
     }
     //Todo

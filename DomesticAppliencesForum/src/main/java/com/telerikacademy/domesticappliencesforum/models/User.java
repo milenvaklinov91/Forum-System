@@ -11,26 +11,10 @@ import javax.validation.constraints.*;
 public class User {
     @Positive(message = "Id should be positive")
     private int id = 1;
-    @NotNull(message = "Username can't be empty")
-    @NotBlank
     private String username;
-    @NotNull(message = "Name can't be empty")
-    @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
-    @NotBlank
     private String firstName;
-    @NotNull(message = "Name can't be empty")
-    @Size(min = 4, max = 32, message = "Name should be between 4 and 32 symbols")
-    @NotBlank
     private String lastName;
-    @NotNull(message = "Email can't be empty")
-    @Email(message = "Email is invalid")
-    @NotBlank
     private String email;
-
-    //TODO Как да направим валидация за password?
-
-    @JsonIgnore
-    @Size(min = 8, message = "Password should be between 8 symbols")
     private String password;
     private GenderTypes gender;
     private boolean isAdmin;

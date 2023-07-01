@@ -4,6 +4,7 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -14,10 +15,8 @@ public class PostDto {
     @NotNull(message = "Content can't be empty")
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
-    //TODO
+    @Positive(message = "Id should be positive")
     private int authorId;
-    private User createdByUser;
-    private LocalDate createDate;
 
     public PostDto() {
     }
@@ -38,14 +37,6 @@ public class PostDto {
         this.content = content;
     }
 
-//    public Comment getComment() {
-//        return comment;
-//    }
-//
-//    public void setComment(Comment comment) {
-//        this.comment = comment;
-//    }
-
     public int getAuthorId() {
         return authorId;
     }
@@ -54,19 +45,4 @@ public class PostDto {
         this.authorId = authorId;
     }
 
-    public LocalDate getCreateDate() {
-        return createDate;
-    }
-
-    public User getCreatedByUser() {
-        return createdByUser;
-    }
-
-    public void setCreatedByUser(User createdByUser) {
-        this.createdByUser = createdByUser;
-    }
-
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
-    }
 }
