@@ -34,8 +34,8 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPosts(
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) int authorId,
-            @RequestParam(required = false) LocalDate localDate
+            @RequestParam(required = false) Integer authorId,
+            @RequestParam(required = false) String localDate
             ) {
         return postService.getAllPosts(title,authorId,localDate);
     }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,12 +31,12 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getAllPosts(String title, int authorId, LocalDate localDate) {
+    public List<Post> getAllPosts(String title, Integer authorId, String localDate) {
         List<Post> result = new ArrayList<>(posts);
         result = filterByAuthor(result, authorId);
-
-
-        return new ArrayList<>(posts);
+        result = filterByDate(result, localDate);
+        result = filterLastTenCreatedPosts(result);
+        return result;
     }
 
     @Override
@@ -71,12 +72,32 @@ public class PostRepositoryImpl implements PostRepository {
         posts.remove(postToDelete);
     }
 
-    private List<Post> filterByAuthor(List<Post> posts, int authorId) {
-        if (posts != null && authorId > 0) {
+    private List<Post> filterByAuthor(List<Post> posts, Integer authorId) {
+        if (posts != null && authorId != null) {
             posts = posts.stream()
-                    .filter(post -> post.getAuthorId() == id)
+                    .filter(post -> post.getAuthorId() == authorId)
                     .collect(Collectors.toList());
         }
         return posts;
     }
+
+
+    private List<Post> filterByDate(List<Post> posts, String localDate) {
+        if (posts != null && localDate != null) {
+            posts = posts.stream()
+                    .filter(post -> post.getCreateDate().equals(localDate))
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
+
+    private List<Post> filterLastTenCreatedPosts(List<Post> posts) {
+        if (posts != null) {
+            posts = posts.stream().sorted(Comparator
+                    .comparing(Post::getPostId)
+                    .reversed()).limit(10).collect(Collectors.toList());
+        }
+        return posts;
+    }
+
 }
