@@ -78,4 +78,5 @@ public class UserRepositoryImpl implements UserRepository {
         User userToDelete = getUserById(id);
         users.remove(userToDelete);
     }
+
 }

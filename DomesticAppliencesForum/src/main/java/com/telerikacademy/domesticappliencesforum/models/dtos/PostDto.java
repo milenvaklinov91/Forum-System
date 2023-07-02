@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.models.dtos;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -16,7 +17,7 @@ public class PostDto {
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
     @Positive(message = "Id should be positive")
-    private int authorId;
+    private User authorId;
 
     public PostDto() {
     }
@@ -37,11 +38,11 @@ public class PostDto {
         this.content = content;
     }
 
-    public int getAuthorId() {
+    public User  getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(int authorId) {
+    public void setAuthorId(User authorId) {
         this.authorId = authorId;
     }
 

@@ -30,6 +30,10 @@ public class UserServiceImpl implements UserService {
         return repository.getUserById(id);
     }
 
+    public User getByUsername(String username){
+        return repository.getByUsername(username);
+    }
+
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);

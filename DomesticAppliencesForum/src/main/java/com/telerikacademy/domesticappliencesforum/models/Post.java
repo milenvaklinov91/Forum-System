@@ -18,7 +18,7 @@ public class Post {
     private String title;
     private String content;
     @Positive(message = "Id should be positive")
-    private int authorId;
+    private User authorId;
     private LocalDate createDate;
     // private List<Comment> comments;
     // private User createdByUser;
@@ -30,7 +30,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String content, int authorId) {
+    public Post(String title, String content, User authorId) {
         this.title = title;
         this.content = content;
         this.authorId = authorId;
@@ -61,11 +61,11 @@ public class Post {
         this.content = content;
     }
 
-    public int getAuthorId() {
+    public User getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(int authorId) {
+    public void setAuthorId(User authorId) {
         this.authorId = authorId;
     }
 

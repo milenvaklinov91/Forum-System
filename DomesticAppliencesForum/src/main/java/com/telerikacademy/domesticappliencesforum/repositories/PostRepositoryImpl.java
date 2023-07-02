@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
+import com.telerikacademy.domesticappliencesforum.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,21 +18,24 @@ public class PostRepositoryImpl implements PostRepository {
     private final List<Post> posts;
     private int id;
 
+
+
     @Autowired
-    public PostRepositoryImpl() {
+    public PostRepositoryImpl(UserRepository userRepository) {
         this.posts = new ArrayList<>();
 
-        Post post1 = new Post("title", "content", 1);
+        Post post1 = new Post("title", "content",userRepository.getUserById(1));
+
         post1.setPostId(++id);
         posts.add(post1);
-        Post post2 = new Post("title", "content", 2);
+        Post post2 = new Post("title", "content",userRepository.getUserById(2));
         post2.setPostId(++id);
         posts.add(post2);
 
     }
 
     @Override
-    public List<Post> getAllPosts(String title, Integer authorId, String localDate) {
+    public List<Post> getAllPosts(String title, User authorId, String localDate) {
         List<Post> result = new ArrayList<>(posts);
         result = filterByAuthor(result, authorId);
         result = filterByDate(result, localDate);
@@ -72,7 +76,7 @@ public class PostRepositoryImpl implements PostRepository {
         posts.remove(postToDelete);
     }
 
-    private List<Post> filterByAuthor(List<Post> posts, Integer authorId) {
+    private List<Post> filterByAuthor(List<Post> posts, User authorId) {
         if (posts != null && authorId != null) {
             posts = posts.stream()
                     .filter(post -> post.getAuthorId() == authorId)
