@@ -16,8 +16,9 @@ public class PostDto {
     @NotNull(message = "Content can't be empty")
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
-    @Positive(message = "Id should be positive")
-    private User authorId;
+
+    private User createdBy;
+
 
     public PostDto() {
     }
@@ -38,12 +39,19 @@ public class PostDto {
         this.content = content;
     }
 
-    public User  getAuthorId() {
-        return authorId;
+//    public User  getAuthorId() {
+//        return createdBy;
+//    }
+//
+//    public void setAuthorId(User authorId) {
+//        this.createdBy = authorId;
+//    }
+
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setAuthorId(User authorId) {
-        this.authorId = authorId;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
-
 }

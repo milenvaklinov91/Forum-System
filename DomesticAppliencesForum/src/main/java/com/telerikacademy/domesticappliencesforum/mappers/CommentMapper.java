@@ -20,7 +20,7 @@ public class CommentMapper {
     public Comment fromCommentDto(CommentDto commentDto){
         Comment comment=new Comment();
         comment.setContent(commentDto.getContent());
-        comment.setAuthorId(commentDto.getAuthorId());
+        comment.setCreatedByUser(commentDto.getCreatedBy());
 
         return comment;
     }

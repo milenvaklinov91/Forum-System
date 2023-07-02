@@ -24,22 +24,24 @@ public class PostRepositoryImpl implements PostRepository {
     public PostRepositoryImpl(UserRepository userRepository) {
         this.posts = new ArrayList<>();
 
-        Post post1 = new Post("title", "content",userRepository.getUserById(1));
-
+        Post post1 = new Post("title", "content");
+        post1.setCreatedBy(userRepository.getUserById(1));
         post1.setPostId(++id);
         posts.add(post1);
-        Post post2 = new Post("title", "content",userRepository.getUserById(2));
+        Post post2 = new Post("title", "content");
+        post2.setCreatedBy(userRepository.getUserById(2));
         post2.setPostId(++id);
         posts.add(post2);
 
     }
 
     @Override
-    public List<Post> getAllPosts(String title, User authorId, String localDate) {
+    public List<Post> getAllPosts(String title, String authorId, String localDate,Integer lastTen) {
         List<Post> result = new ArrayList<>(posts);
         result = filterByAuthor(result, authorId);
         result = filterByDate(result, localDate);
-        result = filterLastTenCreatedPosts(result);
+        //TODO Дори с request пак ги филтрира???
+     //   result = filterLastTenCreatedPosts(result,lastTen);
         return result;
     }
 
@@ -50,6 +52,8 @@ public class PostRepositoryImpl implements PostRepository {
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Post", id));
     }
+
+    //TODO Get by tag
 
     @Override
     public Post browse(int id) {
@@ -76,30 +80,31 @@ public class PostRepositoryImpl implements PostRepository {
         posts.remove(postToDelete);
     }
 
-    private List<Post> filterByAuthor(List<Post> posts, User authorId) {
-        if (posts != null && authorId != null) {
+    private List<Post> filterByAuthor(List<Post> posts, String username) {
+        if (posts != null && username != null) {
             posts = posts.stream()
-                    .filter(post -> post.getAuthorId() == authorId)
+                    .filter(post -> post.getCreatedBy().getUsername().equals(username))
                     .collect(Collectors.toList());
         }
         return posts;
     }
 
 
-    private List<Post> filterByDate(List<Post> posts, String localDate) {
-        if (posts != null && localDate != null) {
+    private List<Post> filterByDate(List<Post> posts, String date) {
+        if (posts != null && date != null) {
             posts = posts.stream()
-                    .filter(post -> post.getCreateDate().equals(localDate))
+                    .filter(post -> post.getCreateDate().equals(date))
                     .collect(Collectors.toList());
         }
         return posts;
     }
 
-    private List<Post> filterLastTenCreatedPosts(List<Post> posts) {
+    private List<Post> filterLastTenCreatedPosts(List<Post> posts,Integer lastTen) {
+        lastTen=10;
         if (posts != null) {
             posts = posts.stream().sorted(Comparator
                     .comparing(Post::getPostId)
-                    .reversed()).limit(10).collect(Collectors.toList());
+                    .reversed()).limit(lastTen).collect(Collectors.toList());
         }
         return posts;
     }

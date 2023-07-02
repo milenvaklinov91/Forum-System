@@ -11,15 +11,14 @@ public class Comment {
     @NotNull(message = "Content can't be empty")
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
-    @Positive(message = "Id should be positive")
-    private int authorId;
+    private User createdByUser;
 
     public Comment() {
     }
 
-    public Comment(String content, int authorId) {
+    public Comment(String content, User createdByUser) {
         this.content = content;
-        this.authorId = authorId;
+        this.createdByUser = createdByUser;
     }
 
     public int getCommentId() {
@@ -38,11 +37,13 @@ public class Comment {
         this.content = content;
     }
 
-    public int getAuthorId() {
-        return authorId;
+
+
+    public User getCreatedByUser() {
+        return createdByUser;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setCreatedByUser(User createdByUser) {
+        this.createdByUser = createdByUser;
     }
 }

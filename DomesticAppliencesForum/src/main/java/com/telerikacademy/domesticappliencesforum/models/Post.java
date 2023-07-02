@@ -18,7 +18,8 @@ public class Post {
     private String title;
     private String content;
     @Positive(message = "Id should be positive")
-    private User authorId;
+    private User createdBy;
+
     private LocalDate createDate;
     // private List<Comment> comments;
     // private User createdByUser;
@@ -30,10 +31,9 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String content, User authorId) {
+    public Post(String title, String content) {
         this.title = title;
         this.content = content;
-        this.authorId = authorId;
         this.createDate = LocalDate.now();
     }
 
@@ -61,13 +61,6 @@ public class Post {
         this.content = content;
     }
 
-    public User getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(User authorId) {
-        this.authorId = authorId;
-    }
 
     public LocalDate getCreateDate() {
         return createDate;
@@ -77,18 +70,11 @@ public class Post {
         this.createDate = createDate;
     }
 
-//    public List<Comment> getComments() {
-//        return new ArrayList<>(comments);
-//    }
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
-//
-//    public User getCreatedByUser() {
-//        return createdByUser;
-//    }
-//
-//    public void setCreatedByUser(User createdByUser) {
-//        this.createdByUser = createdByUser;
-//    }
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
 }

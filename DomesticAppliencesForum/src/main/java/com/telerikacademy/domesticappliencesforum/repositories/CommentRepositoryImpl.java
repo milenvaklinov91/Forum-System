@@ -3,11 +3,13 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
+import com.telerikacademy.domesticappliencesforum.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 
@@ -17,22 +19,26 @@ public class CommentRepositoryImpl implements CommentRepository{
 
     private int commentId;
     @Autowired
-    public CommentRepositoryImpl() {
+    public CommentRepositoryImpl(UserRepository userRepository) {
         comments = new ArrayList<>();
 
-        Comment comment1 = new Comment("Content1", 1);
+        Comment comment1 = new Comment("Content1", userRepository.getUserById(1));
         comment1.setCommentId(++commentId);
         comments.add(comment1);
 
-        Comment comment2 = new Comment("Content2", 2);
+        Comment comment2 = new Comment("Content2", userRepository.getUserById(2));
         comment2.setCommentId(++commentId);
         comments.add(comment2);
     }
 
     @Override
-    public List<Comment> getAllComments() {
-        return new ArrayList<>(comments);
+    public List<Comment> getAllComments(String username) {
+        List<Comment> result = new ArrayList<>(comments);
+        result = filterByAuthor(result, username);
+        return result;
     }
+
+
 
     @Override
     public Comment browse(int id) {
@@ -40,7 +46,7 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
     @Override
-    public void create(Comment comment) {
+    public void create(Comment comment, User user) {
         comment.setCommentId(++commentId);
         comments.add(comment);
     }
@@ -65,5 +71,13 @@ public class CommentRepositoryImpl implements CommentRepository{
                 .filter(post -> post.getCommentId() == id)
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Comment", id));
+    }
+    private List<Comment> filterByAuthor(List<Comment> comments, String username) {
+        if (comments != null && username != null) {
+            comments = comments.stream()
+                    .filter(comment -> comment.getCreatedByUser().getUsername().equals(username))
+                    .collect(Collectors.toList());
+        }
+        return comments;
     }
 }

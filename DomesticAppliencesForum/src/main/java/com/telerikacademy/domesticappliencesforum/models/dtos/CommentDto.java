@@ -1,5 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.models.dtos;
 
+import com.telerikacademy.domesticappliencesforum.models.User;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -8,8 +10,8 @@ public class CommentDto {
     @NotNull(message = "Content can't be empty")
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String content;
-    @Positive(message = "Id should be positive")
-    private int authorId;
+
+    private User createdBy;
 
     public CommentDto() {
     }
@@ -22,11 +24,11 @@ public class CommentDto {
         this.content = content;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 }

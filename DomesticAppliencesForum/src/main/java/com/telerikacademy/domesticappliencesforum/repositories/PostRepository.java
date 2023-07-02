@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostRepository {
 
-    List<Post> getAllPosts(String title, User authorId, String localDate);
+    List<Post> getAllPosts(String title, String authorId, String localDate,Integer lastTen);
     Post browse(int id);
     void create(Post post);
     void modify(Post post);

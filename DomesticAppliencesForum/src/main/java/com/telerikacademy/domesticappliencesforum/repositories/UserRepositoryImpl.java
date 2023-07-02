@@ -3,6 +3,7 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,7 @@ public class UserRepositoryImpl implements UserRepository {
         User userToDelete = getUserById(id);
         users.remove(userToDelete);
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllComments() {
-        return commentRepository.getAllComments();
+    public List<Comment> getAllComments(String username) {
+        return commentRepository.getAllComments(username);
     }
 
     @Override
@@ -30,8 +31,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void create(Comment comment) {
-        commentRepository.create(comment);
+    public void create(Comment comment, User user) {
+        commentRepository.create(comment,user);
     }
 
     @Override
