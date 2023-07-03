@@ -17,23 +17,26 @@ public class UserRepositoryImpl implements UserRepository {
     private final List<User> users;
 
     private int id = 1;
+
     @Autowired
     public UserRepositoryImpl() {
         users = new ArrayList<>();
 
         User user1 = new User("milenvaklinov", "milen",
-                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male,true);
+                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male, true);
         user1.setId(id++);
         users.add(user1);
         User user2 = new User("ledayovkova", "leda",
-                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female,false);
+                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female, false);
         user2.setId(id++);
         users.add(user2);
     }
+
     @Override
     public List<User> getAll() {
         return new ArrayList<>(users);
     }
+
     @Override
     public User getUserById(int id) {
         return users.stream()
@@ -41,6 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("User", id));
     }
+
     @Override
     public User getByUsername(String username) {
         return users.stream()
@@ -49,6 +53,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .orElseThrow(() -> new EntityNotFoundException("User", username));
 
     }
+
     @Override
     public User getByPassword(int id, String password) {
         return users.stream()
@@ -79,7 +84,4 @@ public class UserRepositoryImpl implements UserRepository {
         User userToDelete = getUserById(id);
         users.remove(userToDelete);
     }
-
-
-
 }

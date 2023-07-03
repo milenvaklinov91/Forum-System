@@ -18,8 +18,6 @@ public class PostRepositoryImpl implements PostRepository {
     private final List<Post> posts;
     private int id;
 
-
-
     @Autowired
     public PostRepositoryImpl(UserRepository userRepository) {
         this.posts = new ArrayList<>();
@@ -32,16 +30,15 @@ public class PostRepositoryImpl implements PostRepository {
         post2.setCreatedBy(userRepository.getUserById(2));
         post2.setPostId(++id);
         posts.add(post2);
-
     }
 
     @Override
-    public List<Post> getAllPosts(String title, String authorId, String localDate,Integer lastTen) {
+    public List<Post> getAllPosts(String title, String authorId, String localDate, Integer lastTen) {
         List<Post> result = new ArrayList<>(posts);
         result = filterByAuthor(result, authorId);
         result = filterByDate(result, localDate);
         //TODO Дори с request пак ги филтрира???
-     //   result = filterLastTenCreatedPosts(result,lastTen);
+        //   result = filterLastTenCreatedPosts(result,lastTen);
         return result;
     }
 
@@ -99,8 +96,8 @@ public class PostRepositoryImpl implements PostRepository {
         return posts;
     }
 
-    private List<Post> filterLastTenCreatedPosts(List<Post> posts,Integer lastTen) {
-        lastTen=10;
+    private List<Post> filterLastTenCreatedPosts(List<Post> posts, Integer lastTen) {
+        lastTen = 10;
         if (posts != null) {
             posts = posts.stream().sorted(Comparator
                     .comparing(Post::getPostId)

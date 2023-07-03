@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         return repository.getUserById(id);
     }
 
-    public User getByUsername(String username){
+    public User getByUsername(String username) {
         return repository.getByUsername(username);
     }
 
@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityDuplicateException("User", user.getUsername());
         }
     }
+
     private void isDuplicateEmail(User user) {
         boolean duplicateEmail = true;
         try {

@@ -22,10 +22,11 @@ public class UserController {
 
     private final UserServiceImpl service;
     private final UserMapper userMapper;
+
     @Autowired
     public UserController(UserService userService, UserMapper userMapper) {
         this.service = (UserServiceImpl) userService;
-        this.userMapper =  userMapper;
+        this.userMapper = userMapper;
     }
 
     @GetMapping
@@ -49,7 +50,7 @@ public class UserController {
         try {
             User user = userMapper.fromUserDto(userDto);
             service.create(user);
-            return  user;
+            return user;
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }

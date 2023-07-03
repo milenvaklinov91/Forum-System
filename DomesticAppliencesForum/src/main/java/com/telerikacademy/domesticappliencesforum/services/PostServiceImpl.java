@@ -21,8 +21,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts(String title, String authorId, String localDate,Integer lastTen) {
-        return postRepository.getAllPosts(title, authorId, localDate,lastTen);
+    public List<Post> getAllPosts(String title, String authorId, String localDate, Integer lastTen) {
+        return postRepository.getAllPosts(title, authorId, localDate, lastTen);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void modify(Post post, User user) {
-        if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))){
+        if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         postRepository.modify(post);
@@ -48,7 +48,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(int id, User user) {
         Post post = postRepository.getPostById(id);
-        if(!user.isAdmin() || !post.getCreatedBy().getUsername().equals(user.getUsername())){
+        if (!user.isAdmin() || !post.getCreatedBy().getUsername().equals(user.getUsername())) {
             throw new UnauthorizedOperationException("Only admins can delete");
         }
         //TODO Admina ни не работи както трябва!!!

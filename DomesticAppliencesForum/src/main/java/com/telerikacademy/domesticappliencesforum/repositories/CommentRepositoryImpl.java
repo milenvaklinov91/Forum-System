@@ -13,11 +13,12 @@ import java.util.stream.Collectors;
 
 @Repository
 
-public class CommentRepositoryImpl implements CommentRepository{
+public class CommentRepositoryImpl implements CommentRepository {
 
     private List<Comment> comments;
 
     private int commentId;
+
     @Autowired
     public CommentRepositoryImpl(UserRepository userRepository) {
         comments = new ArrayList<>();
@@ -39,7 +40,6 @@ public class CommentRepositoryImpl implements CommentRepository{
     }
 
 
-
     @Override
     public Comment browse(int id) {
         return null;
@@ -59,7 +59,7 @@ public class CommentRepositoryImpl implements CommentRepository{
 
     @Override
     public void delete(int id) {
-        Comment commentToDelete=getCommentById(id);
+        Comment commentToDelete = getCommentById(id);
         comments.remove(commentToDelete);
 
     }
@@ -72,6 +72,7 @@ public class CommentRepositoryImpl implements CommentRepository{
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("Comment", id));
     }
+
     private List<Comment> filterByAuthor(List<Comment> comments, String username) {
         if (comments != null && username != null) {
             comments = comments.stream()

@@ -47,25 +47,26 @@ public class CommentController {
     public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto) {
         User user = authenticationHelper.tryGetUser(headers);
         Comment comment = commentMapper.fromCommentDto(commentDto);
-        commentService.create(comment,user);
+        commentService.create(comment, user);
         return comment;
     }
+
     @PutMapping("/{id}")
-    public Comment modify(@RequestHeader HttpHeaders headers,@PathVariable int id,@Valid @RequestBody CommentDto commentDto){
+    public Comment modify(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody CommentDto commentDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Comment comment = commentMapper.fromCommentDto(id,commentDto);
+            Comment comment = commentMapper.fromCommentDto(id, commentDto);
             commentService.modify(comment, user);
             return comment;
-        }catch (UnauthorizedOperationException e){
+        } catch (UnauthorizedOperationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id){
+    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);
-        commentService.delete(id,user);
+        commentService.delete(id, user);
     }
 
 }

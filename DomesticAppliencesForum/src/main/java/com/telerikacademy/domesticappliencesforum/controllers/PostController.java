@@ -28,7 +28,7 @@ public class PostController {
     private final AuthenticationHelper authenticationHelper;
 
     public PostController(PostService postService, UserRepository userRepository, PostMapper postMapper
-            ,AuthenticationHelper authenticationHelper) {
+            , AuthenticationHelper authenticationHelper) {
         this.postService = postService;
         this.userRepository = userRepository;
         this.postMapper = postMapper;
@@ -41,8 +41,8 @@ public class PostController {
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer lastTen
-            ) {
-        return postService.getAllPosts(title,username,localDate,lastTen);
+    ) {
+        return postService.getAllPosts(title, username, localDate, lastTen);
     }
 
     @GetMapping("/{id}")
@@ -54,19 +54,19 @@ public class PostController {
     public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
         User user = authenticationHelper.tryGetUser(headers);
         Post post = postMapper.fromPostDto(postDto);
-        postService.create(post,user);
+        postService.create(post, user);
         return post;
 
     }
 
     @PutMapping("/{id}")
-    public Post modify(@RequestHeader HttpHeaders headers,@PathVariable int id, @Valid @RequestBody PostDto postDto) {
+    public Post modify(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Post post = postMapper.fromDto(id,postDto);
+            Post post = postMapper.fromDto(id, postDto);
             postService.modify(post, user);
             return post;
-        }catch (UnauthorizedOperationException e){
+        } catch (UnauthorizedOperationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }

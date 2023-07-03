@@ -9,13 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-     private UserService userService;
+    private UserService userService;
+
     @Autowired
     public UserMapper(UserService userService) {
         this.userService = userService;
     }
 
-    public User fromUserDto(UserDto userDto){
+    public User fromUserDto(UserDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setFirstName(userDto.getFirstName());

@@ -15,17 +15,18 @@ import java.time.LocalDate;
 public class PostMapper {
     private UserService userService;
     private PostService postService;
+
     @Autowired
-    public PostMapper (UserService userService,PostService postService){
-        this.postService=postService;
+    public PostMapper(UserService userService, PostService postService) {
+        this.postService = postService;
         this.userService = userService;
     }
 
-    public Post fromPostDto (PostDto postDto){
+    public Post fromPostDto(PostDto postDto) {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-       // post.setAuthorId(postDto.getCreatedBy());
+        // post.setAuthorId(postDto.getCreatedBy());
         return post;
     }
 
@@ -36,7 +37,6 @@ public class PostMapper {
         post.setCreatedBy(repositoryPost.getCreatedBy());
         return post;
     }
-
 
 
 }
