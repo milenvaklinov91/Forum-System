@@ -51,8 +51,7 @@ public class PostServiceImpl implements PostService {
         if(!user.isAdmin() || !post.getCreatedBy().getUsername().equals(user.getUsername())){
             throw new UnauthorizedOperationException("Only admins can delete");
         }
-        //TODO Да направим верификация за потребител да може да променя само
-        // неговите си постове и админа - всички
+        //TODO Admina ни не работи както трябва!!!
         postRepository.delete(id);
     }
 }

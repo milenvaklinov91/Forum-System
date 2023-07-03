@@ -10,7 +10,7 @@ public interface CommentService {
     List<Comment> getAllComments(String username);
     Comment browse(int id);
     void create(Comment comment, User user);
-    void modify(Comment comment);
-    void delete(int id);
+    void modify(Comment comment,User user);
+    void delete(int id,User user);
     Comment getCommentById(int id);
 }
