@@ -11,6 +11,7 @@ public class Comment {
     private String content;
     private User createdByUser;
     private int like;
+    //todo
 
     public Comment() {
     }

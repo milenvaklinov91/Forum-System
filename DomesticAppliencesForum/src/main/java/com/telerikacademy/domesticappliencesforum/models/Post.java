@@ -16,7 +16,7 @@ public class Post {
     private User createdBy;
     private LocalDate createDate;
     private int like;
-
+    //todo
     public Post() {
     }
 
