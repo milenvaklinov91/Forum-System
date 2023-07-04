@@ -6,82 +6,92 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-    private final List<User> users;
-
-    private int id = 1;
+    private final SessionFactory sessionFactory;
 
     @Autowired
-    public UserRepositoryImpl() {
-        users = new ArrayList<>();
-
-        User user1 = new User("milenvaklinov", "milen",
-                "vaklinov", "milen91@abv.bg", "milen91", GenderTypes.Male, true);
-        user1.setId(id++);
-        users.add(user1);
-        User user2 = new User("ledayovkova", "leda",
-                "yovkova", "leda@abv.bg", "leda123", GenderTypes.Female, false);
-        user2.setId(id++);
-        users.add(user2);
+    public UserRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public List<User> getAll() {
-        return new ArrayList<>(users);
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User", User.class);
+            return query.list();
+        }
     }
 
     @Override
     public User getUserById(int id) {
-        return users.stream()
-                .filter(user -> user.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User", id));
+        try (Session session = sessionFactory.openSession()) {
+            User user = session.get(User.class, id);
+            if (user == null) {
+                throw new EntityNotFoundException("User", id);
+            }
+            return user;
+        }
     }
 
     @Override
     public User getByUsername(String username) {
-        return users.stream()
-                .filter(user -> user.getUsername().equals(username))
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("User", username));
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User where username = :username", User.class);
+            query.setParameter("username", username);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("User", "username", username);
+            }
 
+            return result.get(0);
+        }
     }
 
     @Override
     public User getByPassword(int id, String password) {
-        return users.stream()
-                .filter(user -> user.getId() == id)
-                .filter(user -> user.getPassword().equals(password))
-                .findFirst()
-                .orElseThrow(() -> new DuplicatePasswordException(password));
+        throw new UnsupportedOperationException();
     }
 
     public User getByEmail(String email) {
-        return users.stream()
-                .filter(user -> user.getEmail().equals(email))
-                .findFirst()
-                .orElseThrow(() -> new EmailExitsException(email));
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User where email = :email", User.class);
+            query.setParameter("email", email);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("Email", "email", email);
+            }
+
+            return result.get(0);
+        }
     }
 
     public void create(User user) {
-        user.setId(id++);
-        users.add(user);
+        try (Session session = sessionFactory.openSession()) {
+            session.save(user);
+        }
     }
 
     public void update(User user) {
-        User userToUpdate = getUserById(user.getId());
-        userToUpdate.setPassword(user.getPassword());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(user);
+            session.getTransaction().commit();
+        }
     }
 
     public void delete(int id) {
-        User userToDelete = getUserById(id);
-        users.remove(userToDelete);
+
+
     }
 }

@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
 
     @Autowired
-    public UserServiceImpl() {
-        this.repository = new UserRepositoryImpl();
+    public UserServiceImpl(UserRepository repository) {
+    this.repository = repository;
     }
 
     public List<User> getAll() {
@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
+        repository.create(user);
     }
 
     private void isDuplicateUsername(User user) {

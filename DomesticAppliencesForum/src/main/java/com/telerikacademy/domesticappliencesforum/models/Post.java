@@ -10,8 +10,7 @@ import java.util.List;
 public class Post {
 
     @Positive(message = "Id should be positive")
-    private int postId = 1;
-    //TODO Защо трябва да го сетнем на 1 ,за да работи?
+    private int postId;
     private String title;
     private String content;
     @Positive(message = "Id should be positive")

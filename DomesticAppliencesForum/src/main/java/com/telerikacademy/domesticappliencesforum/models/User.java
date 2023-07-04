@@ -5,25 +5,36 @@ import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.springframework.lang.NonNull;
 import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-
+@Entity
+@Table(name = "users")
 public class User {
-    @Positive(message = "Id should be positive")
-    private int id = 1;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private int id;
+    @Column(name = "username")
     private String username;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
-    private GenderTypes gender;
+   // private GenderTypes gender;
+    @Column(name = "is_admin")
     private boolean isAdmin;
 
     public User() {
 
     }
 
-    public User(String username, String firstName, String lastName,
+    /*public User(String username, String firstName, String lastName,
                 String email, String password, GenderTypes gender, boolean isAdmin) {
         this.username = username;
         this.firstName = firstName;
@@ -32,7 +43,7 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.isAdmin = isAdmin;
-    }
+    }*/
 
     public int getId() {
         return id;
@@ -82,13 +93,13 @@ public class User {
         this.password = password;
     }
 
-    public GenderTypes getGender() {
+    /*public GenderTypes getGender() {
         return gender;
     }
 
     public void setGender(GenderTypes gender) {
         this.gender = gender;
-    }
+    }*/
 
     public boolean isAdmin() {
         return isAdmin;
