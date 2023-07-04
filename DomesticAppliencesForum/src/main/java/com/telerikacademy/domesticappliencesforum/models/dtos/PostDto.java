@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 public class PostDto {
     @NotNull(message = "Title can't be empty")
@@ -18,6 +19,8 @@ public class PostDto {
     private String content;
 
     private User createdBy;
+
+    private List<Comment> commentList;
 
 
     public PostDto() {
@@ -39,13 +42,13 @@ public class PostDto {
         this.content = content;
     }
 
-//    public User  getAuthorId() {
-//        return createdBy;
-//    }
-//
-//    public void setAuthorId(User authorId) {
-//        this.createdBy = authorId;
-//    }
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
+    }
 
     public User getCreatedBy() {
         return createdBy;

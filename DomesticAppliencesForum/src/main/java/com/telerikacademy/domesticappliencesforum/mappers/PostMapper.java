@@ -1,25 +1,25 @@
 package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
-import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
+import com.telerikacademy.domesticappliencesforum.services.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.PostService;
 import com.telerikacademy.domesticappliencesforum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 @Component
 public class PostMapper {
     private UserService userService;
     private PostService postService;
 
+    private CommentService commentService;
+
     @Autowired
-    public PostMapper(UserService userService, PostService postService) {
+    public PostMapper(UserService userService, PostService postService, CommentService commentService) {
         this.postService = postService;
         this.userService = userService;
+        this.commentService = commentService;
     }
 
     public Post fromPostDto(PostDto postDto) {

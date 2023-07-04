@@ -3,6 +3,8 @@ package com.telerikacademy.domesticappliencesforum.models;
 
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Post {
@@ -15,8 +17,11 @@ public class Post {
     @Positive(message = "Id should be positive")
     private User createdBy;
     private LocalDate createDate;
-    private int like;
+    private List<Vote> likes=new ArrayList<>();;
+
+    private List<Comment> comments;
     //todo
+
     public Post() {
     }
 
@@ -66,11 +71,39 @@ public class Post {
         this.createdBy = createdBy;
     }
 
-    public int getLike() {
-        return like;
+
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setLike(int like) {
-        this.like = like;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
+    public void addComment(Comment comment) {
+        comments.add(comment);
+        comment.setPost(this);
+    }
+
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+        comment.setPost(null);
+    }
+    public void addLike(Vote like) {
+        likes.add(like);
+        like.setPost(this);
+    }
+
+
+    public void removeLike(Vote like) {
+        likes.remove(like);
+        like.setPost(null);
+    }
+
+
+    public List<Vote> getLikes() {
+        return likes;
+    }
+
 }

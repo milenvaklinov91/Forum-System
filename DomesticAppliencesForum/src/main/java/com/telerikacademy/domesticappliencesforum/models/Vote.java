@@ -1,10 +1,24 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
 public class Vote {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int voteId;
     private String type;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
     private User createdBy;
-    private Comment toComment;
+
+    //TODO Да добавим колона постове в базата, за да вържем харесвания и на пост
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "post_id")
+    private Post post;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
 
     public Vote() {
     }
@@ -27,5 +41,31 @@ public class Vote {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
+
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
     }
 }
