@@ -14,7 +14,7 @@ public class PostDto {
     @Size(min = 4, max = 32, message = "Title should be between 16 and 64 symbols")
     private String title;
     @NotNull(message = "Content can't be empty")
-    @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
+    @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols")
     private String content;
 
     private User createdBy;

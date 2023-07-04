@@ -10,6 +10,7 @@ public class Comment {
     private int commentId = 1;
     private String content;
     private User createdByUser;
+    private int like;
 
     public Comment() {
     }
@@ -41,5 +42,13 @@ public class Comment {
 
     public void setCreatedByUser(User createdByUser) {
         this.createdByUser = createdByUser;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
     }
 }

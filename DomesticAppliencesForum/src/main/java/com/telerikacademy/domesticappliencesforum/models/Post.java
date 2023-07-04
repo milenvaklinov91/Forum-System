@@ -10,19 +10,12 @@ public class Post {
     @Positive(message = "Id should be positive")
     private int postId = 1;
     //TODO Защо трябва да го сетнем на 1 ,за да работи?
-
     private String title;
     private String content;
     @Positive(message = "Id should be positive")
     private User createdBy;
-
     private LocalDate createDate;
-    // private List<Comment> comments;
-    // private User createdByUser;
-
-    //TODO
-    // private int like;
-    //todo Трябва ли да е поле в Post или отделен Клас?
+    private int like;
 
     public Post() {
     }
@@ -57,7 +50,6 @@ public class Post {
         this.content = content;
     }
 
-
     public LocalDate getCreateDate() {
         return createDate;
     }
@@ -72,5 +64,13 @@ public class Post {
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
     }
 }
