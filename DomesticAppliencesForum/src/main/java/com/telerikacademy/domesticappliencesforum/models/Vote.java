@@ -1,8 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
 public class Vote {
-
-    private int voteId; //type/user/comment
+    private int voteId;
     private String type;
     private User createdBy;
     private Comment toComment;
