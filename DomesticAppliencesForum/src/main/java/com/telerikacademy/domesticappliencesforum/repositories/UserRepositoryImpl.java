@@ -53,7 +53,6 @@ public class UserRepositoryImpl implements UserRepository {
             if (result.size() == 0) {
                 throw new EntityNotFoundException("User", "username", username);
             }
-
             return result.get(0);
         }
     }
@@ -71,7 +70,6 @@ public class UserRepositoryImpl implements UserRepository {
             if (result.size() == 0) {
                 throw new EntityNotFoundException("Email", "email", email);
             }
-
             return result.get(0);
         }
     }

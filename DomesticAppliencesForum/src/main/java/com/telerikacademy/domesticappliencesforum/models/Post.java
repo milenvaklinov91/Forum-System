@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.models;
 
 
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
+
+   // @JoinColumn(name = create_by)
     @Positive(message = "Id should be positive")
     private User createdBy;
     @Column(name = "create_date")
