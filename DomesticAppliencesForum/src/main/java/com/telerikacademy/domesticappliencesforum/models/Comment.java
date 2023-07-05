@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+//@Entity
 @Table(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private int commentId;
-    @Column(name = "comment")
+    // @Column(name = "content")
     private String comment;
     private User createdByUser;
     private List<Vote> likes = new ArrayList<>();
@@ -55,10 +55,12 @@ public class Comment {
         like.setComment(this);
     }
 
+
     public void removeLike(Vote like) {
         likes.remove(like);
         like.setComment(null);
     }
+
 
     public List<Vote> getLikes() {
         return likes;
