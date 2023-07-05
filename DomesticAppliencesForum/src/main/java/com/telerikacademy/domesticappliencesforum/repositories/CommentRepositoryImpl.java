@@ -2,7 +2,6 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,7 +53,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     public void modify(Comment comment) {
         Comment commentToUpdate = getCommentById(comment.getCommentId());
-        commentToUpdate.setContent(comment.getContent());
+        commentToUpdate.setComment(comment.getComment());
     }
 
     @Override

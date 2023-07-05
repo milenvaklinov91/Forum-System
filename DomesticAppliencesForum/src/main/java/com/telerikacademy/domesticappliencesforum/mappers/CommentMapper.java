@@ -1,7 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.services.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.UserService;
@@ -22,7 +21,7 @@ public class CommentMapper {
 
     public Comment fromCommentDto(CommentDto commentDto) {
         Comment comment = new Comment();
-        comment.setContent(commentDto.getContent());
+        comment.setComment(commentDto.getContent());
         comment.setCreatedByUser(commentDto.getCreatedBy());
 
         return comment;

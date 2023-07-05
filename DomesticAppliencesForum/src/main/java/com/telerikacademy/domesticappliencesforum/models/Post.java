@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
 
+import javax.persistence.Column;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,13 +12,16 @@ public class Post {
 
     @Positive(message = "Id should be positive")
     private int postId;
+    @Column(name = "title")
     private String title;
+    @Column(name = "content")
     private String content;
     @Positive(message = "Id should be positive")
     private User createdBy;
+    @Column(name = "create_date")
     private LocalDate createDate;
+    @Column(name = "like")
     private List<Vote> likes=new ArrayList<>();;
-
     private List<Comment> comments;
     //todo
 

@@ -8,8 +8,8 @@ import javax.validation.constraints.Size;
 
 public class CommentDto {
     @NotNull(message = "Content can't be empty")
-    @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols") //todo
-    private String content;
+    @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
+    private String comment;
 
     private User createdBy;
 
@@ -17,11 +17,11 @@ public class CommentDto {
     }
 
     public String getContent() {
-        return content;
+        return comment;
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.comment = content;
     }
 
     public User getCreatedBy() {

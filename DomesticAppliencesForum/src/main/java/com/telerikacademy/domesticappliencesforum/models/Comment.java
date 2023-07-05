@@ -1,26 +1,28 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
-    @Positive(message = "Id should be positive")
-    private int commentId = 1;
-    private String content;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
+    private int commentId;
+    @Column(name = "comment")
+    private String comment;
     private User createdByUser;
-    private List<Vote> likes=new ArrayList<>();
+    private List<Vote> likes = new ArrayList<>();
     private Post post;
     //todo
 
     public Comment() {
     }
 
-    public Comment(String content, User createdByUser) {
-        this.content = content;
+    public Comment(String comment, User createdByUser) {
+        this.comment = comment;
         this.createdByUser = createdByUser;
     }
 
@@ -32,12 +34,12 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public User getCreatedByUser() {
@@ -53,16 +55,15 @@ public class Comment {
         like.setComment(this);
     }
 
-
     public void removeLike(Vote like) {
         likes.remove(like);
         like.setComment(null);
     }
 
-
     public List<Vote> getLikes() {
         return likes;
     }
+
     public Post getPost() {
         return post;
     }
