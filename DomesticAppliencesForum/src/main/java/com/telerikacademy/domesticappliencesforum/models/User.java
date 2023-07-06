@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.models;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +27,9 @@ public class User {
     private boolean isAdmin;
     @Column(name = "registration_date")
     private LocalDateTime localDateTime;
+
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    private Set<Post> myPosts;
 
     public User() {
 
@@ -101,5 +105,13 @@ public class User {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public Set<Post> getMyPosts() {
+        return myPosts;
+    }
+
+    public void setMyPosts(Set<Post> myPosts) {
+        this.myPosts = myPosts;
     }
 }
