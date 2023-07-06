@@ -1,13 +1,8 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
-
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
 import javax.validation.constraints.Positive;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.time.LocalDateTime;
 
 public class Post {
 
@@ -17,24 +12,13 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
-
-   // @JoinColumn(name = create_by)
     @Positive(message = "Id should be positive")
     private User createdBy;
     @Column(name = "create_date")
-    private LocalDate createDate;
-    @Column(name = "like")
-    private List<Vote> likes=new ArrayList<>();;
-    private List<Comment> comments;
-    //todo
+    private LocalDateTime localDateTime;
 
     public Post() {
-    }
 
-    public Post(String title, String content) {
-        this.title = title;
-        this.content = content;
-        this.createDate = LocalDate.now();
     }
 
     public int getPostId() {
@@ -61,13 +45,6 @@ public class Post {
         this.content = content;
     }
 
-    public LocalDate getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
-    }
 
     public User getCreatedBy() {
         return createdBy;
@@ -77,39 +54,11 @@ public class Post {
         this.createdBy = createdBy;
     }
 
-
-
-    public List<Comment> getComments() {
-        return comments;
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
-    public void addComment(Comment comment) {
-        comments.add(comment);
-        comment.setPost(this);
-    }
-
-
-    public void removeComment(Comment comment) {
-        comments.remove(comment);
-        comment.setPost(null);
-    }
-    public void addLike(Vote like) {
-        likes.add(like);
-        like.setPost(this);
-    }
-
-
-    public void removeLike(Vote like) {
-        likes.remove(like);
-        like.setPost(null);
-    }
-
-
-    public List<Vote> getLikes() {
-        return likes;
-    }
-
 }

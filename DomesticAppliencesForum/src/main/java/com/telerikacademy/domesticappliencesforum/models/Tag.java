@@ -5,14 +5,11 @@ public class Tag {
     //    @Id
     //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tagId;
-
     //  @Column(name = "type")
     private String type;
-
     //    @ManyToOne(fetch = FetchType.LAZY)
     //    @JoinColumn(name = "user_id")
     private User createdBy;
-
     //    @ManyToOne(fetch = FetchType.LAZY)
     //    @JoinColumn(name = "post_id")
     private Post post;

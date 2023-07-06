@@ -1,13 +1,8 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
-import org.springframework.lang.NonNull;
-import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -26,9 +21,11 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-   // private GenderTypes gender;
+    //private GenderTypes gender; //todo
     @Column(name = "is_admin")
     private boolean isAdmin;
+    @Column(name = "registration_date")
+    private LocalDateTime localDateTime;
 
     public User() {
 
@@ -96,5 +93,13 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }

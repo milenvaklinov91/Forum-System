@@ -11,13 +11,11 @@ public class Vote {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")
     private User createdBy;
-
     //TODO Да добавим колона постове в базата, за да вържем харесвания и на пост
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "post_id")
     private Post post;
-
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "comment_id")
     private Comment comment;
