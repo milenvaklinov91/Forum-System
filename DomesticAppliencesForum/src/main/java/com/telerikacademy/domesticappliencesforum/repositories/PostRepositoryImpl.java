@@ -3,6 +3,9 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,66 +18,61 @@ import java.util.stream.Collectors;
 @Repository
 public class PostRepositoryImpl implements PostRepository {
 
-    private final List<Post> posts;
-    private int id;
+    private final SessionFactory sessionFactory;
 
     @Autowired
-    public PostRepositoryImpl(UserRepository userRepository) {
-        /*this.posts = new ArrayList<>();
-
-        Post post1 = new Post("title", "content");
-        post1.setCreatedBy(userRepository.getUserById(1));
-        post1.setPostId(++id);
-        posts.add(post1);
-        Post post2 = new Post("title", "content");
-        post2.setCreatedBy(userRepository.getUserById(2));
-        post2.setPostId(++id);
-        posts.add(post2);*/
+    public PostRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public List<Post> getAllPosts(String title, String authorId, String localDate, Integer lastTen) {
-        List<Post> result = new ArrayList<>(posts);
-        result = filterByAuthor(result, authorId);
-        result = filterByDate(result, localDate);
-        //TODO Дори с request пак ги филтрира???
-        //   result = filterLastTenCreatedPosts(result,lastTen);
-        return result;
+    public List<Post> getAllPosts(String authorId, String localDate, Integer lastTen) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("from Post", Post.class);
+            List<Post> posts = query.list();
+            return filter(posts, authorId, localDate, lastTen);
+        }
+
     }
 
     @Override
     public Post getPostById(int id) {
-        return posts.stream()
-                .filter(post -> post.getPostId() == id)
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Post", id));
+        try (Session session = sessionFactory.openSession()) {
+            Post post = session.get(Post.class, id);
+            if (post == null) {
+                throw new EntityNotFoundException("Post", id);
+            }
+            return post;
+
+        }
     }
 
     //TODO Get by tag
 
     @Override
-    public Post browse(int id) {
-        Post postToReturn = getPostById(id);
-        return postToReturn;
-    }
-
-    @Override
     public void create(Post post) {
-        post.setPostId(++id);
-        posts.add(post);
+        try (Session session = sessionFactory.openSession()) {
+            session.save(post);
+        }
     }
 
     @Override
     public void modify(Post post) {
-        Post postToUpdate = getPostById(post.getPostId());
-        postToUpdate.setTitle(post.getTitle());
-        postToUpdate.setContent(post.getContent());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(post);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
     public void delete(int id) {
-        Post postToDelete = getPostById(id);
-        posts.remove(postToDelete);
+        Post postToDelete=getPostById(id);
+        try(Session session=sessionFactory.openSession()){
+            session.beginTransaction();
+            session.delete(postToDelete);
+            session.getTransaction().commit();
+        }
     }
 
     private List<Post> filterByAuthor(List<Post> posts, String username) {
@@ -90,7 +88,7 @@ public class PostRepositoryImpl implements PostRepository {
     private List<Post> filterByDate(List<Post> posts, String date) {
         if (posts != null && date != null) {
             posts = posts.stream()
-                    .filter(post -> post.getCreateDate().equals(date))
+                    .filter(post -> post.getLocalDateTime().equals(date))
                     .collect(Collectors.toList());
         }
         return posts;
@@ -103,6 +101,13 @@ public class PostRepositoryImpl implements PostRepository {
                     .comparing(Post::getPostId)
                     .reversed()).limit(lastTen).collect(Collectors.toList());
         }
+        return posts;
+    }
+
+    public List<Post> filter(List<Post> posts, String authorId, String localDate, Integer lastTen) {
+        posts = filterByAuthor(posts, authorId);
+        posts = filterByDate(posts, localDate);
+        posts = filterLastTenCreatedPosts(posts, lastTen);
         return posts;
     }
 

@@ -1,18 +1,26 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
-import javax.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name="posts")
 public class Post {
 
-    @Positive(message = "Id should be positive")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private int postId;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
     private String content;
-    @Positive(message = "Id should be positive")
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User createdBy;
     @Column(name = "create_date")
     private LocalDateTime localDateTime;

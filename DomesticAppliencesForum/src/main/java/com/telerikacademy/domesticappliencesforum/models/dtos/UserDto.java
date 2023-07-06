@@ -25,7 +25,7 @@ public class UserDto {
     @NotBlank
     private String email;
 
-    //TODO Как да направим валидация за password?
+
     @JsonIgnore
     @NotBlank
     @Size(min = 8, message = "Password should minimum 8 symbols")
