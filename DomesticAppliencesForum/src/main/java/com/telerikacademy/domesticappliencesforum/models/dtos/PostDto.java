@@ -16,7 +16,7 @@ public class PostDto {
     @NotNull(message = "Content can't be empty")
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols")
     private String content;
-//    @JsonIgnore
+
 //    @NotNull(message = "You need to be user to create a post")
 //    private User createdBy;
     @JsonIgnore

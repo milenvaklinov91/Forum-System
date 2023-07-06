@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Entity
 @Table(name="posts")
@@ -19,12 +20,15 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
+
     @Column(name = "create_date")
     private LocalDateTime localDateTime= LocalDateTime.now();
+
 
     public Post() {
 
