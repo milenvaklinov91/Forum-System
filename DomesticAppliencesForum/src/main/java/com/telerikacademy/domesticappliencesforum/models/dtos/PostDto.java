@@ -1,10 +1,12 @@
 package com.telerikacademy.domesticappliencesforum.models.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDto {
@@ -14,8 +16,11 @@ public class PostDto {
     @NotNull(message = "Content can't be empty")
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols")
     private String content;
-    private User createdBy;
-    private List<Comment> commentList;
+//    @JsonIgnore
+//    @NotNull(message = "You need to be user to create a post")
+//    private User createdBy;
+    @JsonIgnore
+    private LocalDateTime localDateTime=LocalDateTime.now();
 
     public PostDto() {
     }
@@ -36,19 +41,13 @@ public class PostDto {
         this.content = content;
     }
 
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
+//    public User getCreatedBy() {
+//        return createdBy;
+//    }
+//
+//    public void setCreatedBy(User createdBy) {
+//        this.createdBy = createdBy;
+//    }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
 }

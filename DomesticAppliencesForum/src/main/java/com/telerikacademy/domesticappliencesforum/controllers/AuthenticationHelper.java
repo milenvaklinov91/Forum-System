@@ -28,6 +28,7 @@ public class AuthenticationHelper {
 
         try {
             String userInfo = headers.getFirst(AUTHORIZATION_HEADER_NAME);
+            assert userInfo != null;
             String username = getUsername(userInfo);
             String password = getPassword(userInfo);
             User user = userService.getByUsername(username);

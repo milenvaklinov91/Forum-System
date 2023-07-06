@@ -32,7 +32,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void create(Post post, User user) {
-        //TODO Да направим верификация за потребител
         post.setCreatedBy(user);
         postRepository.create(post);
     }
@@ -48,10 +47,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(int id, User user) {
         Post post = postRepository.getPostById(id);
-        if (user.isAdmin()==false || !post.getCreatedBy().getUsername().equals(user.getUsername())) {
+        if (!(user.isAdmin() || post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("Only admins can delete");
         }
-        //TODO Admina ни не работи както трябва!!!
         postRepository.delete(id);
     }
 }

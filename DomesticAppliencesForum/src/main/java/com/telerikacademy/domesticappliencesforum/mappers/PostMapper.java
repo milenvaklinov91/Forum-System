@@ -8,17 +8,17 @@ import com.telerikacademy.domesticappliencesforum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class PostMapper {
-    private UserService userService;
     private PostService postService;
 
     private CommentService commentService;
 
     @Autowired
-    public PostMapper(UserService userService, PostService postService, CommentService commentService) {
+    public PostMapper( PostService postService, CommentService commentService) {
         this.postService = postService;
-        this.userService = userService;
         this.commentService = commentService;
     }
 
@@ -26,7 +26,7 @@ public class PostMapper {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-        // post.setAuthorId(postDto.getCreatedBy());
+        post.setLocalDateTime(LocalDateTime.now());
         return post;
     }
 

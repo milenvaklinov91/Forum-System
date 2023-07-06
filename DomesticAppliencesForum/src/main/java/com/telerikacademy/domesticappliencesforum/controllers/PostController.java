@@ -1,8 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.controllers;
 
-import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
-import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
+import com.telerikacademy.domesticappliencesforum.exceptions.*;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
@@ -51,10 +49,16 @@ public class PostController {
 
     @PostMapping
     public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
-        User user = authenticationHelper.tryGetUser(headers);
-        Post post = postMapper.fromPostDto(postDto);
-        postService.create(post, user);
-        return post;
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Post post = postMapper.fromPostDto(postDto);
+            postService.create(post, user);
+            return post;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
 
     }
 
@@ -65,7 +69,7 @@ public class PostController {
             Post post = postMapper.fromDto(id, postDto);
             postService.modify(post, user);
             return post;
-        } catch (UnauthorizedOperationException e) {
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }

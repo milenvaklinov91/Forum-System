@@ -91,8 +91,8 @@ public class PostRepositoryImpl implements PostRepository {
         return posts;
     }
 
-    private List<Post> filterLastTenCreatedPosts(List<Post> posts, Integer lastTen) {
-        lastTen = 10;
+    private List<Post> filterLastTenCreatedPosts(List<Post> posts) {
+        Integer lastTen = 10;
         if (posts != null) {
             posts = posts.stream().sorted(Comparator
                     .comparing(Post::getPostId)
@@ -104,7 +104,7 @@ public class PostRepositoryImpl implements PostRepository {
     public List<Post> filter(List<Post> posts, String authorId, String localDate, Integer lastTen) {
         posts = filterByAuthor(posts, authorId);
         posts = filterByDate(posts, localDate);
-        posts = filterLastTenCreatedPosts(posts, lastTen);
+        posts = filterLastTenCreatedPosts(posts);
         return posts;
     }
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name="posts")
@@ -23,7 +24,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User createdBy;
     @Column(name = "create_date")
-    private LocalDateTime localDateTime;
+    private LocalDateTime localDateTime= LocalDateTime.now();
 
     public Post() {
 
