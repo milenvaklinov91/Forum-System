@@ -3,7 +3,6 @@ package com.telerikacademy.domesticappliencesforum.models;
 public class TagTypes {
 
     private int tagTypeId;
-    private Tag tagID;
     private String type;
 
     public TagTypes() {
@@ -15,14 +14,6 @@ public class TagTypes {
 
     public void setTagTypeId(int tagTypeId) {
         this.tagTypeId = tagTypeId;
-    }
-
-    public Tag getTagID() {
-        return tagID;
-    }
-
-    public void setTagID(Tag tagID) {
-        this.tagID = tagID;
     }
 
     public String getType() {

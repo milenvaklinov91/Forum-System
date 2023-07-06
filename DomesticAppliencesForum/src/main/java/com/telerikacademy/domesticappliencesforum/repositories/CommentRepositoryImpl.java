@@ -20,7 +20,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 
     @Autowired
     public CommentRepositoryImpl(UserRepository userRepository) {
-        comments = new ArrayList<>();
+        /*comments = new ArrayList<>();
 
         Comment comment1 = new Comment("Content1", userRepository.getUserById(1));
         comment1.setCommentId(++commentId);
@@ -28,7 +28,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 
         Comment comment2 = new Comment("Content2", userRepository.getUserById(2));
         comment2.setCommentId(++commentId);
-        comments.add(comment2);
+        comments.add(comment2);*/
     }
 
     @Override

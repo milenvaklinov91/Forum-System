@@ -20,7 +20,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Autowired
     public PostRepositoryImpl(UserRepository userRepository) {
-        this.posts = new ArrayList<>();
+        /*this.posts = new ArrayList<>();
 
         Post post1 = new Post("title", "content");
         post1.setCreatedBy(userRepository.getUserById(1));
@@ -29,7 +29,7 @@ public class PostRepositoryImpl implements PostRepository {
         Post post2 = new Post("title", "content");
         post2.setCreatedBy(userRepository.getUserById(2));
         post2.setPostId(++id);
-        posts.add(post2);
+        posts.add(post2);*/
     }
 
     @Override

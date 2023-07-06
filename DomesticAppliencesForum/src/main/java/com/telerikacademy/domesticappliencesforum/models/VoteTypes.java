@@ -3,7 +3,6 @@ package com.telerikacademy.domesticappliencesforum.models;
 public class VoteTypes {
 
     private int voteTypeID;
-    private Vote voteID;
     private String type;
 
     public VoteTypes() {
@@ -15,14 +14,6 @@ public class VoteTypes {
 
     public void setVoteTypeID(int voteTypeID) {
         this.voteTypeID = voteTypeID;
-    }
-
-    public Vote getVoteID() {
-        return voteID;
-    }
-
-    public void setVoteID(Vote voteID) {
-        this.voteID = voteID;
     }
 
     public String getType() {
