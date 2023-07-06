@@ -48,6 +48,8 @@ public class HibernateConfig {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 
+
+
         // Configure code-first capabilities
         //hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 
