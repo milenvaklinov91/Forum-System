@@ -4,6 +4,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordEx
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
@@ -46,6 +49,13 @@ public class UserController {
                     e.getMessage());
         }
     }
+
+    @GetMapping("/{id}/all- post")
+    public List<Post> getAllPost(@PathVariable int id) {
+        Set<Post> allPost = (getUserById(id).getPost());
+        return new ArrayList<>(allPost);
+    }
+
 
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {

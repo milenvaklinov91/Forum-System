@@ -1,5 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -28,11 +30,11 @@ public class User {
     @Column(name = "registration_date")
     private LocalDateTime localDateTime;
 
+    @JsonIgnore //todo
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
-    private Set<Post> myPosts;
+    private Set<Post> post;
 
     public User() {
-
     }
 
     public int getId() {
@@ -107,11 +109,11 @@ public class User {
         this.localDateTime = localDateTime;
     }
 
-    public Set<Post> getMyPosts() {
-        return myPosts;
+    public Set<Post> getPost() {
+        return post;
     }
 
-    public void setMyPosts(Set<Post> myPosts) {
-        this.myPosts = myPosts;
+    public void setPost(Set<Post> post) {
+        this.post = post;
     }
 }
