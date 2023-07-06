@@ -24,8 +24,6 @@ public class UserDto {
     @Email(message = "Email is invalid")
     @NotBlank
     private String email;
-
-
     @JsonIgnore
     @NotBlank
     @Size(min = 8, message = "Password should minimum 8 symbols")

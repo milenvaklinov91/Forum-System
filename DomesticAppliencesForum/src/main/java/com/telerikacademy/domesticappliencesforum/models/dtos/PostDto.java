@@ -2,12 +2,9 @@ package com.telerikacademy.domesticappliencesforum.models.dtos;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.util.List;
 
 public class PostDto {
@@ -17,11 +14,8 @@ public class PostDto {
     @NotNull(message = "Content can't be empty")
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols")
     private String content;
-
     private User createdBy;
-
     private List<Comment> commentList;
-
 
     public PostDto() {
     }

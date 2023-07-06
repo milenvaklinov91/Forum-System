@@ -6,7 +6,6 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
-import com.telerikacademy.domesticappliencesforum.services.UserService;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +21,14 @@ public class UserController {
 
     private final UserServiceImpl service;
     private final UserMapper userMapper;
+    private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper) {
-        this.service = (UserServiceImpl) userService;
+    public UserController(UserServiceImpl service, UserMapper userMapper, AuthenticationHelper authenticationHelper) {
+
+        this.service = service;
         this.userMapper = userMapper;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping

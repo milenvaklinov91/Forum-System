@@ -6,7 +6,6 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateExce
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
