@@ -37,12 +37,11 @@ public class PostController {
 
     @GetMapping
     public List<Post> getAllPosts(
-            @RequestParam(required = false) String title,
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer lastTen
     ) {
-        return postService.getAllPosts(title, username, localDate, lastTen);
+        return postService.getAllPosts(username, localDate, lastTen);
     }
 
     @GetMapping("/{id}")

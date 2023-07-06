@@ -3,11 +3,13 @@ package com.telerikacademy.domesticappliencesforum.models;
 import javax.persistence.Column;
 
 public class Vote {
+
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int voteId;
  //   @Column(name = "type")
     private String type;
+
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")
     private User createdBy;

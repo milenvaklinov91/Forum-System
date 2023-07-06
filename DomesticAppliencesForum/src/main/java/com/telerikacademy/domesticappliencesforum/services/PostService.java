@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostService {
 
-    List<Post> getAllPosts(String title, String authorId, String localDate,Integer lastTen);
+    List<Post> getAllPosts(String authorId, String localDate,Integer lastTen);
     Post browse(int id);
 
     void create(Post post, User user);
