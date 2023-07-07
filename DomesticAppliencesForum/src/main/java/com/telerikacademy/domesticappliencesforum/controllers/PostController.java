@@ -37,11 +37,12 @@ public class PostController {
     public List<Post> getAllPosts(
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String localDate,
-            @RequestParam(required = false) Integer lastTen
+            @RequestParam(required = false) Integer lastTen,
+            @RequestParam(required = false) Integer tagId
     ) {
-        return postService.getAllPosts(username, localDate, lastTen);
+        return postService.getAllPosts(username, localDate, lastTen,tagId);
     }
-//todo За какво ни ее това горе?
+
     @GetMapping("/{id}")
     public Post browse(@PathVariable int id) {
         return postService.browse(id);

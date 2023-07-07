@@ -34,6 +34,7 @@ public class Post {
     private TagTypes tags;
 
 
+
     public Post() {
 
     }

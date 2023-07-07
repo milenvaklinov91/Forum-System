@@ -23,11 +23,11 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getAllPosts(String authorId, String localDate, Integer lastTen) {
+    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId) {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("from Post", Post.class);
             List<Post> posts = query.list();
-            return filter(posts, authorId, localDate, lastTen);
+            return filter(posts, userName, localDate, lastTen,tagId);
         }
 
     }
@@ -80,6 +80,14 @@ public class PostRepositoryImpl implements PostRepository {
         }
         return posts;
     }
+    private static List<Post> filterByTag(List<Post> posts, Integer tagId) {
+        if (posts != null && tagId!=null) {
+            posts = posts.stream()
+                    .filter(post -> post.getTags().getTagTypeId() == tagId)
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
 
 
     private List<Post> filterByDate(List<Post> posts, String date) {
@@ -91,20 +99,20 @@ public class PostRepositoryImpl implements PostRepository {
         return posts;
     }
 
-    private List<Post> filterLastTenCreatedPosts(List<Post> posts) {
-        Integer lastTen = 10;
-        if (posts != null) {
+    private List<Post> filterLastTenCreatedPosts(List<Post> posts,Integer lastTen) {
+        if (posts != null && lastTen!=null) {
             posts = posts.stream().sorted(Comparator
                     .comparing(Post::getPostId)
-                    .reversed()).limit(lastTen).collect(Collectors.toList());
+                    .reversed()).limit(10).collect(Collectors.toList());
         }
         return posts;
     }
 
-    public List<Post> filter(List<Post> posts, String authorId, String localDate, Integer lastTen) {
+    public List<Post> filter(List<Post> posts, String authorId, String localDate, Integer lastTen,Integer tagId) {
         posts = filterByAuthor(posts, authorId);
         posts = filterByDate(posts, localDate);
-        posts = filterLastTenCreatedPosts(posts);
+        posts = filterLastTenCreatedPosts(posts,lastTen);
+        posts=filterByTag(posts,tagId);
 //        posts = filterMostCommented
         return posts;
     }

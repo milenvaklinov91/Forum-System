@@ -21,8 +21,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts(String authorId, String localDate, Integer lastTen) {
-        return postRepository.getAllPosts( authorId, localDate, lastTen);
+    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen,Integer tagId) {
+        return postRepository.getAllPosts( userName, localDate, lastTen,tagId);
     }
 
     @Override
