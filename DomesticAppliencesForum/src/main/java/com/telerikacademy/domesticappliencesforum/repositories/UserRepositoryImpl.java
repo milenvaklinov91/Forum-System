@@ -61,6 +61,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User getByPassword(int id, String password) {
         throw new UnsupportedOperationException();
     }
+    //todo Това трябва ли ни?
 
     public User getByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {

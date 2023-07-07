@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,6 @@ public class CommentController {
     private final CommentService commentService;
     private final UserRepository userRepository;
     private final AuthenticationHelper authenticationHelper;
-
     private CommentMapper commentMapper;
 
     public CommentController(CommentService commentService, UserRepository userRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper) {
@@ -34,8 +34,11 @@ public class CommentController {
 
     @GetMapping
     public List<Comment> getAllComments(
-            @RequestParam(required = false) String username) {
-        return commentService.getAllComments(username);
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String localDate,
+            @RequestParam(required = false) Integer vote
+    ) {
+        return commentService.getAllComments(username,localDate,vote);
     }
 
     @GetMapping("/{id}")

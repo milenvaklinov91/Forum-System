@@ -2,10 +2,15 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,30 +19,21 @@ import java.util.stream.Collectors;
 
 public class CommentRepositoryImpl implements CommentRepository {
 
-    private List<Comment> comments;
-
-    private int commentId;
+    private final SessionFactory sessionFactory;
 
     @Autowired
-    public CommentRepositoryImpl(UserRepository userRepository) {
-        /*comments = new ArrayList<>();
-
-        Comment comment1 = new Comment("Content1", userRepository.getUserById(1));
-        comment1.setCommentId(++commentId);
-        comments.add(comment1);
-
-        Comment comment2 = new Comment("Content2", userRepository.getUserById(2));
-        comment2.setCommentId(++commentId);
-        comments.add(comment2);*/
+    public CommentRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public List<Comment> getAllComments(String username) {
-        List<Comment> result = new ArrayList<>(comments);
-        result = filterByAuthor(result, username);
-        return result;
+    public List<Comment> getAllComments(String username, String localDate, Integer vote) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Comment> query = session.createQuery("from Comment", Comment.class);
+            List<Comment> comments = query.list();
+            return filter(comments, username, localDate, vote);
+        }
     }
-
 
     @Override
     public Comment browse(int id) {
@@ -46,38 +42,72 @@ public class CommentRepositoryImpl implements CommentRepository {
 
     @Override
     public void create(Comment comment, User user) {
-        comment.setCommentId(++commentId);
-        comments.add(comment);
+        try (Session session = sessionFactory.openSession()) {
+            session.save(comment);
+        }
     }
 
     @Override
     public void modify(Comment comment) {
-        Comment commentToUpdate = getCommentById(comment.getCommentId());
-        commentToUpdate.setComment(comment.getComment());
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(comment);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
     public void delete(int id) {
         Comment commentToDelete = getCommentById(id);
-        comments.remove(commentToDelete);
-
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.delete(commentToDelete);
+            session.getTransaction().commit();
+        }
     }
 
     @Override
     public Comment getCommentById(int id) {
-
-        return comments.stream()
-                .filter(post -> post.getCommentId() == id)
-                .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Comment", id));
+        try (Session session = sessionFactory.openSession()) {
+            Comment comment = session.get(Comment.class, id);
+            if (comment == null) {
+                throw new EntityNotFoundException("Comment", id);
+            }
+            return comment;
+        }
     }
 
-    private List<Comment> filterByAuthor(List<Comment> comments, String username) {
-        if (comments != null && username != null) {
+    public List<Comment> filter(List<Comment> comments, String username, String localDate, Integer vote) {
+        comments = filterCommentsByAuthor(comments, username);
+        comments = filterCommentsByDate(comments, localDate);
+        comments = filterCommentsByMostLiked(comments,vote);
+        return comments;
+        //todo за филтър виж лекцията с Пешо и демото
+    }
+
+    private List<Comment> filterCommentsByDate(List<Comment> comments, String date) {
+        if (comments != null && date != null) {
             comments = comments.stream()
-                    .filter(comment -> comment.getCreatedByUser().getUsername().equals(username))
+                    .filter(comment -> comment.getLocalDateTime().equals(date))
                     .collect(Collectors.toList());
         }
+        return comments;
+    }
+    private List<Comment> filterCommentsByAuthor(List<Comment> comments, String username) {
+        if (comments != null && username != null) {
+            comments = comments.stream()
+                    .filter(comment -> comment.getCreatedByUser().equals(username))
+                    .collect(Collectors.toList());
+        }
+        return comments;
+    }
+
+    private List<Comment> filterCommentsByMostLiked(List<Comment> comments, Integer vote) {
+//        if (comments != null && vote != null) {
+//            comments = comments.stream()
+//                    .filter(comment -> comment.getVote() >= vote)
+//                    .collect(Collectors.toList());
+//        }
         return comments;
     }
 }

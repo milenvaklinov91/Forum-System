@@ -41,7 +41,7 @@ public class PostController {
     ) {
         return postService.getAllPosts(username, localDate, lastTen);
     }
-
+//todo За какво ни ее това горе?
     @GetMapping("/{id}")
     public Post browse(@PathVariable int id) {
         return postService.browse(id);

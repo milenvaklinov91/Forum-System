@@ -8,6 +8,8 @@ import com.telerikacademy.domesticappliencesforum.repositories.CommentRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,8 +24,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllComments(String username) {
-        return commentRepository.getAllComments(username);
+    public List<Comment> getAllComments(String username, String localDate, Integer vote) {
+        return commentRepository.getAllComments(username,localDate,vote);
     }
 
     @Override
