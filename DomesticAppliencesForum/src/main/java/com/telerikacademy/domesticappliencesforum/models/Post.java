@@ -33,7 +33,7 @@ public class Post {
     @JoinColumn(name = "tag_type_id")
     private TagTypes tags;
 
-
+    //TODO comments
 
     public Post() {
 
