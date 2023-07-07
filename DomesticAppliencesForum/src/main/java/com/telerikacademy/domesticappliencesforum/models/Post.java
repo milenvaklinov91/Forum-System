@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
-@Table(name="posts")
+@Table(name = "posts")
 public class Post {
 
     @Id
@@ -27,11 +27,23 @@ public class Post {
     private User createdBy;
 
     @Column(name = "create_date")
-    private LocalDateTime localDateTime= LocalDateTime.now();
+    private LocalDateTime localDateTime = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "tag_type_id")
+    private TagTypes tags;
 
 
     public Post() {
 
+    }
+
+    public TagTypes getTags() {
+        return tags;
+    }
+
+    public void setTags(TagTypes tags) {
+        this.tags = tags;
     }
 
     public int getPostId() {

@@ -5,6 +5,7 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +23,18 @@ public class PostDto {
     @JsonIgnore
     private LocalDateTime localDateTime=LocalDateTime.now();
 
+    @Positive(message = "Tag type ID should be positive")
+    private int tagTypeID;
+
     public PostDto() {
+    }
+
+    public int getTagTypeID() {
+        return tagTypeID;
+    }
+
+    public void setTagTypeID(int tagTypeID) {
+        this.tagTypeID = tagTypeID;
     }
 
     public String getTitle() {
