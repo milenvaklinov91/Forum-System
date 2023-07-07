@@ -26,12 +26,12 @@ public class User {
     @Column(name = "registration_date")
     private LocalDateTime localDateTime;
 
-    @JsonIgnore
+
     @OneToOne
     @JoinColumn(name = "user_login_id")
     private UserLoginDetails loginDetails;
 
-    @JsonIgnore //todo
+    @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<Post> post;
 
