@@ -14,21 +14,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
-    @Column(name = "username")
-    private String username;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "email")
     private String email;
-    @Column(name = "password")
-    private String password;
     //private GenderTypes gender; //todo
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name = "registration_date")
     private LocalDateTime localDateTime;
+
+    @OneToOne
+    @JoinColumn(name = "user_login_id")
+    private UserLoginDetails loginDetails;
 
     @JsonIgnore //todo
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
@@ -43,14 +43,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstName() {
@@ -77,13 +69,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     /*public GenderTypes getGender() {
         return gender;
@@ -107,6 +92,14 @@ public class User {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public UserLoginDetails getLoginDetails() {
+        return loginDetails;
+    }
+
+    public void setLoginDetails(UserLoginDetails loginDetails) {
+        this.loginDetails = loginDetails;
     }
 
     public Set<Post> getPost() {

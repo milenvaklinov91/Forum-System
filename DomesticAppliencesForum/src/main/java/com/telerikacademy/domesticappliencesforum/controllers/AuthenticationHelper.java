@@ -33,7 +33,7 @@ public class AuthenticationHelper {
             String password = getPassword(userInfo);
             User user = userService.getByUsername(username);
 
-            if (!user.getPassword().equals(password)) {
+            if (!user.getLoginDetails().getPassword().equals(password)) {
                 throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
             }
             return user;

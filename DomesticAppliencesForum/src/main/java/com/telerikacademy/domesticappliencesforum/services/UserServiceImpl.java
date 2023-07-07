@@ -42,12 +42,12 @@ public class UserServiceImpl implements UserService {
     private void isDuplicateUsername(User user) {
         boolean duplicateExists = true;
         try {
-            repository.getByUsername(user.getUsername());
+            repository.getByUsername(user.getLoginDetails().getUsername());
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
         if (duplicateExists) {
-            throw new EntityDuplicateException("User", user.getUsername());
+            throw new EntityDuplicateException("User", user.getLoginDetails().getUsername());
         }
     }
 
@@ -67,12 +67,12 @@ public class UserServiceImpl implements UserService {
     public void update(User user) {
         boolean duplicatePass = true;
         try {
-            repository.getByPassword(user.getId(), user.getPassword());
+            repository.getByPassword(user.getId(), user.getLoginDetails().getPassword());
         } catch (DuplicatePasswordException e) {
             duplicatePass = false;
         }
         if (duplicatePass) {
-            throw new DuplicatePasswordException(user.getPassword());
+            throw new DuplicatePasswordException(user.getLoginDetails().getPassword());
         }
         repository.update(user);
     }

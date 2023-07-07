@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void modify(Comment comment, User user) {
-        if (!(comment.getCreatedByUser().getUsername().equals(user.getUsername()))) {
+        if (!(comment.getCreatedByUser().getLoginDetails().getUsername().equals(user.getLoginDetails().getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         commentRepository.modify(comment);
@@ -50,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void delete(int id, User user) {
         Comment comment = commentRepository.getCommentById(id);
-        if (!user.isAdmin() || !comment.getCreatedByUser().getUsername().equals(user.getUsername())) {
+        if (!user.isAdmin() || !comment.getCreatedByUser().getLoginDetails().getUsername().equals(user.getLoginDetails().getUsername())) {
             throw new UnauthorizedOperationException("Only admins can delete");
         }
         //TODO Admina ни не работи както трябва!!!
