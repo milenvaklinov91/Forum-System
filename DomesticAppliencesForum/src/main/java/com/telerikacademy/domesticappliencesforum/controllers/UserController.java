@@ -56,6 +56,13 @@ public class UserController {
         return new ArrayList<>(allPost);
     }
 
+    //todo
+   /* @GetMapping("/{id}/details")
+    public List<User> getDetail(@PathVariable int id) {
+        Set<Post> allPost = (getUserById(id).getPost());
+        return new ArrayList<>(allPost);
+    }
+*/
 
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
