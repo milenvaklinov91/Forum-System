@@ -5,6 +5,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.UserLoginDetails;
 import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -47,7 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getByUsername(String username) {
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("from UserLoginDetails where username = :username", User.class);
+            Query<User> query = session.createQuery("from User user where user.loginDetails.username = :username", User.class);
             query.setParameter("username", username);
             List<User> result = query.list();
             if (result.size() == 0) {
@@ -56,6 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
             return result.get(0);
         }
     }
+
 
     @Override
     public User getByPassword(int id, String password) {
