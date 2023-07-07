@@ -1,37 +1,95 @@
-insert into forum_system.users(email, password, username, first_name, last_name, is_admin, registration_date)
-values ('milenvaklinov@abv.bg', 'milen1991', 'milenvaklinov', 'Milen', 'Vaklinov', 1, current_date),
-       ('ledayovkova@abv.bg', 'leda1991', 'ledayovkova', 'Leda', 'Yovkova', 0, current_date),
-       ('kaloyanstanev@abv.bg', 'kaloyan1991', 'kaloyanstanev', 'Kaloyan', 'Stanev', 0, current_date);
+create table tag_types
+(
+    tag_type_id int auto_increment
+        primary key,
+    type        varchar(45) null
+);
 
-insert into forum_system.posts(user_id, title, content, create_date)
-values (1,'title','content',current_date),
-       (2,'title','content',current_date),
-       (3,'title','content',current_date);
+create table user_login
+(
+    user_login_id int auto_increment
+        primary key,
+    username      varchar(45) not null,
+    password      varchar(45) not null
+);
 
+create table users
+(
+    user_id           int auto_increment
+        primary key,
+    email             varchar(45) not null,
+    first_name        varchar(32) not null,
+    last_name         varchar(32) not null,
+    is_admin          tinyint(1)  not null,
+    registration_date datetime    null,
+    user_login_id     int         not null,
+    constraint users_user_login_user_login_id_fk
+        foreign key (user_login_id) references user_login (user_login_id)
+);
 
-insert into forum_system.comments(user_id, comment, post_id, create_date)
-values (1,'comment',1,current_date),
-       (2,'comment',2,current_date),
-       (3,'comment',3,current_date);
+create table admins
+(
+    admin_id int auto_increment
+        primary key,
+    phone    varchar(20) null,
+    user_id  int         not null,
+    constraint admins_users_user_id_fk
+        foreign key (user_id) references users (user_id)
+);
 
-insert into forum_system.admins(phone, user_id)
-values ('0888123456',1);
+create table posts
+(
+    post_id     int auto_increment
+        primary key,
+    user_id     int           not null,
+    title       varchar(64)   not null,
+    content     varchar(8192) not null,
+    create_date datetime      not null,
+    tag_type_id int           not null,
+    constraint posts_users_user_id_fk
+        foreign key (user_id) references users (user_id)
+);
 
-insert into forum_system.tag_types(type)
-values ('type'),
-       ('type1'),
-       ('type2');
+create table comments
+(
+    comment_id  int auto_increment
+        primary key,
+    user_id     int           not null,
+    comment     varchar(8192) not null,
+    post_id     int           not null,
+    create_date datetime      not null,
+    constraint comments_posts_post_id_fk
+        foreign key (post_id) references posts (post_id),
+    constraint comments_users_user_id_fk
+        foreign key (user_id) references users (user_id)
+);
 
-insert into forum_system.tags(post_id, user_id, type)
-values (1,1,1),
-       (2,2,2),
-       (3,3,3);
+create index users_roles_role_id_fk
+    on users (is_admin);
 
-insert into forum_system.vote_types(type)
-values ('type'),
-       ('type');
+create table vote_types
+(
+    vote_type_id int auto_increment
+        primary key,
+    type         varchar(45) not null
+);
 
-insert into forum_system.votes(comment_id, user_id, post_id, type)
-values (1,1,1,1),
-       (1,1,1,2);
+create table votes
+(
+    vote_id    int auto_increment
+        primary key,
+    comment_id int not null,
+    user_id    int null,
+    post_id    int not null,
+    type       int not null,
+    constraint likes_comments_comment_id_fk
+        foreign key (comment_id) references comments (comment_id),
+    constraint likes_users_user_id_fk
+        foreign key (user_id) references users (user_id),
+    constraint votes_posts_post_id_fk
+        foreign key (post_id) references posts (post_id),
+    constraint votes_vote_types_vote_type_id_fk
+        foreign key (type) references vote_types (vote_type_id)
+);
+
 
