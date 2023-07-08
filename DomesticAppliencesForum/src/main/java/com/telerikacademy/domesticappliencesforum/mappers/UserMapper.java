@@ -14,6 +14,7 @@ public class UserMapper {
         loginDetails.setPassword(userDto.getPassword());
 
         User user = new User();
+        user.setLoginDetails(loginDetails);
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());

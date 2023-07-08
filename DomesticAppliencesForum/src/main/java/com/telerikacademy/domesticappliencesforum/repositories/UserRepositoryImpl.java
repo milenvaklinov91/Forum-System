@@ -1,20 +1,15 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
-import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
+
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -47,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getByUsername(String username) {
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("from UserLoginDetails where username = :username", User.class);
+            Query<User> query = session.createQuery("from User user where user.loginDetails.username = :username", User.class);
             query.setParameter("username", username);
             List<User> result = query.list();
             if (result.size() == 0) {

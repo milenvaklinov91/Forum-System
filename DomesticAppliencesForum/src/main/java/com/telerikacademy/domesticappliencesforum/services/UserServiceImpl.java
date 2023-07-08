@@ -9,6 +9,7 @@ import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
+        user.setCreateTime(LocalDateTime.now());
         repository.create(user);
     }
 
@@ -55,13 +57,12 @@ public class UserServiceImpl implements UserService {
         boolean duplicateEmail = true;
         try {
             repository.getByEmail(user.getEmail());
-        } catch (EmailExitsException e) {
+        } catch (EntityNotFoundException e) {
             duplicateEmail = false;
         }
         if (duplicateEmail) {
             throw new EmailExitsException(user.getEmail());
         }
-        repository.create(user);
     }
 
     public void update(User user) {

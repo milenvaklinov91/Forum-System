@@ -24,13 +24,11 @@ public class User {
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name = "registration_date")
-    private LocalDateTime localDateTime;
-
-
+    private LocalDateTime createTime;
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_login_id")
     private UserLoginDetails loginDetails;
-
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<Post> post;
@@ -87,12 +85,12 @@ public class User {
         isAdmin = admin;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setCreateTime(LocalDateTime localDateTime) {
+        this.createTime = localDateTime;
     }
 
     public UserLoginDetails getLoginDetails() {
