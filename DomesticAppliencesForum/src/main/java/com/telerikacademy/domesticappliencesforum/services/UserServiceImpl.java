@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
-        user.setCreateTime(LocalDateTime.now());
+        user.setCreateTime(LocalDateTime.now()); //todo
         repository.create(user);
     }
 
