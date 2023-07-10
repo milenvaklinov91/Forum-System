@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.controllers;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.*;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
+import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
@@ -14,7 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -46,6 +49,12 @@ public class PostController {
     @GetMapping("/{id}")
     public Post browse(@PathVariable int id) {
         return postService.browse(id);
+    }
+
+    @GetMapping("/{id}/all-comments")
+    public List<Comment> getAllComments(@PathVariable int id) {
+        Set<Comment> allComments = postService.browse(id).getComments();
+        return new ArrayList<>(allComments);
     }
 
     @PostMapping
