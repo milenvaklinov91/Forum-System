@@ -1,14 +1,15 @@
 package com.telerikacademy.domesticappliencesforum.controllers;
 
-import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.exceptions.*;
 import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.UserLoginDetails;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,14 +25,16 @@ public class UserController {
 
     private final UserServiceImpl service;
     private final UserMapper userMapper;
+    private final AuthenticationHelper authenticationHelper;
 
 
     @Autowired
-    public UserController(UserServiceImpl service, UserMapper userMapper) {
+    public UserController(UserServiceImpl service, UserMapper userMapper,
+                          AuthenticationHelper authenticationHelper) {
 
         this.service = service;
         this.userMapper = userMapper;
-
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
@@ -49,20 +52,23 @@ public class UserController {
                     e.getMessage());
         }
     }
-
-    @GetMapping("/{id}/all- post")
+    //TODO
+    @GetMapping("/{id}/allposts")
     public List<Post> getAllPost(@PathVariable int id) {
         Set<Post> allPost = (getUserById(id).getPost());
         return new ArrayList<>(allPost);
     }
 
     //todo
-   /* @GetMapping("/{id}/details")
-    public List<User> getDetail(@PathVariable int id) {
-        Set<Post> allPost = (getUserById(id).getPost());
-        return new ArrayList<>(allPost);
+    @GetMapping("/{id}/details")
+    public UserLoginDetails getDetail(@RequestHeader HttpHeaders headers,@PathVariable int id ) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            return service.getUserDetails(id,user);
+        } catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
-*/
 
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {

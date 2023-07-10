@@ -1,10 +1,8 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
-import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.exceptions.*;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.UserLoginDetails;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,8 +35,16 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
-        user.setCreateTime(LocalDateTime.now()); //todo
+        user.setCreateTime(LocalDateTime.now());
         repository.create(user);
+    }
+
+    public UserLoginDetails getUserDetails(int id, User user){
+        User userDetails = repository.getUserById(id);
+        if (!(user.isAdmin())){
+            throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }
+        return userDetails.getLoginDetails();
     }
 
     private void isDuplicateUsername(User user) {
