@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = "posts")
 public class Post {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -29,12 +30,12 @@ public class Post {
 
     @Column(name = "create_date")
     private LocalDateTime localDateTime = LocalDateTime.now();
-
+@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tag_type_id")
     private TagTypes tags;
 
-    //TODO comments
+
     @JsonIgnore
     @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
     private Set<Comment> comments;

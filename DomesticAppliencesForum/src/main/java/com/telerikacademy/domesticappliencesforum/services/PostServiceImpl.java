@@ -34,6 +34,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.getPostById(id);
     }
 
+
     @Override
     public void create(Post post, User user) {
         post.setCreatedBy(user);

@@ -20,8 +20,8 @@ public class PostDto {
 
 //    @NotNull(message = "You need to be user to create a post")
 //    private User createdBy;
-    @JsonIgnore
-    private LocalDateTime localDateTime=LocalDateTime.now();
+//    @JsonIgnore
+//    private LocalDateTime localDateTime=LocalDateTime.now();
 
     @Positive(message = "Tag type ID should be positive")
     private int tagTypeID;

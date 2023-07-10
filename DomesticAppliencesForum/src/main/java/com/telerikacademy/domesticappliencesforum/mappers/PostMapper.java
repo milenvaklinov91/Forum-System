@@ -27,16 +27,15 @@ public class PostMapper {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-        post.setLocalDateTime(LocalDateTime.now());
         post.setTags(tagTypesService.get(postDto.getTagTypeID()));
         return post;
     }
 
     public Post fromDto(int id, PostDto postDto) {
         Post post = fromPostDto(postDto);
-        post.setPostId(id);
-        Post repositoryPost = postService.browse(id);
-        post.setCreatedBy(repositoryPost.getCreatedBy());
+        post=postService.browse(id);
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
         return post;
     }
 
