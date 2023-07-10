@@ -2,14 +2,10 @@ package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
-import com.telerikacademy.domesticappliencesforum.services.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.PostService;
 import com.telerikacademy.domesticappliencesforum.services.TagTypesService;
-import com.telerikacademy.domesticappliencesforum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 public class PostMapper {

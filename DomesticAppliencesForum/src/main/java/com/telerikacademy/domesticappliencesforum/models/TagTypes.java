@@ -29,6 +29,6 @@ public class TagTypes {
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = type.toLowerCase();
     }
 }
