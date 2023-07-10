@@ -35,13 +35,13 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
-        user.setCreateTime(LocalDateTime.now());
+        user.setRegistration(LocalDateTime.now());
         repository.create(user);
     }
 
     public UserLoginDetails getUserDetails(int id, User user){
         User userDetails = repository.getUserById(id);
-        if (!(user.isAdmin())){
+        if (!user.isAdmin()){
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         return userDetails.getLoginDetails();
