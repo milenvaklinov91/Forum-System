@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 
+import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 
@@ -15,4 +16,5 @@ public interface PostService {
 
     void modify(Post post, User user);
     void delete(int id, User user);
+    List<Comment> getAllComments(int id);
 }

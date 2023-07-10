@@ -1,13 +1,17 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
+import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -21,8 +25,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen,Integer tagId) {
-        return postRepository.getAllPosts( userName, localDate, lastTen,tagId);
+    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId) {
+        return postRepository.getAllPosts(userName, localDate, lastTen, tagId);
     }
 
     @Override
@@ -51,5 +55,10 @@ public class PostServiceImpl implements PostService {
             throw new UnauthorizedOperationException("Only admins can delete");
         }
         postRepository.delete(id);
+    }
+
+    public List<Comment> getAllComments(int id) {
+        Set<Comment> allComments = postRepository.getPostById(id).getComments();
+        return new ArrayList<>(allComments);
     }
 }

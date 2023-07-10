@@ -1,26 +1,28 @@
 package com.telerikacademy.domesticappliencesforum.models;
 
-import javax.persistence.Column;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "votes")
 public class Vote {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int voteId;
- //   @Column(name = "type")
+    @Column(name = "type")
     private String type;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User createdBy;
-    //TODO Да добавим колона постове в базата, за да вържем харесвания и на пост
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "post_id")
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
-//    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "comment_id")
-    private Comment comment;
+    //private Comment comment;
 
 
     public Vote() {
@@ -55,7 +57,6 @@ public class Vote {
     }
 
 
-
     public Post getPost() {
         return post;
     }
@@ -64,11 +65,11 @@ public class Vote {
         this.post = post;
     }
 
-    public Comment getComment() {
-        return comment;
-    }
+//    public Comment getComment() {
+//        return comment;
+//    }
+//
+//    public void setComment(Comment comment) {
+//        this.comment = comment;}
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
-    }
 }

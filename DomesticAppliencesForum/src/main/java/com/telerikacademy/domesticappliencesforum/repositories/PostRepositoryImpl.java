@@ -44,8 +44,6 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
-    //TODO Get by tag
-
     @Override
     public void create(Post post) {
         try (Session session = sessionFactory.openSession()) {

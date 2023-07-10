@@ -53,8 +53,7 @@ public class PostController {
 
     @GetMapping("/{id}/all-comments")
     public List<Comment> getAllComments(@PathVariable int id) {
-        Set<Comment> allComments = postService.browse(id).getComments();
-        return new ArrayList<>(allComments);
+        return postService.getAllComments(id);
     }
 
     @PostMapping
