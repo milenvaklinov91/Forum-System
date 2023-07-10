@@ -7,6 +7,7 @@ import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -34,6 +35,9 @@ public class Post {
     private TagTypes tags;
 
     //TODO comments
+    @JsonIgnore
+    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     public Post() {
 
@@ -71,6 +75,13 @@ public class Post {
         this.content = content;
     }
 
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
     public User getCreatedBy() {
         return createdBy;
