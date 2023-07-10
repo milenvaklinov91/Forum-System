@@ -24,7 +24,7 @@ public class User {
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name = "registration_date")
-    private LocalDateTime createTime;
+    private LocalDateTime registration;
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_login_id")
@@ -85,12 +85,12 @@ public class User {
         isAdmin = admin;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
+    public LocalDateTime getRegistration() {
+        return registration;
     }
 
-    public void setCreateTime(LocalDateTime localDateTime) {
-        this.createTime = localDateTime;
+    public void setRegistration(LocalDateTime localDateTime) {
+        this.registration = localDateTime;
     }
 
     public UserLoginDetails getLoginDetails() {
