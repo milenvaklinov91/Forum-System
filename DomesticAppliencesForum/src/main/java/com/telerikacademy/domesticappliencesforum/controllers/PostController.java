@@ -55,6 +55,7 @@ public class PostController {
     public List<Comment> getAllComments(@PathVariable int id) {
         return postService.getAllComments(id);
     }
+    //TODO
 
     @PostMapping
     public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
