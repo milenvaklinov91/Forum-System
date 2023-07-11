@@ -1,5 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.controllers;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
+import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
@@ -43,15 +45,21 @@ public class CommentController {
 
     @GetMapping("/{id}")
     public Comment browse(@PathVariable int id) {
-        return commentService.getCommentById(id);
+        return commentService.browse(id);
     }
 
     @PostMapping
     public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto) {
-        User user = authenticationHelper.tryGetUser(headers);
-        Comment comment = commentMapper.fromCommentDto(commentDto);
-        commentService.create(comment, user);
-        return comment;
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Comment comment = commentMapper.fromCommentDto(commentDto);
+            commentService.create(comment, user);
+            return comment;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")

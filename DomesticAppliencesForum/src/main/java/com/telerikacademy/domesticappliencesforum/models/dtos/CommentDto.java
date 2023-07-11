@@ -11,8 +11,6 @@ public class CommentDto {
     @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
     private String comment;
 
-    private User createdBy;
-
     public CommentDto() {
     }
 
@@ -24,11 +22,5 @@ public class CommentDto {
         this.comment = content;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
-    }
 
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
-    }
 }

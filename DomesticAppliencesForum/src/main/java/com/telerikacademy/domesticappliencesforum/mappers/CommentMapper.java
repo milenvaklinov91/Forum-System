@@ -7,23 +7,21 @@ import com.telerikacademy.domesticappliencesforum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class CommentMapper {
 
-    private UserService userService;
     private CommentService commentService;
 
     @Autowired
-    public CommentMapper(UserService userService, CommentService commentService) {
-        this.userService = userService;
+    public CommentMapper(CommentService commentService) {
         this.commentService = commentService;
     }
 
     public Comment fromCommentDto(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setComment(commentDto.getContent());
-        comment.setCreatedByUser(commentDto.getCreatedBy());
-
         return comment;
     }
 

@@ -25,7 +25,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     public CommentRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
+// работи
     @Override
     public List<Comment> getAllComments(String username, String localDate, Integer vote) {
         try (Session session = sessionFactory.openSession()) {
@@ -41,7 +41,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     }
 
     @Override
-    public void create(Comment comment, User user) {
+    public void create(Comment comment) {
         try (Session session = sessionFactory.openSession()) {
             session.save(comment);
         }
@@ -65,7 +65,7 @@ public class CommentRepositoryImpl implements CommentRepository {
             session.getTransaction().commit();
         }
     }
-
+//работи
     @Override
     public Comment getCommentById(int id) {
         try (Session session = sessionFactory.openSession()) {

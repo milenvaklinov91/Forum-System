@@ -31,12 +31,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment browse(int id) {
 
-        return commentRepository.browse(id);
+        return commentRepository.getCommentById(id);
     }
 
     @Override
     public void create(Comment comment, User user) {
-        commentRepository.create(comment, user);
+        comment.setCreatedByUser(user);
+        commentRepository.create(comment);
     }
 
     @Override
