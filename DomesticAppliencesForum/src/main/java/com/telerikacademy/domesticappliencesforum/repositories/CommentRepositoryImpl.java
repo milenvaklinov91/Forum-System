@@ -31,11 +31,7 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
     }
 
-    @Override
-    public Comment browse(int id) {
-        return null;
-    }
-
+//работи
     @Override
     public void create(Comment comment) {
         try (Session session = sessionFactory.openSession()) {
@@ -51,7 +47,7 @@ public class CommentRepositoryImpl implements CommentRepository {
             session.getTransaction().commit();
         }
     }
-
+//работи
     @Override
     public void delete(int id) {
         Comment commentToDelete = getCommentById(id);

@@ -9,7 +9,6 @@ import java.util.List;
 public interface CommentRepository {
 
     List<Comment> getAllComments(String username, String localDate, Integer vote);
-    Comment browse(int id);
     void create(Comment comment);
     void modify(Comment comment);
     void delete(int id);
