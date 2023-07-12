@@ -29,7 +29,7 @@ public class CommentMapper {
         return comment;
     }
 
-    public Comment fromCommentDto(int id, CommentDto commentDto) {
+    public Comment fromCommentDtoWithID(int id, CommentDto commentDto) {
         Comment comment = fromCommentDto(commentDto);
         comment.setCommentId(id);
         Comment repositoryComment = commentService.browse(id);

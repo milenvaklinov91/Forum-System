@@ -76,7 +76,7 @@ public class PostController {
     public Post modify(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Post post = postMapper.fromDto(id, postDto);
+            Post post = postMapper.fromDto(id,postDto);
             postService.modify(post, user);
             return post;
         } catch (AuthorizationException e) {

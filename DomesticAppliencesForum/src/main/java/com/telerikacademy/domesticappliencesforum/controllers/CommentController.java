@@ -66,7 +66,7 @@ public class CommentController {
     public Comment modify(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody CommentDto commentDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Comment comment = commentMapper.fromCommentDto(id, commentDto);
+            Comment comment = commentMapper.fromCommentDtoWithID(id, commentDto);
             commentService.modify(comment, user);
             return comment;
         } catch (UnauthorizedOperationException e) {

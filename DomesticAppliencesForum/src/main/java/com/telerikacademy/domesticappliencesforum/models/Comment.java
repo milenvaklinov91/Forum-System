@@ -20,7 +20,7 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User createdByUser;
     @Column(name = "create_date")
-    private LocalDateTime createComment;
+    private LocalDateTime createComment = LocalDateTime.now();
 
     @JsonIgnore
     @ManyToOne
