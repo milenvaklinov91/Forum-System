@@ -20,11 +20,13 @@ public class User {
     private String lastName;
     @Column(name = "email")
     private String email;
-    //private GenderTypes gender; //todo
     @Column(name = "is_admin")
     private boolean isAdmin;
+
+    @Column(name = "is_blocked")
+    private boolean isBlocked;
     @Column(name = "registration_date")
-    private LocalDateTime registration;
+    private LocalDateTime registrationDate;
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "user_login_id")
@@ -32,6 +34,9 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<Post> post;
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdByUser", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     public User() {
     }
@@ -68,15 +73,6 @@ public class User {
         this.email = email;
     }
 
-
-    /*public GenderTypes getGender() {
-        return gender;
-    }
-
-    public void setGender(GenderTypes gender) {
-        this.gender = gender;
-    }*/
-
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -85,12 +81,12 @@ public class User {
         isAdmin = admin;
     }
 
-    public LocalDateTime getRegistration() {
-        return registration;
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setRegistration(LocalDateTime localDateTime) {
-        this.registration = localDateTime;
+    public void setRegistrationDate(LocalDateTime localDateTime) {
+        this.registrationDate = localDateTime;
     }
 
     public UserLoginDetails getLoginDetails() {
@@ -107,5 +103,13 @@ public class User {
 
     public void setPost(Set<Post> post) {
         this.post = post;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }

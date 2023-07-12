@@ -91,7 +91,7 @@ public class PostRepositoryImpl implements PostRepository {
     private List<Post> filterByDate(List<Post> posts, String date) {
         if (posts != null && date != null) {
             posts = posts.stream()
-                    .filter(post -> post.getLocalDateTime().equals(date))
+                    .filter(post -> post.getCreateTime().equals(date))
                     .collect(Collectors.toList());
         }
         return posts;

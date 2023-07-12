@@ -32,10 +32,19 @@ public class UserServiceImpl implements UserService {
         return repository.getByUsername(username);
     }
 
+    public User getByFirstName(String firstName) {
+        return repository.getByFirstName(firstName);
+    }
+
+    public User getByEmail(String email) {
+        return repository.getByEmail(email);
+    }
+
+
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
-        user.setRegistration(LocalDateTime.now());
+        user.setRegistrationDate(LocalDateTime.now());
         repository.create(user);
     }
 

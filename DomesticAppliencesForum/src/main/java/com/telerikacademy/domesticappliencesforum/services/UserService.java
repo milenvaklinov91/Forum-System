@@ -10,6 +10,8 @@ public interface UserService {
     List<User> getAll();
     User getById(int id);
     User getByUsername(String username);
+    User getByFirstName(String firstName);
+    User getByEmail(String email);
     UserLoginDetails getUserDetails(int id, User user);
     void create(User user);
     void update(User user);

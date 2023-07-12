@@ -3,10 +3,7 @@ package com.telerikacademy.domesticappliencesforum.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,14 +24,12 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
-
     @Column(name = "create_date")
-    private LocalDateTime localDateTime = LocalDateTime.now();
-@JsonIgnore
+    private LocalDateTime createTime = LocalDateTime.now();
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tag_type_id")
     private TagTypes tags;
-
     @JsonIgnore
     @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
     private Set<Comment> comments;
@@ -91,11 +86,11 @@ public class Post {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setCreateTime(LocalDateTime localDateTime) {
+        this.createTime = localDateTime;
     }
 }

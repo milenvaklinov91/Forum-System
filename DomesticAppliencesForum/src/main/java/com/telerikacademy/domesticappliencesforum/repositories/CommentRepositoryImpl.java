@@ -80,7 +80,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     private List<Comment> filterCommentsByDate(List<Comment> comments, String date) {
         if (comments != null && date != null) {
             comments = comments.stream()
-                    .filter(comment -> comment.getCreateComment().equals(date))
+                    .filter(comment -> comment.getCreateTime().equals(date))
                     .collect(Collectors.toList());
         }
         return comments;

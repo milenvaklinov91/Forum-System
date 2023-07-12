@@ -42,7 +42,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getByUsername(String username) {
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("from User user where user.loginDetails.username = :username", User.class);
+            Query<User> query = session.createQuery(
+                    "from User user where user.loginDetails.username = :username", User.class);
             query.setParameter("username", username);
             List<User> result = query.list();
             if (result.size() == 0) {
@@ -53,10 +54,18 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User getByPassword(int id, String password) {
-        throw new UnsupportedOperationException();
+    public User getByFirstName(String firstName) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery(
+                    "from User user where user.firstName = :firstName", User.class);
+            query.setParameter("firstName", firstName);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("User", "firstName", firstName);
+            }
+            return result.get(0);
+        }
     }
-    //todo Това трябва ли ни?
 
     public User getByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
@@ -69,6 +78,12 @@ public class UserRepositoryImpl implements UserRepository {
             return result.get(0);
         }
     }
+
+    @Override
+    public User getByPassword(int id, String password) {
+        throw new UnsupportedOperationException();
+    }
+    //todo Това трябва ли ни?
 
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {

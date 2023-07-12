@@ -2,13 +2,11 @@ package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void create(Comment comment, User user) {
         comment.setCreatedByUser(user);
-        comment.setCreateComment(LocalDateTime.now());
+        comment.setCreateTime(LocalDateTime.now());
         commentRepository.create(comment);
     }
 
