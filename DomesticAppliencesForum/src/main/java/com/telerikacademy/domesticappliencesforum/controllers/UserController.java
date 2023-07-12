@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @GetMapping("/email")
-    public User getByEmail(@RequestHeader HttpHeaders headers, String email) {
+    public User getUserByEmail(@RequestHeader HttpHeaders headers, String email) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             service.getUserDetails(user.getId(), user);

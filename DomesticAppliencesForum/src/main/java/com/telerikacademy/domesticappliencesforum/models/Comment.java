@@ -20,7 +20,7 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User createdByUser;
     @Column(name = "create_date")
-    private LocalDateTime createComment = LocalDateTime.now();
+    private LocalDateTime createTime = LocalDateTime.now();
 
     @JsonIgnore
     @ManyToOne
@@ -54,12 +54,12 @@ public class Comment {
         this.createdByUser = createdByUser;
     }
 
-    public LocalDateTime getCreateComment() {
-        return createComment;
+    public LocalDateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateComment(LocalDateTime localDateTime) {
-        this.createComment = localDateTime;
+    public void setCreateTime(LocalDateTime localDateTime) {
+        this.createTime = localDateTime;
     }
 
     public Post getPostId() {
