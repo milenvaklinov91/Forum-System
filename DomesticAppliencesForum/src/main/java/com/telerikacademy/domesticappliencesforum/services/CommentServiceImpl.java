@@ -36,6 +36,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void create(Comment comment, User user) {
         comment.setCreatedByUser(user);
+        comment.setCreateComment(LocalDateTime.now());
         commentRepository.create(comment);
     }
 

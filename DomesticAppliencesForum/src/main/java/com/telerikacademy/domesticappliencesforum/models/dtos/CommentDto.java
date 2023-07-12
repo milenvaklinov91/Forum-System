@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 public class CommentDto {
     @NotNull(message = "Content can't be empty")
-    @Size(min = 4, max = 32, message = "Content should be between 32 and 8192 symbols")
+    @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols")
     private String content;
 
     private int postId;

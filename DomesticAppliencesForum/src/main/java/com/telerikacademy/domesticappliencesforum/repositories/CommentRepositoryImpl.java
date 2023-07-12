@@ -2,16 +2,12 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,7 +84,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     private List<Comment> filterCommentsByDate(List<Comment> comments, String date) {
         if (comments != null && date != null) {
             comments = comments.stream()
-                    .filter(comment -> comment.getLocalDateTime().equals(date))
+                    .filter(comment -> comment.getCreateComment().equals(date))
                     .collect(Collectors.toList());
         }
         return comments;
