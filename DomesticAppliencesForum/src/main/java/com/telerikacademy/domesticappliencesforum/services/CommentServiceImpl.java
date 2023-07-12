@@ -30,7 +30,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment browse(int id) {
-
         return commentRepository.getCommentById(id);
     }
 

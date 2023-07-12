@@ -35,7 +35,6 @@ public class Post {
     @JoinColumn(name = "tag_type_id")
     private TagTypes tags;
 
-
     @JsonIgnore
     @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
     private Set<Comment> comments;

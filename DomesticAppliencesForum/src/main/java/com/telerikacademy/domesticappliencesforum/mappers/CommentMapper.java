@@ -3,6 +3,7 @@ package com.telerikacademy.domesticappliencesforum.mappers;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.services.CommentService;
+import com.telerikacademy.domesticappliencesforum.services.PostService;
 import com.telerikacademy.domesticappliencesforum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,15 +14,18 @@ import java.time.LocalDateTime;
 public class CommentMapper {
 
     private CommentService commentService;
+    private PostService postService;
 
     @Autowired
-    public CommentMapper(CommentService commentService) {
+    public CommentMapper(CommentService commentService,PostService postService) {
         this.commentService = commentService;
+        this.postService = postService;
     }
 
     public Comment fromCommentDto(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setComment(commentDto.getContent());
+        comment.setPostId(postService.browse(commentDto.getPostId()));
         return comment;
     }
 
