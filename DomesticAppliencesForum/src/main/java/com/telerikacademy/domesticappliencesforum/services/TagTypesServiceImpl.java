@@ -24,18 +24,18 @@ public class TagTypesServiceImpl implements TagTypesService{
 
     public TagTypes get(int id){return  tagTypesRepository.get(id);}
 
+    //TODO
     public void create(TagTypes tag) {
         boolean duplicateExists = true;
         try {
             tagTypesRepository.getByName(tag.getType());
-            tagTypesRepository.create(tag);
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
         if (duplicateExists) {
             throw new EntityDuplicateException("Tag" , tag.getType());
         }
-
+        tagTypesRepository.create(tag);
     }
 
     public TagTypes filterByName(List<TagTypes> tags, String name){

@@ -9,8 +9,9 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int voteId;
-    @Column(name = "type")
-    private String type;
+    @ManyToOne
+    @JoinColumn(name="type")
+    private VoteTypes type;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -20,17 +21,16 @@ public class Vote {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "comment_id")
-    //private Comment comment;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
 
     public Vote() {
     }
 
-    public Vote(String type) {
-        this.type = type;
-    }
 
     public int getVoteId() {
         return voteId;
@@ -40,11 +40,11 @@ public class Vote {
         this.voteId = voteId;
     }
 
-    public String getType() {
+    public VoteTypes getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(VoteTypes type) {
         this.type = type;
     }
 
