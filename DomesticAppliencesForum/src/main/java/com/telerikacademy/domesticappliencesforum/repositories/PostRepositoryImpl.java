@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
+import com.telerikacademy.domesticappliencesforum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -23,11 +24,11 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId) {
+    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId,String mostComments) {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("from Post", Post.class);
             List<Post> posts = query.list();
-            return filter(posts, userName, localDate, lastTen,tagId);
+            return filter(posts, userName, localDate, lastTen, tagId,mostComments);
         }
 
     }
@@ -62,8 +63,8 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public void delete(int id) {
-        Post postToDelete=getPostById(id);
-        try(Session session=sessionFactory.openSession()){
+        Post postToDelete = getPostById(id);
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.delete(postToDelete);
             session.getTransaction().commit();
@@ -78,8 +79,9 @@ public class PostRepositoryImpl implements PostRepository {
         }
         return posts;
     }
+
     private static List<Post> filterByTag(List<Post> posts, Integer tagId) {
-        if (posts != null && tagId!=null) {
+        if (posts != null && tagId != null) {
             posts = posts.stream()
                     .filter(post -> post.getTags().getTagTypeId() == tagId)
                     .collect(Collectors.toList());
@@ -97,8 +99,8 @@ public class PostRepositoryImpl implements PostRepository {
         return posts;
     }
 
-    private List<Post> filterLastTenCreatedPosts(List<Post> posts,Integer lastTen) {
-        if (posts != null && lastTen!=null) {
+    private List<Post> filterLastTenCreatedPosts(List<Post> posts, Integer lastTen) {
+        if (posts != null && lastTen != null) {
             posts = posts.stream().sorted(Comparator
                     .comparing(Post::getPostId)
                     .reversed()).limit(10).collect(Collectors.toList());
@@ -106,13 +108,28 @@ public class PostRepositoryImpl implements PostRepository {
         return posts;
     }
 
-    public List<Post> filter(List<Post> posts, String authorId, String localDate, Integer lastTen,Integer tagId) {
-        posts = filterByAuthor(posts, authorId);
+    public List<Post> filter(List<Post> posts, String username, String localDate,
+                             Integer lastTen, Integer tagId,String mostComment) {
+        posts = filterByAuthor(posts, username);
         posts = filterByDate(posts, localDate);
-        posts = filterLastTenCreatedPosts(posts,lastTen);
-        posts=filterByTag(posts,tagId);
-//        posts = filterMostCommented
+        posts = filterLastTenCreatedPosts(posts, lastTen);
+        posts = filterByTag(posts, tagId);
+        posts = filterMostCommented(mostComment);
         return posts;
     }
+
+    public List<Post> filterMostCommented(String mostComment) {
+        String request = "SELECT p FROM Post p LEFT JOIN FETCH p.comments c GROUP BY p.id ORDER BY COUNT(c) DESC";
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery(request, Post.class);
+            query.setMaxResults(10);
+            List<Post> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("Posts", "post");
+            }
+            return result;
+        }
+    }
+
 
 }

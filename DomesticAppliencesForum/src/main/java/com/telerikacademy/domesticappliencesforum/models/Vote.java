@@ -8,6 +8,7 @@ public class Vote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="vote_id")
     private int voteId;
     @ManyToOne
     @JoinColumn(name="type")
@@ -65,11 +66,11 @@ public class Vote {
         this.post = post;
     }
 
-//    public Comment getComment() {
-//        return comment;
-//    }
-//
-//    public void setComment(Comment comment) {
-//        this.comment = comment;}
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;}
 
 }

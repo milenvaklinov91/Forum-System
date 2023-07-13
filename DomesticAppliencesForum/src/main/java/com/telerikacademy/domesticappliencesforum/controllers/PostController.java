@@ -41,9 +41,10 @@ public class PostController {
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer lastTen,
-            @RequestParam(required = false) Integer tagId
+            @RequestParam(required = false) Integer tagId,
+            @RequestParam(required = false) String mostComments
     ) {
-        return postService.getAllPosts(username, localDate, lastTen,tagId);
+        return postService.getAllPosts(username, localDate, lastTen,tagId,mostComments);
     }
 
     @GetMapping("/{id}")

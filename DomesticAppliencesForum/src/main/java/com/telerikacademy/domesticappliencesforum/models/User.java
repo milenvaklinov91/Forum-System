@@ -23,8 +23,8 @@ public class User {
     @Column(name = "is_admin")
     private boolean isAdmin;
 
-    @Column(name = "is_blocked")
-    private boolean isBlocked;
+//    @Column(name = "is_blocked")
+//    private boolean isBlocked;
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
     @JsonIgnore

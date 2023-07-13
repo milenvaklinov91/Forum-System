@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PostRepository {
 
-    List<Post> getAllPosts(String userName, String localDate, Integer lastTen,Integer tagId);
+    List<Post> getAllPosts(String userName, String localDate, Integer lastTen,Integer tagId,String mostComments);
     void create(Post post);
     void modify(Post post);
     void delete(int id);

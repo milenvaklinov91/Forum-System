@@ -8,6 +8,7 @@ public class VoteTypes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="vote_type_id")
     private int voteTypeID;
     @Column(name="type")
     private String type;
