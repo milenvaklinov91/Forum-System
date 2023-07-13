@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -110,6 +111,6 @@ public class UserRepositoryImpl implements UserRepository {
             session.delete(getUserById(id));
             session.getTransaction().commit();
         }
-
     }
+
 }

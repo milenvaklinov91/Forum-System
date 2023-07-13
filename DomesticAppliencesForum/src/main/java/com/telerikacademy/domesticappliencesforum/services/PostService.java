@@ -10,7 +10,7 @@ import java.util.List;
 public interface PostService {
 
     List<Post> getAllPosts(String userName, String localDate,Integer lastTen,Integer tagId,String mostComment);
-    Post browse(int id);
+    Post getById(int id);
 
     void create(Post post, User user);
 

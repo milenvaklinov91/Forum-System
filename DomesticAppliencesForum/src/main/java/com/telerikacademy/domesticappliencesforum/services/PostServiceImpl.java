@@ -29,7 +29,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post browse(int id) {
+    public Post getById(int id) {
         return postRepository.getPostById(id);
     }
 

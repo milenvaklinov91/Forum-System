@@ -7,6 +7,8 @@ import com.telerikacademy.domesticappliencesforum.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VoteServiceImpl implements VoteService{
     private final VoteRepository voteRepository;
@@ -38,4 +40,6 @@ public class VoteServiceImpl implements VoteService{
         Vote vote = voteMapper.fromVoteDto(voteDto, user, post, type);
         voteRepository.save(vote);
     }
+
+
 }

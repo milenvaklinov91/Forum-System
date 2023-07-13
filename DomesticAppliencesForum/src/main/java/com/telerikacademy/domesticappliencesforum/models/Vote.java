@@ -23,12 +23,6 @@ public class Vote {
     @JoinColumn(name = "post_id")
     private Post post;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "comment_id")
-    private Comment comment;
-
-
     public Vote() {
     }
 
@@ -66,11 +60,5 @@ public class Vote {
         this.post = post;
     }
 
-    public Comment getComment() {
-        return comment;
-    }
-
-    public void setComment(Comment comment) {
-        this.comment = comment;}
 
 }

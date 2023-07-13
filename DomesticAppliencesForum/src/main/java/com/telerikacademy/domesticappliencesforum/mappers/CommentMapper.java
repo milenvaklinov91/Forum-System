@@ -4,11 +4,8 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.services.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.PostService;
-import com.telerikacademy.domesticappliencesforum.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 public class CommentMapper {
@@ -25,7 +22,7 @@ public class CommentMapper {
     public Comment fromCommentDto(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setComment(commentDto.getContent());
-        comment.setPostId(postService.browse(commentDto.getPostId()));
+        comment.setPostId(postService.getById(commentDto.getPostId()));
         return comment;
     }
 

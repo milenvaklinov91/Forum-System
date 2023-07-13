@@ -29,21 +29,25 @@ public class Post {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tag_type_id")
-    private TagTypes tags;
+    private TagTypes tag;
     @JsonIgnore
     @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
     private Set<Comment> comments;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    private Set<Vote> votes;
 
     public Post() {
 
     }
 
-    public TagTypes getTags() {
-        return tags;
+    public TagTypes getTag() {
+        return tag;
     }
 
-    public void setTags(TagTypes tags) {
-        this.tags = tags;
+    public void setTag(TagTypes tags) {
+        this.tag = tags;
     }
 
     public int getPostId() {
@@ -92,5 +96,13 @@ public class Post {
 
     public void setCreateTime(LocalDateTime localDateTime) {
         this.createTime = localDateTime;
+    }
+
+    public Set<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
     }
 }

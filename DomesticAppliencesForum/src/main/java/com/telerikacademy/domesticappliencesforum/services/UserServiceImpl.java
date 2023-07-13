@@ -96,4 +96,6 @@ public class UserServiceImpl implements UserService {
     public void delete(int id) {
         repository.delete(id);
     }
+
+
 }

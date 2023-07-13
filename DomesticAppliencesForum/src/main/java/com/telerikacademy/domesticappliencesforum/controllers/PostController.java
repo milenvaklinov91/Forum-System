@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -48,11 +45,11 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public Post browse(@PathVariable int id) {
-        return postService.browse(id);
+    public Post getById(@PathVariable int id) {
+        return postService.getById(id);
     }
 
-    @GetMapping("/{id}/all-comments")
+    @GetMapping("/{id}/comments")
     public List<Comment> getAllComments(@PathVariable int id) {
         return postService.getAllComments(id);
     }
