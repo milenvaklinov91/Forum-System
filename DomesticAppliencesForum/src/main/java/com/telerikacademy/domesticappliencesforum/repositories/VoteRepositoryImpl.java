@@ -34,6 +34,20 @@ public class VoteRepositoryImpl implements VoteRepository {
             session.save(vote);
         }
     }
+    public int getLikeForPost(int postId) {
+        try(Session session = sessionFactory.openSession()){
+            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =1");
+            query.setParameter("post_id", postId);
+            Long count = (Long) query.getSingleResult();
+            return count.intValue();
+        }}
+    public int getDislikeForPost(int postId) {
+        try(Session session = sessionFactory.openSession()){
+            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =2");
+            query.setParameter("post_id", postId);
+            Long count = (Long) query.getSingleResult();
+            return count.intValue();
+        }}
 //    public List<Post> getLikedPostsByUser(int userId) {
 //        try (Session session = sessionFactory.openSession()) {
 //            Query query = session.createQuery("SELECT v.post FROM Vote v WHERE v.createdBy = :userId AND v.type.type = 'like'");

@@ -30,6 +30,14 @@ public class VoteController {
         this.postRepository = postRepository;
         this.authenticationHelper = authenticationHelper;
     }
+    @GetMapping("/{id}/likes")
+    public int getLikeForPost(@Valid @PathVariable int id){
+        return voteService.getVoteCountForPost(id);
+    }
+    @GetMapping("/{id}/dislikes")
+    public int getDislikeForPost(@Valid @PathVariable int id){
+        return voteService.getDislikeForPost(id);
+    }
 
     @PostMapping
     public void votePost(@RequestHeader HttpHeaders headers, @Valid @RequestBody VoteDto voteDto) {
@@ -40,5 +48,7 @@ public class VoteController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
+
 
 }
