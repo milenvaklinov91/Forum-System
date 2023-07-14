@@ -22,7 +22,6 @@ public class User {
     private String email;
     @Column(name = "is_admin")
     private boolean isAdmin;
-
     @Column(name = "is_blocked")
     private boolean isBlocked;
     @Column(name = "registration_date")

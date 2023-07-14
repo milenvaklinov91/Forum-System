@@ -9,7 +9,9 @@ public class PhoneNumber {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "phone_number_id")
     private int phoneNumberId;
-   // private User admin;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User admin;
    @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -25,13 +27,13 @@ public class PhoneNumber {
         this.phoneNumberId = adminID;
     }
 
-   /* public User getAdmin() {
+    public User getAdmin() {
         return admin;
     }
 
     public void setAdmin(User admin) {
         this.admin = admin;
-    }*/
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

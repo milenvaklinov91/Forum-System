@@ -33,14 +33,15 @@ create table users
 
 
 
-create table admins
+create table phone_number
 (
-    admin_id int auto_increment
+    phone_number_id int auto_increment
         primary key,
-    phone    varchar(20) null,
     user_id  int         not null,
-    constraint admins_users_user_id_fk
-        foreign key (user_id) references users (user_id)
+    phone_number    varchar(20) null,
+
+     constraint phone_number_users_user_id_fk
+    foreign key (user_id) references users (user_id)
 );
 
 
