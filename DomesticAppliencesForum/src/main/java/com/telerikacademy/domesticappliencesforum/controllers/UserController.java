@@ -83,7 +83,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}/allposts")
+    @GetMapping("/{id}/all-posts")
     public List<Post> getAllPost(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);
         service.getUserDetails(user.getId(), user);
@@ -109,7 +109,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
-
+    //TODO
     @PutMapping("/{id}")
     public User update(@Valid @RequestBody UserDto userDto) {
         try {

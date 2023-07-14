@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-
 public class CommentRepositoryImpl implements CommentRepository {
 
     private final SessionFactory sessionFactory;

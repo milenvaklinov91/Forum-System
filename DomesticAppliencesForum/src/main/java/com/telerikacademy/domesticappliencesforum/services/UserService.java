@@ -22,6 +22,8 @@ public interface UserService {
     void create(User user);
 
     void update(User user);
+    User blockUser(int id, User user);
+    User unBlockUser(int id, User user);
 
     void delete(int id);
 

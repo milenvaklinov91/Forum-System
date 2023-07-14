@@ -30,7 +30,7 @@ public class TagController {
     }
 
     @GetMapping("/{type}")
-    public TagTypes filterByname(@PathVariable String type) {
+    public TagTypes filterByName(@PathVariable String type) {
         List<TagTypes> tags = tagTypesService.get();
         return tagTypesService.filterByName(tags, type);
     }
