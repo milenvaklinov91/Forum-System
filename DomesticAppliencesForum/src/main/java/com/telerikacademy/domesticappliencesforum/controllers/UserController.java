@@ -111,10 +111,12 @@ public class UserController {
     }
     //TODO
     @PutMapping("/{id}")
-    public User update(@Valid @RequestBody UserDto userDto) {
+    public User update(@RequestHeader HttpHeaders headers,@Valid @RequestBody UserDto userDto) {
         try {
-            User user = userMapper.fromUserDtoWithoutUsername(userDto);
-            return user;
+            User user = authenticationHelper.tryGetUser(headers);
+            User user1 = userMapper.fromUserDtoWithoutUsername(userDto);
+            service.update(user,user1);
+            return user1;
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }

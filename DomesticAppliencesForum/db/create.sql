@@ -21,6 +21,8 @@ create table users
 (
     user_id           int auto_increment
         primary key,
+    username          varchar(45) not null,
+    password          varchar(45) not null,
     email             varchar(45) not null,
     first_name        varchar(32) not null,
     last_name         varchar(32) not null,

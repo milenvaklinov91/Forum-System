@@ -46,7 +46,7 @@ public class PostRepositoryImpl implements PostRepository {
     private List<Post> filterByAuthor(List<Post> posts, String username) {
         if (posts != null && username != null) {
             posts = posts.stream()
-                    .filter(post -> post.getCreatedBy().getLoginDetails().getUsername().equals(username))
+                    .filter(post -> post.getCreatedBy().getUsername().equals(username))
                     .collect(Collectors.toList());
         }
         return posts;

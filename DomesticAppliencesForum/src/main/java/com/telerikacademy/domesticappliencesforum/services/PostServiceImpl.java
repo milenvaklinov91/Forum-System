@@ -40,7 +40,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void modify(Post post, User user) {
-        if (!(post.getCreatedBy().getLoginDetails().getUsername().equals(user.getLoginDetails().getUsername()))) {
+        if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         postRepository.modify(post);
@@ -49,7 +49,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(int id, User user) {
         Post post = postRepository.getPostById(id);
-        if (!(user.isAdmin() || post.getCreatedBy().getLoginDetails().getUsername().equals(user.getLoginDetails().getUsername()))) {
+        if (!(user.isAdmin() || post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         postRepository.delete(id);

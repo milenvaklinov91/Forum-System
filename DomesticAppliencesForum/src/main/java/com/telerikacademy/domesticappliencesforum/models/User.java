@@ -14,6 +14,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "password")
+    private String password;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -26,10 +30,6 @@ public class User {
     private boolean isBlocked;
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "user_login_id")
-    private UserLoginDetails loginDetails;
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<Post> post;
@@ -46,6 +46,22 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -94,14 +110,6 @@ public class User {
 
     public void setRegistrationDate(LocalDateTime localDateTime) {
         this.registrationDate = localDateTime;
-    }
-
-    public UserLoginDetails getLoginDetails() {
-        return loginDetails;
-    }
-
-    public void setLoginDetails(UserLoginDetails loginDetails) {
-        this.loginDetails = loginDetails;
     }
 
     public Set<Post> getPost() {
