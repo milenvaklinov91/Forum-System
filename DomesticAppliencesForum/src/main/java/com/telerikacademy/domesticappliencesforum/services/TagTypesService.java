@@ -9,7 +9,10 @@ public interface TagTypesService {
     List<TagTypes> get();
 
     TagTypes get(int id);
+
     void create(TagTypes tag);
+
     TagTypes filterByName(List<TagTypes> tags, String name);
+
     void delete(int id, User user);
 }

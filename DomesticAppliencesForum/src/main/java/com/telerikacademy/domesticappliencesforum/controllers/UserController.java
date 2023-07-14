@@ -46,9 +46,7 @@ public class UserController {
         try {
             return service.getById(id);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -59,9 +57,7 @@ public class UserController {
             service.getUserDetails(user.getId(), user);
             return service.getByUsername(username);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -72,9 +68,7 @@ public class UserController {
             service.getUserDetails(user.getId(), user);
             return service.getByFirstName(firstName);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -85,9 +79,7 @@ public class UserController {
             service.getUserDetails(user.getId(), user);
             return service.getByEmail(email);
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
@@ -107,18 +99,6 @@ public class UserController {
         return new ArrayList<>(allComment);
     }
 
-
-    /*//todo
-    @GetMapping("/{id}/details")
-    public UserLoginDetails getDetail(@RequestHeader HttpHeaders headers,@PathVariable int id ) {
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            return service.getUserDetails(id,user);
-        } catch (AuthorizationException e){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
-    }*/
-
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
@@ -131,10 +111,34 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User update(@Valid @RequestBody User user) {
+    public User update(@Valid @RequestBody UserDto userDto) {
         try {
-            service.update(user);
+            User user = userMapper.fromUserDtoWithoutUsername(userDto);
             return user;
+        } catch (DuplicatePasswordException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/block")
+    public User blockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            return service.blockUser(id, user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (DuplicatePasswordException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/unblock")
+    public User unBlockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            return service.unBlockUser(id, user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }

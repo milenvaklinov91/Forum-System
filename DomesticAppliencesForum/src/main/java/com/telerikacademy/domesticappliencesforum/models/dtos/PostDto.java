@@ -19,11 +19,6 @@ public class PostDto {
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols")
     private String content;
 
-//    @NotNull(message = "You need to be user to create a post")
-//    private User createdBy;
-//    @JsonIgnore
-//    private LocalDateTime localDateTime=LocalDateTime.now();
-
     @Positive(message = "Tag type ID should be positive")
     private int tagTypeID;
 
@@ -53,14 +48,5 @@ public class PostDto {
     public void setContent(String content) {
         this.content = content;
     }
-
-
-//    public User getCreatedBy() {
-//        return createdBy;
-//    }
-//
-//    public void setCreatedBy(User createdBy) {
-//        this.createdBy = createdBy;
-//    }
 
 }

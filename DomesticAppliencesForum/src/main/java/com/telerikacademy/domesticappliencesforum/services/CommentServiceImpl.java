@@ -23,7 +23,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getAllComments(String username, String localDate, Integer vote) {
-        return commentRepository.getAllComments(username,localDate,vote);
+        return commentRepository.getAllComments(username, localDate, vote);
     }
 
     @Override

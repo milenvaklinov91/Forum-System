@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_login")
 public class UserLoginDetails {
-//todo
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_login_id")

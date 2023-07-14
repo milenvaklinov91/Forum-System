@@ -25,16 +25,18 @@ public class TagController {
     }
 
     @GetMapping
-    public List<TagTypes> getAllTags(){
-        return tagTypesService.get();}
+    public List<TagTypes> getAllTags() {
+        return tagTypesService.get();
+    }
 
     @GetMapping("/{type}")
-    public TagTypes filterByname(@PathVariable String type){
-        List<TagTypes> tags=tagTypesService.get();
-        return tagTypesService.filterByName(tags,type);
+    public TagTypes filterByname(@PathVariable String type) {
+        List<TagTypes> tags = tagTypesService.get();
+        return tagTypesService.filterByName(tags, type);
     }
+
     @PostMapping
-    public TagTypes create(@Valid @RequestBody TagTypes tag){
+    public TagTypes create(@Valid @RequestBody TagTypes tag) {
         try {
             tagTypesService.create(tag);
             return tag;
@@ -42,11 +44,12 @@ public class TagController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @DeleteMapping("/{id}")
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            tagTypesService.delete(id,user);
+            tagTypesService.delete(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

@@ -12,13 +12,14 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class VoteTypesRepositoryImpl implements VoteTypesRepository{
+public class VoteTypesRepositoryImpl implements VoteTypesRepository {
     private final SessionFactory sessionFactory;
 
     @Autowired
     public VoteTypesRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
     public VoteTypes get(int id) {
         try (Session session = sessionFactory.openSession()) {
             VoteTypes voteTypes = session.get(VoteTypes.class, id);
@@ -28,6 +29,7 @@ public class VoteTypesRepositoryImpl implements VoteTypesRepository{
             return voteTypes;
         }
     }
+
     public VoteTypes getByType(String type) {
         try (Session session = sessionFactory.openSession()) {
             Query<VoteTypes> query = session.createQuery("from VoteTypes  where type = :type", VoteTypes.class);

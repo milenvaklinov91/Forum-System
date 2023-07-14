@@ -40,7 +40,7 @@ public class CommentController {
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer vote
     ) {
-        return commentService.getAllComments(username,localDate,vote);
+        return commentService.getAllComments(username, localDate, vote);
     }
 
     @GetMapping("/{id}")

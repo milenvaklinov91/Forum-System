@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     public UserServiceImpl(UserRepository repository) {
-    this.repository = repository;
+        this.repository = repository;
     }
 
     public List<User> getAll() {
@@ -46,14 +46,6 @@ public class UserServiceImpl implements UserService {
         isDuplicateEmail(user);
         user.setRegistrationDate(LocalDateTime.now());
         repository.create(user);
-    }
-
-    public UserLoginDetails getUserDetails(int id, User user){
-        User userDetails = repository.getUserById(id);
-        if (!user.isAdmin()){
-            throw new UnauthorizedOperationException("You're not authorized for this operation");
-        }
-        return userDetails.getLoginDetails();
     }
 
     private void isDuplicateUsername(User user) {
@@ -93,9 +85,35 @@ public class UserServiceImpl implements UserService {
         repository.update(user);
     }
 
+    public UserLoginDetails getUserDetails(int id, User user) {
+        User userDetails = repository.getUserById(id);
+        if (!user.isAdmin()) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation!");
+        }
+        return userDetails.getLoginDetails();
+    }
+
+    public User blockUser(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && !user1.isAdmin()) {
+            user1.setBlocked(true);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+    public User unBlockUser(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && !user1.isAdmin()) {
+            user1.setBlocked(false);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
     public void delete(int id) {
         repository.delete(id);
     }
-
-
 }

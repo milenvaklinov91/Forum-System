@@ -7,7 +7,10 @@ import com.telerikacademy.domesticappliencesforum.models.VoteTypes;
 
 public interface VoteRepository {
     boolean existsByCreatedByAndPostAndVoteType(User createdBy, Post post, VoteTypes voteType);
+
     void save(Vote vote);
+
     int getLikeForPost(int postId);
+
     int getDislikeForPost(int postId);
 }

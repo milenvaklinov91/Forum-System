@@ -30,12 +30,14 @@ public class VoteController {
         this.postRepository = postRepository;
         this.authenticationHelper = authenticationHelper;
     }
+
     @GetMapping("/{id}/likes")
-    public int getLikeForPost(@Valid @PathVariable int id){
+    public int getLikeForPost(@Valid @PathVariable int id) {
         return voteService.getVoteCountForPost(id);
     }
+
     @GetMapping("/{id}/dislikes")
-    public int getDislikeForPost(@Valid @PathVariable int id){
+    public int getDislikeForPost(@Valid @PathVariable int id) {
         return voteService.getDislikeForPost(id);
     }
 
@@ -43,12 +45,11 @@ public class VoteController {
     public void votePost(@RequestHeader HttpHeaders headers, @Valid @RequestBody VoteDto voteDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            voteService.votePost(voteDto,user);
-        }catch (AuthorizationException e) {
+            voteService.votePost(voteDto, user);
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-
 
 
 }

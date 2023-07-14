@@ -8,16 +8,15 @@ public class Vote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="vote_id")
+    @Column(name = "vote_id")
     private int voteId;
     @ManyToOne
-    @JoinColumn(name="type")
+    @JoinColumn(name = "type")
     private VoteTypes type;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
-
 
     @ManyToOne
     @JoinColumn(name = "post_id")
@@ -25,7 +24,6 @@ public class Vote {
 
     public Vote() {
     }
-
 
     public int getVoteId() {
         return voteId;

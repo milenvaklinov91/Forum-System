@@ -21,4 +21,17 @@ public class UserMapper {
 
         return user;
     }
+
+    public User fromUserDtoWithoutUsername(UserDto userDto) {
+        UserLoginDetails loginDetails = new UserLoginDetails();
+        loginDetails.setPassword(userDto.getPassword());
+
+        User user = new User();
+        user.setLoginDetails(loginDetails);
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+
+        return user;
+    }
 }

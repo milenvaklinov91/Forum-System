@@ -3,14 +3,14 @@ package com.telerikacademy.domesticappliencesforum.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name="vote_types")
+@Table(name = "vote_types")
 public class VoteTypes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="vote_type_id")
+    @Column(name = "vote_type_id")
     private int voteTypeID;
-    @Column(name="type")
+    @Column(name = "type")
     private String type;
 
     public VoteTypes() {

@@ -23,8 +23,8 @@ public class User {
     @Column(name = "is_admin")
     private boolean isAdmin;
 
-//    @Column(name = "is_blocked")
-//    private boolean isBlocked;
+    @Column(name = "is_blocked")
+    private boolean isBlocked;
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
     @JsonIgnore
@@ -81,6 +81,14 @@ public class User {
         isAdmin = admin;
     }
 
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
     public LocalDateTime getRegistrationDate() {
         return registrationDate;
     }
@@ -112,4 +120,6 @@ public class User {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
+
+
 }

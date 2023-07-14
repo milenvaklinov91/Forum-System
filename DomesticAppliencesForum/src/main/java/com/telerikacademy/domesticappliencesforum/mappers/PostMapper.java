@@ -14,7 +14,7 @@ public class PostMapper {
     private final TagTypesService tagTypesService;
 
     @Autowired
-    public PostMapper( PostService postService, TagTypesService tagTypesService) {
+    public PostMapper(PostService postService, TagTypesService tagTypesService) {
         this.postService = postService;
         this.tagTypesService = tagTypesService;
     }
