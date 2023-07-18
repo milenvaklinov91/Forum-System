@@ -41,7 +41,6 @@ public class UserServiceImpl implements UserService {
         return repository.getByEmail(email);
     }
 
-
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
