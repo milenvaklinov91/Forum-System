@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.VoteMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
@@ -33,6 +34,8 @@ public class VoteServiceImpl implements VoteService {
 
         if (voteRepository.existsByCreatedByAndPostAndVoteType(user, post, type)) {
             throw new IllegalArgumentException("User has already voted on the post.");
+        }else if(user.isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!!!");
         }
 
 

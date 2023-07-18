@@ -35,17 +35,19 @@ public class PostServiceImpl implements PostService {
     @Override
     public void create(Post post, User user) {
         post.setCreatedBy(user);
-        if(!(post.getCreatedBy().isBlocked())){
-        postRepository.create(post);}
-        else{
+        if(post.getCreatedBy().isBlocked()){
             throw new UnauthorizedOperationException("You`re blocked!!!");
         }
+        postRepository.create(post);
     }
 
     @Override
     public void modify(Post post, User user) {
         if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }
+        else if(post.getCreatedBy().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!!!");
         }
         postRepository.modify(post);
     }
@@ -55,6 +57,8 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.getPostById(id);
         if (!(user.isAdmin() || post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }else if(post.getCreatedBy().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!!!");
         }
         postRepository.delete(id);
     }
