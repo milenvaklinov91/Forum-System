@@ -41,11 +41,18 @@ public class CommentRepositoryImpl implements CommentRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterOptionsComment.getUsername().ifPresent(value -> {
-                filters.add("username like :username");
-                params.put("username", String.format("%%%s%%", value));
+            filterOptionsComment.getUserId().ifPresent(value -> {
+                filters.add("user_id like :userId");
+                params.put("userId",value);
             });
-
+            filterOptionsComment.getLocalDate().ifPresent(value -> {
+                filters.add("create_date like :localDate");
+                params.put("localDate",value);
+            });
+//            filterOptionsComment.getVote().ifPresent(value -> {
+//                filters.add("vote like :vote");
+//                params.put("vote",value);
+//            }); /todo това щее мога да го извиквам като имам лайкове
             StringBuilder queryString = new StringBuilder("from Comment");
             if (!filters.isEmpty()) {
                 queryString

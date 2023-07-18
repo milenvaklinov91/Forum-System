@@ -37,11 +37,11 @@ public class CommentController {
 
     @GetMapping
     public List<Comment> getAllComments(
-            @RequestParam(required = false) String username,
+            @RequestParam(required = false) Integer userId,
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer vote
     ) {
-        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(username, localDate, vote);
+        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(userId, localDate, vote);
         return commentService.getAllComments(filterOptionsComment);
     }
 
