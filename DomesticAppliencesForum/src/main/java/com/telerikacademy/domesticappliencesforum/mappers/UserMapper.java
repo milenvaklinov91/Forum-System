@@ -1,7 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.UserLoginDetails;
 import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
 import org.springframework.stereotype.Component;
 
@@ -9,12 +8,22 @@ import org.springframework.stereotype.Component;
 public class UserMapper {
 
     public User fromUserDto(UserDto userDto) {
-        UserLoginDetails loginDetails = new UserLoginDetails();
-        loginDetails.setUsername(userDto.getUsername());
-        loginDetails.setPassword(userDto.getPassword());
 
         User user = new User();
-        user.setLoginDetails(loginDetails);
+
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+
+        return user;
+    }
+
+    public User fromUserDtoWithoutUsername(UserDto userDto) {
+
+        User user = new User();
+        user.setPassword(userDto.getPassword());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());

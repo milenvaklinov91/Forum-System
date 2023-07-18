@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -44,15 +41,15 @@ public class PostController {
             @RequestParam(required = false) Integer tagId,
             @RequestParam(required = false) String mostComments
     ) {
-        return postService.getAllPosts(username, localDate, lastTen,tagId,mostComments);
+        return postService.getAllPosts(username, localDate, lastTen, tagId, mostComments);
     }
 
     @GetMapping("/{id}")
-    public Post browse(@PathVariable int id) {
-        return postService.browse(id);
+    public Post getById(@PathVariable int id) {
+        return postService.getById(id);
     }
 
-    @GetMapping("/{id}/all-comments")
+    @GetMapping("/{id}/comments")
     public List<Comment> getAllComments(@PathVariable int id) {
         return postService.getAllComments(id);
     }
@@ -77,7 +74,7 @@ public class PostController {
     public Post modify(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Post post = postMapper.fromDto(id,postDto);
+            Post post = postMapper.fromDto(id, postDto);
             postService.modify(post, user);
             return post;
         } catch (AuthorizationException e) {

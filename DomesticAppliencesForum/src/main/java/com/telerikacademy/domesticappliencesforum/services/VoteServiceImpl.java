@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VoteServiceImpl implements VoteService{
+public class VoteServiceImpl implements VoteService {
     private final VoteRepository voteRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -26,7 +26,7 @@ public class VoteServiceImpl implements VoteService{
         this.voteTypesRepository = voteTypesRepository;
     }
 
-    public void votePost(VoteDto voteDto,User userReg) {
+    public void votePost(VoteDto voteDto, User userReg) {
         User user = userRepository.getUserById(voteDto.getUserId());
         Post post = postRepository.getPostById(voteDto.getPostId());
         VoteTypes type = voteTypesRepository.get(voteDto.getType());
@@ -38,4 +38,15 @@ public class VoteServiceImpl implements VoteService{
         Vote vote = voteMapper.fromVoteDto(voteDto, user, post, type);
         voteRepository.save(vote);
     }
+    //TODO kogato user e like daden post, posle ako go dislike fda ne pravi nov zapis a da go update
+
+    public int getVoteCountForPost(int postId) {
+        return voteRepository.getLikeForPost(postId);
+    }
+
+    public int getDislikeForPost(int postId) {
+        return voteRepository.getDislikeForPost(postId);
+    }
+
+
 }

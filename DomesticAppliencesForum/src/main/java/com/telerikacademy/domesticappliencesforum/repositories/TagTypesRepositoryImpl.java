@@ -41,11 +41,12 @@ public class TagTypesRepositoryImpl implements TagTypesRepository {
         }
     }
 
-    public void create(TagTypes tag){
+    public void create(TagTypes tag) {
         try (Session session = sessionFactory.openSession()) {
             session.save(tag);
         }
     }
+
     public TagTypes filterByName(List<TagTypes> tags, String name) {
         if (tags != null && name != null) {
             tags = tags.stream()
@@ -54,6 +55,7 @@ public class TagTypesRepositoryImpl implements TagTypesRepository {
         }
         return tags.get(0);
     }
+
     public TagTypes getByName(String name) {
         try (Session session = sessionFactory.openSession()) {
             Query<TagTypes> query = session.createQuery("from TagTypes  where type = :name", TagTypes.class);
@@ -65,6 +67,7 @@ public class TagTypesRepositoryImpl implements TagTypesRepository {
             return result.get(0);
         }
     }
+
     public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
-
 public class CommentRepositoryImpl implements CommentRepository {
 
     private final SessionFactory sessionFactory;
@@ -103,7 +102,7 @@ public class CommentRepositoryImpl implements CommentRepository {
     public List<Comment> filter(List<Comment> comments, String username, String localDate, Integer vote) {
         comments = filterCommentsByAuthor(comments, username);
         comments = filterCommentsByDate(comments, localDate);
-        comments = filterCommentsByMostLiked(comments,vote);
+        comments = filterCommentsByMostLiked(comments, vote);
         return comments;
         //todo за филтър виж лекцията с Пешо и демото
     }
@@ -116,6 +115,7 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
         return comments;
     }
+
     private List<Comment> filterCommentsByAuthor(List<Comment> comments, String username) {
         if (comments != null && username != null) {
             comments = comments.stream()

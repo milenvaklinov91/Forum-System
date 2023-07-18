@@ -2,10 +2,11 @@ package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.*;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.UserLoginDetails;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     public UserServiceImpl(UserRepository repository) {
-    this.repository = repository;
+        this.repository = repository;
     }
 
     public List<User> getAll() {
@@ -48,23 +49,15 @@ public class UserServiceImpl implements UserService {
         repository.create(user);
     }
 
-    public UserLoginDetails getUserDetails(int id, User user){
-        User userDetails = repository.getUserById(id);
-        if (!user.isAdmin()){
-            throw new UnauthorizedOperationException("You're not authorized for this operation");
-        }
-        return userDetails.getLoginDetails();
-    }
-
     private void isDuplicateUsername(User user) {
         boolean duplicateExists = true;
         try {
-            repository.getByUsername(user.getLoginDetails().getUsername());
+            repository.getByUsername(user.getUsername());
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
         if (duplicateExists) {
-            throw new EntityDuplicateException("User", user.getLoginDetails().getUsername());
+            throw new EntityDuplicateException("User", user.getUsername());
         }
     }
 
@@ -80,17 +73,48 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void update(User user) {
-        boolean duplicatePass = true;
+    public void update(User user, User user1) {
         try {
-            repository.getByPassword(user.getId(), user.getLoginDetails().getPassword());
-        } catch (DuplicatePasswordException e) {
-            duplicatePass = false;
-        }
-        if (duplicatePass) {
-            throw new DuplicatePasswordException(user.getLoginDetails().getPassword());
+            User existUser = repository.getUserById(user.getId());
+            existUser.setFirstName(user.getFirstName());
+            existUser.setLastName(user.getLastName());
+            existUser.setEmail(user.getEmail());
+            existUser.setPassword(user.getPassword());
+            if (!existUser.getUsername().equals(user1.getUsername())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "You cannot update username!");
+            }
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
         repository.update(user);
+    }
+
+    public User getUserDetails(int id, User user) {
+        User admin = repository.getUserById(id);
+        if (!admin.isAdmin()) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation!");
+        }
+        return admin;
+    }
+
+    public User blockUser(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && !user1.isAdmin()) {
+            user1.setBlocked(true);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+    public User unBlockUser(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && !user1.isAdmin()) {
+            user1.setBlocked(false);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
     public void delete(int id) {

@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,7 +44,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User getByUsername(String username) {
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery(
-                    "from User user where user.loginDetails.username = :username", User.class);
+                    "from User user where user.username = :username", User.class);
             query.setParameter("username", username);
             List<User> result = query.list();
             if (result.size() == 0) {
@@ -89,7 +90,6 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
-            session.save(user.getLoginDetails());
             session.save(user);
 
             session.getTransaction().commit();
@@ -110,6 +110,6 @@ public class UserRepositoryImpl implements UserRepository {
             session.delete(getUserById(id));
             session.getTransaction().commit();
         }
-
     }
+
 }

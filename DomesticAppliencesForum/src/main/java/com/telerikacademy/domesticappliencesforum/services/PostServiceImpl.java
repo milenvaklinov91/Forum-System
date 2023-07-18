@@ -7,7 +7,6 @@ import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +23,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId,String mostComment) {
-        return postRepository.getAllPosts(userName, localDate, lastTen, tagId,mostComment);
+    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId, String mostComment) {
+        return postRepository.getAllPosts(userName, localDate, lastTen, tagId, mostComment);
     }
 
     @Override
-    public Post browse(int id) {
+    public Post getById(int id) {
         return postRepository.getPostById(id);
     }
-
 
     @Override
     public void create(Post post, User user) {
@@ -42,7 +40,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void modify(Post post, User user) {
-        if (!(post.getCreatedBy().getLoginDetails().getUsername().equals(user.getLoginDetails().getUsername()))) {
+        if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         postRepository.modify(post);
@@ -51,8 +49,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public void delete(int id, User user) {
         Post post = postRepository.getPostById(id);
-        if (!(user.isAdmin() || post.getCreatedBy().getLoginDetails().getUsername().equals(user.getLoginDetails().getUsername()))) {
-            throw new UnauthorizedOperationException("Only admins can delete");
+        if (!(user.isAdmin() || post.getCreatedBy().getUsername().equals(user.getUsername()))) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         postRepository.delete(id);
     }
@@ -61,5 +59,4 @@ public class PostServiceImpl implements PostService {
         Set<Comment> allComments = postRepository.getPostById(id).getComments();
         return new ArrayList<>(allComments);
     }
-    //TODO
 }

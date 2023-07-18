@@ -36,8 +36,8 @@ public class VoteMapper {
     }
 
     public Vote fromVoteDto(VoteDto voteDto, User user, Post post, VoteTypes voteType) {
-         user = userRepository.getUserById(voteDto.getUserId());
-         post = postRepository.getPostById(voteDto.getPostId());
+        user = userRepository.getUserById(voteDto.getUserId());
+        post = postRepository.getPostById(voteDto.getPostId());
         Vote vote = new Vote();
 
         vote.setCreatedBy(user);

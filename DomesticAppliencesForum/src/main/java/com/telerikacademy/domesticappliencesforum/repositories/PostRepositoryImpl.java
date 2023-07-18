@@ -2,7 +2,7 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.Vote;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -24,14 +24,79 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId,String mostComments) {
+    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId, String mostComments) {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("from Post", Post.class);
             List<Post> posts = query.list();
-            return filter(posts, userName, localDate, lastTen, tagId,mostComments);
+            return filter(posts, userName, localDate, lastTen, tagId, mostComments);
         }
 
     }
+
+    public List<Post> filter(List<Post> posts, String username, String localDate,
+                             Integer lastTen, Integer tagId, String mostComment) {
+        posts = filterByAuthor(posts, username);
+        posts = filterByDate(posts, localDate);
+        posts = filterLastTenCreatedPosts(posts, lastTen);
+        posts = filterByTag(posts, tagId);
+        posts = filterMostCommented(mostComment);
+        return posts;
+    }
+
+    private List<Post> filterByAuthor(List<Post> posts, String username) {
+        if (posts != null && username != null) {
+            posts = posts.stream()
+                    .filter(post -> post.getCreatedBy().getUsername().equals(username))
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
+
+    private static List<Post> filterByTag(List<Post> posts, Integer tagId) {
+        if (posts != null && tagId != null) {
+            posts = posts.stream()
+                    .filter(post -> post.getTag().getTagTypeId() == tagId)
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
+
+
+    private List<Post> filterByDate(List<Post> posts, String date) {
+        if (posts != null && date != null) {
+            posts = posts.stream()
+                    .filter(post -> post.getCreateTime().equals(date))
+                    .collect(Collectors.toList());
+        }
+        return posts;
+    }
+
+    private List<Post> filterLastTenCreatedPosts(List<Post> posts, Integer lastTen) {
+        if (posts != null && lastTen != null) {
+            posts = posts.stream().sorted(Comparator
+                    .comparing(Post::getPostId)
+                    .reversed()).limit(10).collect(Collectors.toList());
+        }
+        return posts;
+    }
+
+    public List<Post> filterMostCommented(String mostComment) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p FROM Post p LEFT JOIN FETCH p.comments c GROUP BY p.id ORDER BY COUNT(c) DESC", Post.class);
+            query.setMaxResults(10);
+            if (mostComment != null) {
+                List<Post> result = query.list();
+                if (result.size() == 0) {
+                    throw new EntityNotFoundException("Posts", "post");
+                }
+                return result;
+            }
+            Query<Post> query1 = session.createQuery("from Post", Post.class);
+            List<Post> posts = query1.list();
+            return posts;
+        }
+    }
+
 
     @Override
     public Post getPostById(int id) {
@@ -70,66 +135,4 @@ public class PostRepositoryImpl implements PostRepository {
             session.getTransaction().commit();
         }
     }
-
-    private List<Post> filterByAuthor(List<Post> posts, String username) {
-        if (posts != null && username != null) {
-            posts = posts.stream()
-                    .filter(post -> post.getCreatedBy().getLoginDetails().getUsername().equals(username))
-                    .collect(Collectors.toList());
-        }
-        return posts;
-    }
-
-    private static List<Post> filterByTag(List<Post> posts, Integer tagId) {
-        if (posts != null && tagId != null) {
-            posts = posts.stream()
-                    .filter(post -> post.getTags().getTagTypeId() == tagId)
-                    .collect(Collectors.toList());
-        }
-        return posts;
-    }
-
-
-    private List<Post> filterByDate(List<Post> posts, String date) {
-        if (posts != null && date != null) {
-            posts = posts.stream()
-                    .filter(post -> post.getCreateTime().equals(date))
-                    .collect(Collectors.toList());
-        }
-        return posts;
-    }
-
-    private List<Post> filterLastTenCreatedPosts(List<Post> posts, Integer lastTen) {
-        if (posts != null && lastTen != null) {
-            posts = posts.stream().sorted(Comparator
-                    .comparing(Post::getPostId)
-                    .reversed()).limit(10).collect(Collectors.toList());
-        }
-        return posts;
-    }
-
-    public List<Post> filter(List<Post> posts, String username, String localDate,
-                             Integer lastTen, Integer tagId,String mostComment) {
-        posts = filterByAuthor(posts, username);
-        posts = filterByDate(posts, localDate);
-        posts = filterLastTenCreatedPosts(posts, lastTen);
-        posts = filterByTag(posts, tagId);
-        posts = filterMostCommented(mostComment);
-        return posts;
-    }
-
-    public List<Post> filterMostCommented(String mostComment) {
-        String request = "SELECT p FROM Post p LEFT JOIN FETCH p.comments c GROUP BY p.id ORDER BY COUNT(c) DESC";
-        try (Session session = sessionFactory.openSession()) {
-            Query<Post> query = session.createQuery(request, Post.class);
-            query.setMaxResults(10);
-            List<Post> result = query.list();
-            if (result.size() == 0) {
-                throw new EntityNotFoundException("Posts", "post");
-            }
-            return result;
-        }
-    }
-
-
 }

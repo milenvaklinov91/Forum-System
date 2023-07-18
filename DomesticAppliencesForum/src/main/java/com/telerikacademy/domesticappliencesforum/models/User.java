@@ -14,26 +14,28 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "password")
+    private String password;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "email")
     private String email;
-    //private GenderTypes gender; //todo
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name = "is_blocked")
     private boolean isBlocked;
     @Column(name = "registration_date")
-    private LocalDateTime registration;
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "user_login_id")
-    private UserLoginDetails loginDetails;
+    private LocalDateTime registrationDate;
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<Post> post;
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdByUser", fetch = FetchType.EAGER)
+    private Set<Comment> comments;
 
     public User() {
     }
@@ -44,6 +46,22 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -70,15 +88,6 @@ public class User {
         this.email = email;
     }
 
-
-    /*public GenderTypes getGender() {
-        return gender;
-    }
-
-    public void setGender(GenderTypes gender) {
-        this.gender = gender;
-    }*/
-
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -87,20 +96,20 @@ public class User {
         isAdmin = admin;
     }
 
-    public LocalDateTime getRegistration() {
-        return registration;
+    public boolean isBlocked() {
+        return isBlocked;
     }
 
-    public void setRegistration(LocalDateTime localDateTime) {
-        this.registration = localDateTime;
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
     }
 
-    public UserLoginDetails getLoginDetails() {
-        return loginDetails;
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setLoginDetails(UserLoginDetails loginDetails) {
-        this.loginDetails = loginDetails;
+    public void setRegistrationDate(LocalDateTime localDateTime) {
+        this.registrationDate = localDateTime;
     }
 
     public Set<Post> getPost() {
@@ -110,4 +119,14 @@ public class User {
     public void setPost(Set<Post> post) {
         this.post = post;
     }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+
 }
