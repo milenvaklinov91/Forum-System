@@ -67,7 +67,6 @@ public class PostController {
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
-
     }
 
     @PutMapping("/{id}")

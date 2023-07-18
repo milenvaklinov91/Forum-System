@@ -69,12 +69,9 @@ create table votes
 (
     vote_id    int auto_increment
         primary key,
-    comment_id int not null,
     user_id    int null,
     post_id    int not null,
     type       int not null,
-    constraint likes_comments_comment_id_fk
-        foreign key (comment_id) references comments (comment_id),
     constraint likes_users_user_id_fk
         foreign key (user_id) references users (user_id),
     constraint votes_posts_post_id_fk

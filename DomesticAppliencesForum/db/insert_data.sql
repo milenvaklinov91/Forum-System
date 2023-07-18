@@ -25,6 +25,6 @@ insert into forum_system.vote_types(type)
 values ('type'),
        ('type');
 
-insert into forum_system.votes(comment_id, user_id, post_id, type)
-values (1,1,1,1),
-       (1,1,1,2);
+insert into forum_system.votes(user_id, post_id, type)
+values (1,1,1),
+       (1,1,2);
