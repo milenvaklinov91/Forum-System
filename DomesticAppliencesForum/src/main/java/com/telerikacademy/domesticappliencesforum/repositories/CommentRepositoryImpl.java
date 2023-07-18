@@ -45,7 +45,14 @@ public class CommentRepositoryImpl implements CommentRepository {
                 filters.add("user_id like :userId");
                 params.put("userId",value);
             });
-
+            filterOptionsComment.getLocalDate().ifPresent(value -> {
+                filters.add("create_date like :localDate");
+                params.put("localDate",value);
+            });
+//            filterOptionsComment.getVote().ifPresent(value -> {
+//                filters.add("vote like :vote");
+//                params.put("vote",value);
+//            }); /todo това щее мога да го извиквам като имам лайкове
             StringBuilder queryString = new StringBuilder("from Comment");
             if (!filters.isEmpty()) {
                 queryString
