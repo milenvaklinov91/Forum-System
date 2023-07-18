@@ -41,9 +41,9 @@ public class CommentRepositoryImpl implements CommentRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterOptionsComment.getUsername().ifPresent(value -> {
-                filters.add("username like :username");
-                params.put("username", String.format("%%%s%%", value));
+            filterOptionsComment.getUserId().ifPresent(value -> {
+                filters.add("user_id like :userId");
+                params.put("userId",value);
             });
 
             StringBuilder queryString = new StringBuilder("from Comment");

@@ -4,18 +4,18 @@ import java.util.Optional;
 
 public class FilterOptionsComment {
 
-    private Optional<String> username;
+    private Optional<Integer> userId;
     private Optional<String> localDate;
     private Optional<Integer> vote;
 
-    public FilterOptionsComment(String username, String localDate, Integer vote) {
-        this.username = Optional.ofNullable(username);
+    public FilterOptionsComment(Integer userId, String localDate, Integer vote) {
+        this.userId = Optional.ofNullable(userId);
         this.localDate = Optional.ofNullable(localDate);;
         this.vote = Optional.ofNullable(vote);;
     }
 
-    public Optional<String> getUsername() {
-        return username;
+    public Optional<Integer> getUserId() {
+        return userId;
     }
 
     public Optional<String> getLocalDate() {
