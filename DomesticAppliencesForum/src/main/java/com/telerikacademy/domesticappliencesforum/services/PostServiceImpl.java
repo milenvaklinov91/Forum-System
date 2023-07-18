@@ -35,7 +35,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public void create(Post post, User user) {
         post.setCreatedBy(user);
-        postRepository.create(post);
+        if(post.getCreatedBy().isBlocked()){
+        postRepository.create(post);}
+        else{
+            throw new UnauthorizedOperationException("You`re blocked!!!");
+        }
     }
 
     @Override

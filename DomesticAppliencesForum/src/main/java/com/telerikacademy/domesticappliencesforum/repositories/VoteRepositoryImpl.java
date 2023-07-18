@@ -52,6 +52,8 @@ public class VoteRepositoryImpl implements VoteRepository {
             return count.intValue();
         }
     }
+
+    //TODO getLikedPOstByUser, getMostLidedPosts(10), getDisLikedPostByUser,getMostDislikedPOsts(10)
 //    public List<Post> getLikedPostsByUser(int userId) {
 //        try (Session session = sessionFactory.openSession()) {
 //            Query query = session.createQuery("SELECT v.post FROM Vote v WHERE v.createdBy = :userId AND v.type.type = 'like'");

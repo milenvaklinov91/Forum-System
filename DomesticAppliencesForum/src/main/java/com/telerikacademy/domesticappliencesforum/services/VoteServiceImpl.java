@@ -35,10 +35,11 @@ public class VoteServiceImpl implements VoteService {
             throw new IllegalArgumentException("User has already voted on the post.");
         }
 
+
         Vote vote = voteMapper.fromVoteDto(voteDto, user, post, type);
         voteRepository.save(vote);
     }
-    //TODO kogato user e like daden post, posle ako go dislike fda ne pravi nov zapis a da go update
+
 
     public int getVoteCountForPost(int postId) {
         return voteRepository.getLikeForPost(postId);
