@@ -16,8 +16,7 @@ create table users
     last_name         varchar(32) not null,
     registration_date datetime    null,
     is_admin          tinyint(1)  not null,
-    is_blocked        tinyint(1)  not null,
-    user_login_id     int         not null
+    is_blocked        tinyint(1)  not null
 );
 
 create table phone_number

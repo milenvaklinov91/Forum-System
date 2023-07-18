@@ -8,6 +8,7 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import com.telerikacademy.domesticappliencesforum.services.CommentService;
 import org.springframework.http.HttpHeaders;
@@ -40,7 +41,8 @@ public class CommentController {
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer vote
     ) {
-        return commentService.getAllComments(username, localDate, vote);
+        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(username, localDate, vote);
+        return commentService.getAllComments(filterOptionsComment);
     }
 
     @GetMapping("/{id}")

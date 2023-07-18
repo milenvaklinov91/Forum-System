@@ -2,13 +2,14 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface CommentRepository {
 
-    List<Comment> getAllComments(String username, String localDate, Integer vote);
+    List<Comment> getAllComments(FilterOptionsComment filterOptionsComment);
 
     void create(Comment comment);
 
