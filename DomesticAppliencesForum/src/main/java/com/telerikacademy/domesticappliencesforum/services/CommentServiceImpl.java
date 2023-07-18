@@ -3,6 +3,7 @@ package com.telerikacademy.domesticappliencesforum.services;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getAllComments(String username, String localDate, Integer vote) {
-        return commentRepository.getAllComments(username,localDate,vote);
+    public List<Comment> getAllComments(FilterOptionsComment filterOptionsComment) {
+        return commentRepository.getAllComments(filterOptionsComment);
     }
 
     @Override
@@ -53,10 +54,5 @@ public class CommentServiceImpl implements CommentService {
             throw new UnauthorizedOperationException("Only admins and comment owners are authorized to delete this comment");
         }
         commentRepository.delete(id);
-    }
-
-    @Override
-    public Comment getCommentById(int id) {
-        return commentRepository.getCommentById(id);
     }
 }

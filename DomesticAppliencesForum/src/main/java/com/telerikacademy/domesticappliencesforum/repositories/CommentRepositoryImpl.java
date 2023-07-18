@@ -2,13 +2,17 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Repository
@@ -22,12 +26,37 @@ public class CommentRepositoryImpl implements CommentRepository {
         this.sessionFactory = sessionFactory;
     }
 
+//    @Override
+//    public List<Comment> getAllComments(FilterOptionsComment filterOptionsComment) {
+//        try (Session session = sessionFactory.openSession()) {
+//            Query<Comment> query = session.createQuery("from Comment", Comment.class);
+//            List<Comment> comments = query.list();
+//            return filter(comments, username, localDate, vote);
+//        }
+//    }
+
     @Override
-    public List<Comment> getAllComments(String username, String localDate, Integer vote) {
+    public List<Comment> getAllComments(FilterOptionsComment filterOptionsComment) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Comment> query = session.createQuery("from Comment", Comment.class);
-            List<Comment> comments = query.list();
-            return filter(comments, username, localDate, vote);
+            StringBuilder stringBuilder = new StringBuilder("from Comments");
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            filterOptionsComment.getUsername().ifPresent(value -> {
+                filters.add("username like :username");
+                params.put("username", String.format("%%%s%%", value));
+            });
+
+            StringBuilder queryString = new StringBuilder("from Comment");
+            if (!filters.isEmpty()) {
+                queryString
+                        .append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+            System.out.println(queryString);
+            Query<Comment> query = session.createQuery(queryString.toString(), Comment.class);
+            query.setProperties(params);
+            return query.list();
         }
     }
 
@@ -57,6 +86,8 @@ public class CommentRepositoryImpl implements CommentRepository {
             session.getTransaction().commit();
         }
     }
+
+
 
     @Override
     public Comment getCommentById(int id) {
