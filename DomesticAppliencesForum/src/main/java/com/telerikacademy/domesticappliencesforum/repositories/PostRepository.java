@@ -16,4 +16,5 @@ public interface PostRepository {
 
     Post getPostById(int id);
     int getPostLikes(int postId);
+    int getPostDisLikes(int postId);
 }

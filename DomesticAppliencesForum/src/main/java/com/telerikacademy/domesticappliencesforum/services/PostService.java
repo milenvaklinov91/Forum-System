@@ -21,4 +21,5 @@ public interface PostService {
 
     List<Comment> getAllComments(int id);
     int getPostLikes(int postId);
+    int getPostDisLikes(int postId);
 }

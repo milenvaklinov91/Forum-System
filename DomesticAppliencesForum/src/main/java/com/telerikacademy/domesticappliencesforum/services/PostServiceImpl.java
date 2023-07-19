@@ -75,4 +75,7 @@ public class PostServiceImpl implements PostService {
 
         return postRepository.getPostLikes(postId);
     }
+    public int getPostDisLikes(int postId){
+        return postRepository.getPostDisLikes(postId);
+    }
 }

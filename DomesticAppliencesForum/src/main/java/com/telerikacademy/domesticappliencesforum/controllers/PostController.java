@@ -56,6 +56,8 @@ public class PostController {
 
     @GetMapping("/{id}/likes")
     public int getLikedPost(@PathVariable int id){return postService.getPostLikes(id);}
+    @GetMapping("/{id}/dislikes")
+    public int getDisLikedPost(@PathVariable int id){return postService.getPostDisLikes(id);}
 
 
     @PostMapping
