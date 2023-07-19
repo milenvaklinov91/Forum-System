@@ -32,6 +32,7 @@ public class VoteController {
 
     @GetMapping("/{id}/likes")
     public int getLikeForPost(@Valid @PathVariable int id) {
+
         return voteService.getVoteCountForPost(id);
     }
 

@@ -53,7 +53,10 @@ public class PostController {
     public List<Comment> getAllComments(@PathVariable int id) {
         return postService.getAllComments(id);
     }
-    //TODO
+
+    @GetMapping("/{id}/likes")
+    public int getLikedPost(@PathVariable int id){return postService.getPostLikes(id);}
+
 
     @PostMapping
     public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {

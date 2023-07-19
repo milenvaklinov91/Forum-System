@@ -3,7 +3,6 @@ package com.telerikacademy.domesticappliencesforum.services;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.TagTypesRepository;

@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
@@ -65,6 +66,13 @@ public class PostServiceImpl implements PostService {
 
     public List<Comment> getAllComments(int id) {
         Set<Comment> allComments = postRepository.getPostById(id).getComments();
+        if(allComments.isEmpty()){
+            throw new EntityNotFoundException("This post dont have comments");
+        }
         return new ArrayList<>(allComments);
+    }
+    public int getPostLikes(int postId) {
+
+        return postRepository.getPostLikes(postId);
     }
 }
