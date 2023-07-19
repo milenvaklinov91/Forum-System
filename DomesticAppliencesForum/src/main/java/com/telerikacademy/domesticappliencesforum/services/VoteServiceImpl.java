@@ -44,13 +44,13 @@ public class VoteServiceImpl implements VoteService {
     }
 
 
-    public int getVoteCountForPost(int postId) {
-        return voteRepository.getLikeForPost(postId);
-    }
-
-    public int getDislikeForPost(int postId) {
-        return voteRepository.getDislikeForPost(postId);
-    }
+//    public int getVoteCountForPost(int postId) {
+//        return voteRepository.getLikeForPost(postId);
+//    }
+//
+//    public int getDislikeForPost(int postId) {
+//        return voteRepository.getDislikeForPost(postId);
+//    }
 
 
 }

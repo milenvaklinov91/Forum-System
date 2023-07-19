@@ -30,16 +30,16 @@ public class VoteController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @GetMapping("/{id}/likes")
-    public int getLikeForPost(@Valid @PathVariable int id) {
-
-        return voteService.getVoteCountForPost(id);
-    }
-
-    @GetMapping("/{id}/dislikes")
-    public int getDislikeForPost(@Valid @PathVariable int id) {
-        return voteService.getDislikeForPost(id);
-    }
+//    @GetMapping("/{id}/likes")
+//    public int getLikeForPost(@Valid @PathVariable int id) {
+//
+//        return voteService.getVoteCountForPost(id);
+//    }
+//
+//    @GetMapping("/{id}/dislikes")
+//    public int getDislikeForPost(@Valid @PathVariable int id) {
+//        return voteService.getDislikeForPost(id);
+//    }
 
     @PostMapping
     public void votePost(@RequestHeader HttpHeaders headers, @Valid @RequestBody VoteDto voteDto) {

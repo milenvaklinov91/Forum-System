@@ -98,6 +98,15 @@ public class UserController {
         Set<Comment> allComment = (getUserById(id).getComments());
         return new ArrayList<>(allComment);
     }
+    @GetMapping("/{id}/liked-posts")
+    public List<Post> getLikedPostsByUser(@PathVariable int id) {
+        return service.getLikedPostsByUser(id);
+    }
+
+    @GetMapping("/{id}/disLiked-posts")
+    public List<Post> getDisLikedPostsByUser(@PathVariable int id) {
+        return service.getDisLikedPostsByUser(id);
+    }
 
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {

@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.*;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,10 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return repository.getByEmail(email);
     }
+
+    public List<Post> getLikedPostsByUser(int userId){return repository.getLikedPostsByUser(userId);}
+
+    public List<Post> getDisLikedPostsByUser(int userId){return repository.getDisLikedPostsByUser(userId);}
 
     public void create(User user) {
         isDuplicateUsername(user);
