@@ -80,6 +80,32 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    public List<Post> getLikedPostsByUser(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT v.post " +
+                            "FROM Vote v " +
+                            "WHERE v.createdBy.id = :user_id AND v.type.id = 1"
+            );
+            query.setParameter("user_id", userId);
+            List<Post> likedPosts = query.list();
+            return likedPosts;
+        }
+    }
+
+    public List<Post> getDisLikedPostsByUser(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT v.post " +
+                            "FROM Vote v " +
+                            "WHERE v.createdBy.id = :user_id AND v.type.id = 2"
+            );
+            query.setParameter("user_id", userId);
+            List<Post> likedPosts = query.list();
+            return likedPosts;
+        }
+    }
+
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

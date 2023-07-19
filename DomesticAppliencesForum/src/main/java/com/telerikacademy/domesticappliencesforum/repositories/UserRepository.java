@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 
 import java.util.List;
@@ -15,6 +16,11 @@ public interface UserRepository {
     User getByFirstName(String firstName);
 
     User getByEmail(String email);
+
+
+    List<Post> getLikedPostsByUser(int userId);
+
+    List<Post> getDisLikedPostsByUser(int userId);
 
     void create(User user);
 
