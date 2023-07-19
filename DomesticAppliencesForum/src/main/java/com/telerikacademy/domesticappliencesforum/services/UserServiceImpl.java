@@ -116,7 +116,30 @@ public class UserServiceImpl implements UserService {
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public void delete(int id) {
-        repository.delete(id);
+    public User makeAdmin(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && !user1.isAdmin()) {
+            user1.setAdmin(true);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
+
+    public User unMakeAdmin(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && user1.isAdmin()) {
+            user1.setAdmin(false);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+
+
+
+   /*public void delete(int id) {
+        repository.delete(id);
+    }*/
 }

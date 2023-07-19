@@ -16,13 +16,11 @@ public interface UserRepository {
 
     User getByEmail(String email);
 
-    User getByPassword(int id, String password);
-
     void create(User user);
 
     void update(User user);
 
-    void delete(int id);
+    /*void delete(int id);*/
 
 
 }

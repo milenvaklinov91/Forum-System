@@ -91,7 +91,7 @@ public class UserController {
         return new ArrayList<>(allPost);
     }
 
-    @GetMapping("/{id}/allComments")
+    @GetMapping("/{id}/all-comments")
     public List<Comment> getAllComments(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);
         service.getUserDetails(user.getId(), user);
@@ -146,12 +146,36 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}/make-admin")
+    public User makeAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            return service.makeAdmin(id, user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (DuplicatePasswordException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/unmake-admin")
+    public User unMakeAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            return service.unMakeAdmin(id, user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (DuplicatePasswordException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+
+    /*@DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         try {
             service.delete(id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-    }
+    }*/
 }

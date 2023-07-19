@@ -80,12 +80,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    @Override
-    public User getByPassword(int id, String password) {
-        throw new UnsupportedOperationException();
-    }
-    //todo Това трябва ли ни?
-
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -104,12 +98,12 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    public void delete(int id) {
+    /*public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.delete(getUserById(id));
             session.getTransaction().commit();
         }
-    }
+    }*/
 
 }

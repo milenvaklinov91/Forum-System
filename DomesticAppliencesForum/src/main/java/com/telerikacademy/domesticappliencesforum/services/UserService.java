@@ -24,7 +24,11 @@ public interface UserService {
 
     User unBlockUser(int id, User user);
 
-    void delete(int id);
+    User makeAdmin(int id, User user);
+
+    User unMakeAdmin(int id, User user);
+
+    /*void delete(int id);*/
 
 
 }
