@@ -4,7 +4,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateExce
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.services.TagTypesServiceImpl;
+import com.telerikacademy.domesticappliencesforum.services.TagTypesService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tags")
 public class TagController {
-    private final TagTypesServiceImpl tagTypesService;
+    private final TagTypesService tagTypesService;
     private final AuthenticationHelper authenticationHelper;
 
-    public TagController(TagTypesServiceImpl tagTypesService, AuthenticationHelper authenticationHelper) {
+    public TagController(TagTypesService tagTypesService, AuthenticationHelper authenticationHelper) {
         this.tagTypesService = tagTypesService;
         this.authenticationHelper = authenticationHelper;
     }

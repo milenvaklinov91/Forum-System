@@ -10,7 +10,7 @@ public interface VoteRepository {
 
     void save(Vote vote);
 
-    int getLikeForPost(int postId);
-
-    int getDislikeForPost(int postId);
+//    int getLikeForPost(int postId);
+//
+//    int getDislikeForPost(int postId);
 }
