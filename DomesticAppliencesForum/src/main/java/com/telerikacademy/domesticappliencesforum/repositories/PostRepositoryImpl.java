@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,13 @@ public class PostRepositoryImpl implements PostRepository {
             Query<Post> query = session.createQuery("from Post", Post.class);
             List<Post> posts = query.list();
             return filter(posts, userName, localDate, lastTen, tagId, mostComments);
+        }
+
+    }
+    public Long countAllPosts() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("select count(p) from Post p where 1=1", Long.class);
+            return query.getSingleResult();
         }
 
     }

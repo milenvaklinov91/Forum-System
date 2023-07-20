@@ -43,6 +43,10 @@ public class PostController {
     ) {
         return postService.getAllPosts(username, localDate, lastTen, tagId, mostComments);
     }
+    @GetMapping("/count")
+    public Long countAllPosts() {
+        return postService.countAllPosts();
+    }
 
     @GetMapping("/{id}")
     public Post getById(@PathVariable int id) {
