@@ -37,13 +37,12 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     public List<Comment> getAllComments(FilterOptionsComment filterOptionsComment) {
         try (Session session = sessionFactory.openSession()) {
-            StringBuilder stringBuilder = new StringBuilder("from Comments");
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterOptionsComment.getUserId().ifPresent(value -> {
-                filters.add("user_id like :userId");
-                params.put("userId",value);
+            filterOptionsComment.getUsername().ifPresent(value -> {
+                filters.add("comment.createdByUser.username like :username");
+                params.put("username", String.format("%%%s%%", value));
             });
             filterOptionsComment.getLocalDate().ifPresent(value -> {
                 filters.add("create_date like :localDate");
@@ -53,7 +52,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 //                filters.add("vote like :vote");
 //                params.put("vote",value);
 //            }); /todo това щее мога да го извиквам като имам лайкове
-            StringBuilder queryString = new StringBuilder("from Comment");
+            StringBuilder queryString = new StringBuilder("from Comment comment");
             if (!filters.isEmpty()) {
                 queryString
                         .append(" where ")
@@ -139,5 +138,29 @@ public class CommentRepositoryImpl implements CommentRepository {
 //                    .collect(Collectors.toList());
 //        }
         return comments;
+    }
+
+    private String generateOrderBy(FilterOptionsComment filterOptionsComment) {
+        if (filterOptionsComment.getSortBy().isEmpty()) {
+            return "";
+        }
+
+        String orderBy = "";
+        switch (filterOptionsComment.getSortBy().get()) {
+            case "createDate":
+                orderBy = "createDate";
+                break;
+            case "vote":
+                orderBy = "vote";
+                break;
+        }
+
+        orderBy = String.format(" order by %s", orderBy);
+
+        if (filterOptionsComment.getSortOrder().isPresent() && filterOptionsComment.getSortOrder().get().equalsIgnoreCase("desc")) {
+            orderBy = String.format("%s desc", orderBy);
+        }
+
+        return orderBy;
     }
 }

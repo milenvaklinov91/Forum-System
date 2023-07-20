@@ -39,9 +39,11 @@ public class CommentController {
     public List<Comment> getAllComments(
             @RequestParam(required = false) Integer userId,
             @RequestParam(required = false) String localDate,
-            @RequestParam(required = false) Integer vote
-    ) {
-        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(userId, localDate, vote);
+            @RequestParam(required = false) Integer vote,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortOrder
+            ) {
+        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(userId, localDate, vote, sortBy, sortOrder);
         return commentService.getAllComments(filterOptionsComment);
     }
 
