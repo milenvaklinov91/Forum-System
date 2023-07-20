@@ -1,7 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.controllers;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
@@ -31,15 +30,16 @@ public class VoteController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @GetMapping("/{id}/likes")
-    public int getLikeForPost(@Valid @PathVariable int id) {
-        return voteService.getVoteCountForPost(id);
-    }
-
-    @GetMapping("/{id}/dislikes")
-    public int getDislikeForPost(@Valid @PathVariable int id) {
-        return voteService.getDislikeForPost(id);
-    }
+//    @GetMapping("/{id}/likes")
+//    public int getLikeForPost(@Valid @PathVariable int id) {
+//
+//        return voteService.getVoteCountForPost(id);
+//    }
+//
+//    @GetMapping("/{id}/dislikes")
+//    public int getDislikeForPost(@Valid @PathVariable int id) {
+//        return voteService.getDislikeForPost(id);
+//    }
 
     @PostMapping
     public void votePost(@RequestHeader HttpHeaders headers, @Valid @RequestBody VoteDto voteDto) {
@@ -50,6 +50,7 @@ public class VoteController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
 
 
 }

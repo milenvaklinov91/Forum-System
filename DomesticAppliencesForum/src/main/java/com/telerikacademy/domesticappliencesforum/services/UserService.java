@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public interface UserService {
     User getByEmail(String email);
 
     User getUserDetails(int id, User user);
+    List<Post> getDisLikedPostsByUser(int userId);
+
+    List<Post> getLikedPostsByUser(int userId);
 
     void update(User user, User user1);
 
@@ -24,7 +28,11 @@ public interface UserService {
 
     User unBlockUser(int id, User user);
 
-    void delete(int id);
+    User makeAdmin(int id, User user);
+
+    User unMakeAdmin(int id, User user);
+
+    /*void delete(int id);*/
 
 
 }

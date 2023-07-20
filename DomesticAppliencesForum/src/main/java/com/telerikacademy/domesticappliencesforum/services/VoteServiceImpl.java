@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.VoteMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
@@ -33,20 +34,23 @@ public class VoteServiceImpl implements VoteService {
 
         if (voteRepository.existsByCreatedByAndPostAndVoteType(user, post, type)) {
             throw new IllegalArgumentException("User has already voted on the post.");
+        }else if(user.isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!!!");
         }
+
 
         Vote vote = voteMapper.fromVoteDto(voteDto, user, post, type);
         voteRepository.save(vote);
     }
-    //TODO kogato user e like daden post, posle ako go dislike fda ne pravi nov zapis a da go update
 
-    public int getVoteCountForPost(int postId) {
-        return voteRepository.getLikeForPost(postId);
-    }
 
-    public int getDislikeForPost(int postId) {
-        return voteRepository.getDislikeForPost(postId);
-    }
+//    public int getVoteCountForPost(int postId) {
+//        return voteRepository.getLikeForPost(postId);
+//    }
+//
+//    public int getDislikeForPost(int postId) {
+//        return voteRepository.getDislikeForPost(postId);
+//    }
 
 
 }

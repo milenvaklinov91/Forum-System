@@ -20,4 +20,6 @@ public interface PostService {
     void delete(int id, User user);
 
     List<Comment> getAllComments(int id);
+    int getPostLikes(int postId);
+    int getPostDisLikes(int postId);
 }

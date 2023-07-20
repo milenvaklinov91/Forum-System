@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.*;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,20 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return repository.getByEmail(email);
     }
+
+    public List<Post> getLikedPostsByUser(int userId){
+        List<Post> allPosts =repository.getLikedPostsByUser(userId);
+        if(allPosts.isEmpty()){
+            throw new EntityNotFoundException("This user dont have liked posts");
+        }
+        return repository.getLikedPostsByUser(userId);}
+
+    public List<Post> getDisLikedPostsByUser(int userId){
+        List<Post> allPosts =repository.getDisLikedPostsByUser(userId);
+        if(allPosts.isEmpty()){
+            throw new EntityNotFoundException("This user dont have disliked posts");
+        }
+        return repository.getDisLikedPostsByUser(userId);}
 
     public void create(User user) {
         isDuplicateUsername(user);
@@ -116,7 +131,30 @@ public class UserServiceImpl implements UserService {
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public void delete(int id) {
-        repository.delete(id);
+    public User makeAdmin(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && !user1.isAdmin()) {
+            user1.setAdmin(true);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
+
+    public User unMakeAdmin(int id, User user) {
+        User user1 = repository.getUserById(id);
+        if (user.isAdmin() && user1.isAdmin()) {
+            user1.setAdmin(false);
+            repository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+
+
+
+   /*public void delete(int id) {
+        repository.delete(id);
+    }*/
 }

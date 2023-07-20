@@ -1,9 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.User;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface PostRepository {
@@ -17,4 +15,6 @@ public interface PostRepository {
     void delete(int id);
 
     Post getPostById(int id);
+    int getPostLikes(int postId);
+    int getPostDisLikes(int postId);
 }

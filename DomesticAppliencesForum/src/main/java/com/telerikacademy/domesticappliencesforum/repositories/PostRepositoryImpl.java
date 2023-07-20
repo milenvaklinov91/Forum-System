@@ -96,6 +96,36 @@ public class PostRepositoryImpl implements PostRepository {
             return posts;
         }
     }
+    public int getPostLikes(int postId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT COUNT(v) " +
+                            "FROM Vote v " +
+                            "WHERE v.post.id = :post_id AND v.type.id = 1"
+            );
+            query.setParameter("post_id", postId);
+            Long likeCount = (Long) query.uniqueResult();
+            if (likeCount == 0) {
+                throw new EntityNotFoundException("This post dont have likes!");
+            }
+            return likeCount.intValue();
+        }
+    }
+    public int getPostDisLikes(int postId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT COUNT(v) " +
+                            "FROM Vote v " +
+                            "WHERE v.post.id = :post_id AND v.type.id = 2"
+            );
+            query.setParameter("post_id", postId);
+            Long likeCount = (Long) query.uniqueResult();
+            if (likeCount == 0) {
+                throw new EntityNotFoundException("This post dont have disLikes!");
+            }
+            return likeCount.intValue();
+        }
+    }
 
 
     @Override

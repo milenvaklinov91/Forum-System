@@ -1,13 +1,17 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class VoteRepositoryImpl implements VoteRepository {
@@ -35,30 +39,26 @@ public class VoteRepositoryImpl implements VoteRepository {
         }
     }
 
-    public int getLikeForPost(int postId) {
-        try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =1");
-            query.setParameter("post_id", postId);
-            Long count = (Long) query.getSingleResult();
-            return count.intValue();
-        }
-    }
-
-    public int getDislikeForPost(int postId) {
-        try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =2");
-            query.setParameter("post_id", postId);
-            Long count = (Long) query.getSingleResult();
-            return count.intValue();
-        }
-    }
-//    public List<Post> getLikedPostsByUser(int userId) {
+//    public int getLikeForPost(int postId) {
 //        try (Session session = sessionFactory.openSession()) {
-//            Query query = session.createQuery("SELECT v.post FROM Vote v WHERE v.createdBy = :userId AND v.type.type = 'like'");
-//            query.setParameter("createdBy", userId);
-//
-//            return query.list();
+//            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =1");
+//            query.setParameter("post_id", postId);
+//            Long count = (Long) query.getSingleResult();
+//            return count.intValue();
 //        }
 //    }
+//
+//    public int getDislikeForPost(int postId) {
+//        try (Session session = sessionFactory.openSession()) {
+//            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =2");
+//            query.setParameter("post_id", postId);
+//            Long count = (Long) query.getSingleResult();
+//            return count.intValue();
+//        }
+//    }
+
+
+    //TODO getLikedPOstByUser, getMostLidedPosts(10), getDisLikedPostByUser,getMostDislikedPOsts(10)
+
 
 }

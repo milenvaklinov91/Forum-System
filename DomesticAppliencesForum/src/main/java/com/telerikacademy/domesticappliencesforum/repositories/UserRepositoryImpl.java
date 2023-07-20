@@ -80,11 +80,31 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    @Override
-    public User getByPassword(int id, String password) {
-        throw new UnsupportedOperationException();
+    public List<Post> getLikedPostsByUser(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT v.post " +
+                            "FROM Vote v " +
+                            "WHERE v.createdBy.id = :user_id AND v.type.id = 1"
+            );
+            query.setParameter("user_id", userId);
+            List<Post> likedPosts = query.list();
+            return likedPosts;
+        }
     }
-    //todo Това трябва ли ни?
+
+    public List<Post> getDisLikedPostsByUser(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT v.post " +
+                            "FROM Vote v " +
+                            "WHERE v.createdBy.id = :user_id AND v.type.id = 2"
+            );
+            query.setParameter("user_id", userId);
+            List<Post> likedPosts = query.list();
+            return likedPosts;
+        }
+    }
 
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
@@ -104,12 +124,12 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    public void delete(int id) {
+    /*public void delete(int id) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.delete(getUserById(id));
             session.getTransaction().commit();
         }
-    }
+    }*/
 
 }

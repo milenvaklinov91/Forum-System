@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
@@ -35,6 +36,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public void create(Post post, User user) {
         post.setCreatedBy(user);
+        if(post.getCreatedBy().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!!!");
+        }
         postRepository.create(post);
     }
 
@@ -42,6 +46,9 @@ public class PostServiceImpl implements PostService {
     public void modify(Post post, User user) {
         if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }
+        else if(post.getCreatedBy().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!!!");
         }
         postRepository.modify(post);
     }
@@ -51,12 +58,24 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.getPostById(id);
         if (!(user.isAdmin() || post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }else if(post.getCreatedBy().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!!!");
         }
         postRepository.delete(id);
     }
 
     public List<Comment> getAllComments(int id) {
         Set<Comment> allComments = postRepository.getPostById(id).getComments();
+        if(allComments.isEmpty()){
+            throw new EntityNotFoundException("This post dont have comments");
+        }
         return new ArrayList<>(allComments);
+    }
+    public int getPostLikes(int postId) {
+
+        return postRepository.getPostLikes(postId);
+    }
+    public int getPostDisLikes(int postId){
+        return postRepository.getPostDisLikes(postId);
     }
 }
