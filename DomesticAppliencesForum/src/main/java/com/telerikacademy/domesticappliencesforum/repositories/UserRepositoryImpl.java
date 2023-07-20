@@ -29,6 +29,13 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    public Long countAllUsers() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("select count(u) from User u where 1=1", Long.class);
+            return query.getSingleResult();
+        }
+    }
+
     @Override
     public User getUserById(int id) {
         try (Session session = sessionFactory.openSession()) {

@@ -41,6 +41,11 @@ public class UserController {
         return service.getAll();
     }
 
+    @GetMapping("/count")
+    public Long countAllPosts() {
+        return service.countAllUsers();
+    }
+
     @GetMapping("/{id}")
     public User getUserById(@PathVariable int id) {
         try {

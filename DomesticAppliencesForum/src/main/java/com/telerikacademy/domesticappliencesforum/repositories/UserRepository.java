@@ -9,6 +9,8 @@ public interface UserRepository {
 
     List<User> getAll();
 
+    Long countAllUsers();
+
     User getUserById(int id);
 
     User getByUsername(String username);

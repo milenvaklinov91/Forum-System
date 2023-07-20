@@ -9,6 +9,8 @@ public interface UserService {
 
     List<User> getAll();
 
+    Long countAllUsers();
+
     User getById(int id);
 
     User getByUsername(String username);

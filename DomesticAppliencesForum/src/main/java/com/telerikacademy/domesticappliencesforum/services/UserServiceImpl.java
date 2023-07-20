@@ -26,6 +26,10 @@ public class UserServiceImpl implements UserService {
         return repository.getAll();
     }
 
+    public Long countAllUsers() {
+        return repository.countAllUsers();
+    }
+
     public User getById(int id) {
         return repository.getUserById(id);
     }
@@ -42,19 +46,21 @@ public class UserServiceImpl implements UserService {
         return repository.getByEmail(email);
     }
 
-    public List<Post> getLikedPostsByUser(int userId){
-        List<Post> allPosts =repository.getLikedPostsByUser(userId);
-        if(allPosts.isEmpty()){
+    public List<Post> getLikedPostsByUser(int userId) {
+        List<Post> allPosts = repository.getLikedPostsByUser(userId);
+        if (allPosts.isEmpty()) {
             throw new EntityNotFoundException("This user dont have liked posts");
         }
-        return repository.getLikedPostsByUser(userId);}
+        return repository.getLikedPostsByUser(userId);
+    }
 
-    public List<Post> getDisLikedPostsByUser(int userId){
-        List<Post> allPosts =repository.getDisLikedPostsByUser(userId);
-        if(allPosts.isEmpty()){
+    public List<Post> getDisLikedPostsByUser(int userId) {
+        List<Post> allPosts = repository.getDisLikedPostsByUser(userId);
+        if (allPosts.isEmpty()) {
             throw new EntityNotFoundException("This user dont have disliked posts");
         }
-        return repository.getDisLikedPostsByUser(userId);}
+        return repository.getDisLikedPostsByUser(userId);
+    }
 
     public void create(User user) {
         isDuplicateUsername(user);

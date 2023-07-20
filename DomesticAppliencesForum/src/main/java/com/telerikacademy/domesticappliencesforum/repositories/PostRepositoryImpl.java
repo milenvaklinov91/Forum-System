@@ -33,12 +33,12 @@ public class PostRepositoryImpl implements PostRepository {
         }
 
     }
+
     public Long countAllPosts() {
         try (Session session = sessionFactory.openSession()) {
             Query<Long> query = session.createQuery("select count(p) from Post p where 1=1", Long.class);
             return query.getSingleResult();
         }
-
     }
 
     public List<Post> filter(List<Post> posts, String username, String localDate,
@@ -104,6 +104,7 @@ public class PostRepositoryImpl implements PostRepository {
             return posts;
         }
     }
+
     public int getPostLikes(int postId) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(
@@ -119,6 +120,7 @@ public class PostRepositoryImpl implements PostRepository {
             return likeCount.intValue();
         }
     }
+
     public int getPostDisLikes(int postId) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(
@@ -144,7 +146,6 @@ public class PostRepositoryImpl implements PostRepository {
                 throw new EntityNotFoundException("Post", id);
             }
             return post;
-
         }
     }
 
