@@ -83,7 +83,6 @@ public class PostServiceImplTests {
         Post mockPost = createMockPost();
         mockPost.setCreatedBy(mockUser);
 
-
         // Act
         postService.create(mockPost, mockUser);
 
@@ -125,7 +124,6 @@ public class PostServiceImplTests {
 
         // Act & Assert
         assertThrows(UnauthorizedOperationException.class, () -> postService.modify(mockPost, blockedMockUser));
-
 
         verify(postRepository, never()).modify(any(Post.class));
     }
@@ -268,7 +266,6 @@ public class PostServiceImplTests {
         int postId = 1;
         int expectedLikes = 1;
 
-
         when(postRepository.getPostLikes(postId)).thenReturn(expectedLikes);
 
         // Act
@@ -284,12 +281,9 @@ public class PostServiceImplTests {
         int postId = 1;
         int expectedLikes = 0;
 
-
         when(postRepository.getPostLikes(postId)).thenReturn(expectedLikes);
-
         // Act
         int actualLikes = postService.getPostLikes(postId);
-
         // Assert
         assertEquals(expectedLikes, actualLikes);
     }
@@ -299,7 +293,6 @@ public class PostServiceImplTests {
         int expectedDisLikes = 1;
 
         when(postRepository.getPostDisLikes(postId)).thenReturn(expectedDisLikes);
-
         // Act
         int result = postService.getPostDisLikes(postId);
 
