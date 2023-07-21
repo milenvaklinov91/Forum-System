@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
@@ -40,5 +41,13 @@ public class Helper {
         mockPost.setCreatedBy(createMockUser());
         mockPost.setTag(createTag());
         return mockPost;
+    }
+
+    public static Comment createMockComment() {
+        var mockComment = new Comment();
+        mockComment.setCommentId(1);
+        mockComment.setComment("Comment should be between 32 and 3222 symbols");
+        mockComment.setCreatedByUser(createMockUser());
+        return mockComment;
     }
 }
