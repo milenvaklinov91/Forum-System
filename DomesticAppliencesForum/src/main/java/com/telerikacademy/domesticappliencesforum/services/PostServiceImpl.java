@@ -45,6 +45,7 @@ public class PostServiceImpl implements PostService {
         postRepository.create(post);
     }
 
+
     @Override
     public void modify(Post post, User user) {
         if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))) {
