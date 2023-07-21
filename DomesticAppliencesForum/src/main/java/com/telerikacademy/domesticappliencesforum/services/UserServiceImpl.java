@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     public List<Post> getLikedPostsByUser(int userId) {
         List<Post> allPosts = repository.getLikedPostsByUser(userId);
         if (allPosts.isEmpty()) {
-            throw new EntityNotFoundException("This user dont have liked posts");
+            throw new EntityNotFoundException("This user dont have liked posts!");
         }
         return repository.getLikedPostsByUser(userId);
     }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     public List<Post> getDisLikedPostsByUser(int userId) {
         List<Post> allPosts = repository.getDisLikedPostsByUser(userId);
         if (allPosts.isEmpty()) {
-            throw new EntityNotFoundException("This user dont have disliked posts");
+            throw new EntityNotFoundException("This user dont have disliked posts!");
         }
         return repository.getDisLikedPostsByUser(userId);
     }

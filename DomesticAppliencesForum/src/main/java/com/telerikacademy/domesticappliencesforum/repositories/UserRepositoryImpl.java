@@ -74,7 +74,7 @@ public class UserRepositoryImpl implements UserRepository {
             return result.get(0);
         }
     }
-
+    @Override
     public User getByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("from User where email = :email", User.class);
@@ -89,11 +89,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     public List<Post> getLikedPostsByUser(int userId) {
         try (Session session = sessionFactory.openSession()) {
-            Query query = session.createQuery(
-                    "SELECT v.post " +
-                            "FROM Vote v " +
-                            "WHERE v.createdBy.id = :user_id AND v.type.id = 1"
-            );
+            Query query = session.createQuery("SELECT v.post " + "FROM Vote v " +
+                            "WHERE v.createdBy.id = :user_id AND v.type.id = 1");
             query.setParameter("user_id", userId);
             List<Post> likedPosts = query.list();
             return likedPosts;
@@ -103,10 +100,8 @@ public class UserRepositoryImpl implements UserRepository {
     public List<Post> getDisLikedPostsByUser(int userId) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(
-                    "SELECT v.post " +
-                            "FROM Vote v " +
-                            "WHERE v.createdBy.id = :user_id AND v.type.id = 2"
-            );
+                    "SELECT v.post " + "FROM Vote v " +
+                            "WHERE v.createdBy.id = :user_id AND v.type.id = 2");
             query.setParameter("user_id", userId);
             List<Post> likedPosts = query.list();
             return likedPosts;

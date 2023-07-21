@@ -86,7 +86,7 @@ public class UserServiceImplTests {
         User mockUser = createMockUser();
         //Act
         Mockito.when(mockRepository.getByFirstName(Mockito.anyString())).thenReturn(mockUser);
-        User result = userService.getByUsername(mockUser.getFirstName());
+        User result = userService.getByFirstName(mockUser.getFirstName());
         // Assert
         Assertions.assertEquals(mockUser , result);
     }
