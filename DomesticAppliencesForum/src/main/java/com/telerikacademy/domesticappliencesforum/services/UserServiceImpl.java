@@ -126,21 +126,21 @@ public class UserServiceImpl implements UserService {
     }
 
     public User blockUser(int id, User user) {
-        User user1 = repository.getUserById(id);
-        if (user.isAdmin() && !user1.isAdmin()) {
-            user1.setBlocked(true);
-            repository.update(user1);
-            return user1;
+        User normalUser = repository.getUserById(id);
+        if (user.isAdmin() && !normalUser.isAdmin()) {
+            normalUser.setBlocked(true);
+            repository.update(normalUser);
+            return normalUser;
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
     public User unBlockUser(int id, User user) {
-        User user1 = repository.getUserById(id);
-        if (user.isAdmin() && !user1.isAdmin()) {
-            user1.setBlocked(false);
-            repository.update(user1);
-            return user1;
+        User normalUser = repository.getUserById(id);
+        if (user.isAdmin() && !normalUser.isAdmin()) {
+            normalUser.setBlocked(false);
+            repository.update(normalUser);
+            return normalUser;
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
