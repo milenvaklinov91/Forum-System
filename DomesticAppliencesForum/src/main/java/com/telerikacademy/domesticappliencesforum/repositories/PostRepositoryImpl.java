@@ -3,6 +3,7 @@ package com.telerikacademy.domesticappliencesforum.repositories;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

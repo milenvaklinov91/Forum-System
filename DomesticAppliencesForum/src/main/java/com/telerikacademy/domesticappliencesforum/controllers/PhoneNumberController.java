@@ -4,8 +4,8 @@ import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationExcept
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.models.PhoneNumber;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.services.PhoneNumberService;
-import com.telerikacademy.domesticappliencesforum.services.UserService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PhoneNumberService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

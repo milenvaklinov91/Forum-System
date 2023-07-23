@@ -2,8 +2,8 @@ package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
-import com.telerikacademy.domesticappliencesforum.services.CommentService;
-import com.telerikacademy.domesticappliencesforum.services.PostService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

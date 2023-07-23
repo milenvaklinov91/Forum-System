@@ -1,10 +1,11 @@
-package com.telerikacademy.domesticappliencesforum.repositories;
+package com.telerikacademy.domesticappliencesforum.services.interfaces;
 
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
+import com.telerikacademy.domesticappliencesforum.models.User;
 
 import java.util.List;
 
-public interface TagTypesRepository {
+public interface TagTypesService {
     List<TagTypes> get();
 
     TagTypes get(int id);
@@ -13,7 +14,5 @@ public interface TagTypesRepository {
 
     TagTypes filterByName(List<TagTypes> tags, String name);
 
-    TagTypes getByName(String name);
-
-    void delete(int id);
+    void delete(int id, User user);
 }

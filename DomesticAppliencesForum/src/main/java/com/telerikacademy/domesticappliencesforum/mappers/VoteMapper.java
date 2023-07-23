@@ -5,10 +5,10 @@ import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.Vote;
 import com.telerikacademy.domesticappliencesforum.models.VoteTypes;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
-import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
-import com.telerikacademy.domesticappliencesforum.repositories.VoteTypesRepository;
-import com.telerikacademy.domesticappliencesforum.services.PostService;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteTypesRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import org.springframework.stereotype.Component;
 
 @Component

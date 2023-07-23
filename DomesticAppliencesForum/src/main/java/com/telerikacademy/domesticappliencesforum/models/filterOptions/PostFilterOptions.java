@@ -9,7 +9,6 @@ public class PostFilterOptions {
     private Optional<Integer> lastTen;
     private Optional<Integer> tagId;
     private Optional<String> mostComments;
-
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 

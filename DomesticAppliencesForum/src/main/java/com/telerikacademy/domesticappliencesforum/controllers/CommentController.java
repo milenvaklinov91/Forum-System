@@ -5,19 +5,17 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
-import com.telerikacademy.domesticappliencesforum.services.CommentService;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController

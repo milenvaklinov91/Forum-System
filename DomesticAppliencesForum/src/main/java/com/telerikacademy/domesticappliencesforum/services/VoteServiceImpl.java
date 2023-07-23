@@ -4,7 +4,11 @@ import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperati
 import com.telerikacademy.domesticappliencesforum.mappers.VoteMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
-import com.telerikacademy.domesticappliencesforum.repositories.*;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteTypesRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

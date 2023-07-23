@@ -4,12 +4,13 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateExce
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.PhoneNumber;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.repositories.PhoneNumberRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PhoneNumberRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PhoneNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PhoneNumberServiceImpl implements PhoneNumberService{
+public class PhoneNumberServiceImpl implements PhoneNumberService {
 
     private final PhoneNumberRepository phoneNumberRepository;
 @Autowired

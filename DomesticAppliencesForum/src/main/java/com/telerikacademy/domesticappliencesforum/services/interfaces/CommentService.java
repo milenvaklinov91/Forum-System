@@ -1,21 +1,24 @@
-package com.telerikacademy.domesticappliencesforum.repositories;
+package com.telerikacademy.domesticappliencesforum.services.interfaces;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface CommentRepository {
+public interface CommentService {
 
     List<Comment> getAllComments(FilterOptionsComment filterOptionsComment);
 
-    void create(Comment comment);
+    Comment browse(int id);
 
-    void modify(Comment comment);
+    void create(Comment comment, User user);
 
-    void delete(int id);
+    void modify(Comment comment, User user);
+
+    void delete(int id, User user);
 
     Comment getCommentById(int id);
 }

@@ -2,8 +2,8 @@ package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
-import com.telerikacademy.domesticappliencesforum.services.PostService;
-import com.telerikacademy.domesticappliencesforum.services.TagTypesService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

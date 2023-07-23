@@ -7,8 +7,8 @@ import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
-import com.telerikacademy.domesticappliencesforum.services.PostService;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +44,11 @@ public class PostController {
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String orderBy
     ) {
-        PostFilterOptions filterOptions=new PostFilterOptions(username, localDate,
-                lastTen, tagId, mostComments,sortBy,orderBy);
+        PostFilterOptions filterOptions = new PostFilterOptions(username, localDate,
+                lastTen, tagId, mostComments, sortBy, orderBy);
         return postService.getAllPosts(filterOptions);
     }
+
     @GetMapping("/count")
     public Long countAllPosts() {
         return postService.countAllPosts();
@@ -64,9 +65,14 @@ public class PostController {
     }
 
     @GetMapping("/{id}/likes")
-    public int getLikedPost(@PathVariable int id){return postService.getPostLikes(id);}
+    public int getLikedPost(@PathVariable int id) {
+        return postService.getPostLikes(id);
+    }
+
     @GetMapping("/{id}/dislikes")
-    public int getDisLikedPost(@PathVariable int id){return postService.getPostDisLikes(id);}
+    public int getDisLikedPost(@PathVariable int id) {
+        return postService.getPostDisLikes(id);
+    }
 
 
     @PostMapping

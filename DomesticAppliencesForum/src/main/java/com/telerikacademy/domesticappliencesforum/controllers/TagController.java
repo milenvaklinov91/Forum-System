@@ -4,7 +4,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateExce
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.services.TagTypesService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

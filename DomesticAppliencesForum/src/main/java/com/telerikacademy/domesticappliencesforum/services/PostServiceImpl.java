@@ -6,7 +6,8 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
-import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

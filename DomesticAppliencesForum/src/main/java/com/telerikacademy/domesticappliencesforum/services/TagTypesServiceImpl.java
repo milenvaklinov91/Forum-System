@@ -5,7 +5,8 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.repositories.TagTypesRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.TagTypesRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,13 +1,12 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
-import com.sun.xml.bind.v2.TODO;
 import com.telerikacademy.domesticappliencesforum.exceptions.EmailExitsException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +21,9 @@ import java.util.List;
 
 import static com.telerikacademy.domesticappliencesforum.services.Helper.createMockAdmin;
 import static com.telerikacademy.domesticappliencesforum.services.Helper.createMockUser;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -152,7 +152,7 @@ public class UserServiceImplTests {
 
         userService.create(mockUser);
         //todo
-        Mockito.verify(userMockRepository, Mockito.times(1)).create(mockUser);
+        Mockito.verify(userMockRepository, times(1)).create(mockUser);
         assertEquals(LocalDateTime.now().getDayOfYear(), mockUser.getRegistrationDate().getDayOfYear());
     }
 
@@ -185,7 +185,7 @@ public class UserServiceImplTests {
 
         User result = userService.getUserDetails(adminId, mockAdmin);
 
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(adminId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(adminId);
         Assertions.assertEquals(mockAdmin, result);
     }
 
@@ -199,33 +199,23 @@ public class UserServiceImplTests {
 
 
         Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.getUserDetails(notAdminId, mockUser));
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(notAdminId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(notAdminId);
     }
 
     @Test
     void blockUser_Should_BlockUser_When_UserIsAdminAndBlockedUserIsNotAdmin() {
-        int adminId = 1;
-        User mockAdmin = createMockUser();
-        mockAdmin.setAdmin(true);
-
-        int blockedUserId = 2;
+        //ARRANGE
         User mockUser = createMockUser();
-        mockUser.setAdmin(false);
-        //todo doesnt work TODO
-        Mockito.when(userMockRepository.getUserById(adminId)).thenReturn(mockAdmin);
-        Mockito.when(userMockRepository.getUserById(blockedUserId)).thenReturn(mockUser);
+        User mockAdmin = createMockAdmin();
 
-        Mockito.when(mockAdmin.isAdmin()).thenReturn(true);
+        when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
+        doNothing().when(userMockRepository).update(any());
+        //act
+        userService.blockUser(mockUser.getId(),mockAdmin);
 
-        User result = userService.blockUser(adminId, mockUser);
-
-
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(adminId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(blockedUserId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).update(mockUser);
-
-        Assertions.assertEquals(mockUser, result);
-        Assertions.assertTrue(mockUser.isBlocked());
+        //assert
+        assertTrue(mockUser.isBlocked());
+        verify(userMockRepository, times(1)).update(mockUser);
     }
 
     @Test
@@ -241,35 +231,24 @@ public class UserServiceImplTests {
 
         Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.blockUser(notAdminId, mockUserToBlock));
 
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(notAdminId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(notAdminId);
         Mockito.verify(userMockRepository, Mockito.never()).update(mockUserToBlock);
     }
 
     @Test
     void unblockUser_Should_UnblockUser_When_UserIsAdminAndUnblockedUserIsNotAdmin() {
-        int adminId = 1;
-        User mockAdmin = createMockUser();
-        mockAdmin.setAdmin(true);
-        //todo doesnt work TODO
-        int blockedUserId = 2;
         User mockUser = createMockUser();
-        mockUser.setAdmin(false);
         mockUser.setBlocked(true);
+        User mockAdmin = createMockAdmin();
 
-        Mockito.when(userMockRepository.getUserById(adminId)).thenReturn(mockAdmin);
-        Mockito.when(userMockRepository.getUserById(blockedUserId)).thenReturn(mockUser);
+        when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
+        doNothing().when(userMockRepository).update(any());
+        //act
+        userService.unBlockUser(mockUser.getId(),mockAdmin);
 
-        Mockito.when(mockAdmin.isAdmin()).thenReturn(true);
-
-        User result = userService.blockUser(adminId, mockUser);
-
-
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(adminId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(blockedUserId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).update(mockUser);
-
-        Assertions.assertEquals(mockUser, result);
-        Assertions.assertTrue(mockUser.isBlocked());
+        //assert
+        assertFalse(mockUser.isBlocked());
+        verify(userMockRepository, times(1)).update(mockUser);
     }
 
     @Test
@@ -285,7 +264,7 @@ public class UserServiceImplTests {
 
         Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.unBlockUser(notAdminId, mockUserToBlock));
 
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(notAdminId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(notAdminId);
         Mockito.verify(userMockRepository, Mockito.never()).update(mockUserToBlock);
     }
     @Test           //TODO
@@ -303,9 +282,9 @@ public class UserServiceImplTests {
 
         Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.makeAdmin(targetUserId, mockAdmin));
 
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(targetUserId);
-        Mockito.verify(userMockRepository, Mockito.never()).update(Mockito.any());
+        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
+        Mockito.verify(userMockRepository, Mockito.never()).update(any());
     }
 
     @Test   //TODO
@@ -325,9 +304,9 @@ public class UserServiceImplTests {
 
         User result = userService.makeAdmin(targetUserId, mockAdmin);
 
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(targetUserId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).update(spyUser);
+        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
+        Mockito.verify(userMockRepository, times(1)).update(spyUser);
 
         Assertions.assertTrue(spyUser.isAdmin());
         Assertions.assertEquals(spyUser, result);
@@ -350,9 +329,9 @@ public class UserServiceImplTests {
             userService.unMakeAdmin(userId, mockTargetUser);
         });
 
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(targetUserId);
-        Mockito.verify(userMockRepository, Mockito.times(0)).update(Mockito.any(User.class));
+        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
+        Mockito.verify(userMockRepository, times(0)).update(any(User.class));
         Mockito.verifyNoMoreInteractions(userMockRepository);
     }
     @Test           //TODO
@@ -370,9 +349,9 @@ public class UserServiceImplTests {
 
         User result = userService.unMakeAdmin(userId, mockTargetUser);
 
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).getUserById(targetUserId);
-        Mockito.verify(userMockRepository, Mockito.times(1)).update(mockTargetUser);
+        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
+        Mockito.verify(userMockRepository, times(1)).update(mockTargetUser);
         Mockito.verifyNoMoreInteractions(userMockRepository);
 
         Assertions.assertFalse(result.isAdmin());

@@ -1,8 +1,5 @@
 package com.telerikacademy.domesticappliencesforum.models.filterOptions;
 
-import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.services.UserService;
-
 import java.util.Optional;
 
 public class FilterOptionsComment {

@@ -3,16 +3,15 @@ package com.telerikacademy.domesticappliencesforum.controllers;
 import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
-import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
-import com.telerikacademy.domesticappliencesforum.services.VoteService;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.VoteService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/votes")

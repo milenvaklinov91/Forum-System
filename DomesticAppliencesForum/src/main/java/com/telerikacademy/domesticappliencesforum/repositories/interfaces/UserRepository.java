@@ -1,4 +1,4 @@
-package com.telerikacademy.domesticappliencesforum.repositories;
+package com.telerikacademy.domesticappliencesforum.repositories.interfaces;
 
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;

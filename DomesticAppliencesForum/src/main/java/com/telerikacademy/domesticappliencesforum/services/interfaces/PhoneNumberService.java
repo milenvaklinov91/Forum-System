@@ -1,4 +1,4 @@
-package com.telerikacademy.domesticappliencesforum.services;
+package com.telerikacademy.domesticappliencesforum.services.interfaces;
 
 import com.telerikacademy.domesticappliencesforum.models.PhoneNumber;
 import com.telerikacademy.domesticappliencesforum.models.User;

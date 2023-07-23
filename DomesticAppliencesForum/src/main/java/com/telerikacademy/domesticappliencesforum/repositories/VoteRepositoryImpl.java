@@ -1,17 +1,10 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
-import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
-import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Repository
 public class VoteRepositoryImpl implements VoteRepository {

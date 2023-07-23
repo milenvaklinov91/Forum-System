@@ -4,7 +4,8 @@ import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperati
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
-import com.telerikacademy.domesticappliencesforum.repositories.CommentRepository;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.CommentRepository;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

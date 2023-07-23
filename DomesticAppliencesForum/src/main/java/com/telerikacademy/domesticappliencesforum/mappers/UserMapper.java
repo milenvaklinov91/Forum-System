@@ -2,7 +2,7 @@ package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
-import com.telerikacademy.domesticappliencesforum.services.UserService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.stereotype.Component;
 
 @Component
