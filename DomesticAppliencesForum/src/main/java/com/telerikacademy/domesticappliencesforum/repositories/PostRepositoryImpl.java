@@ -54,9 +54,9 @@ public class PostRepositoryImpl implements PostRepository {
                     stringBuilder.append(" WHERE ");
                     stringBuilder.append(String.join(" AND ", filters));
                 }
-                stringBuilder.append(generateOrderBy(filterOptions));
-
             }
+
+            stringBuilder.append(generateOrderBy(filterOptions));
 
             Query<Post> query = session.createQuery(stringBuilder.toString(), Post.class);
             query.setProperties(params);
@@ -220,10 +220,11 @@ public class PostRepositoryImpl implements PostRepository {
                 break;
         }
 
-        orderBy = String.format(" ORDER BY %s", orderBy);
+        orderBy = String.format(" ORDER BY %s ", orderBy);
 
-        if (filterOptions.getSortOrder().isPresent() && filterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
-            orderBy = String.format("%s DESC", orderBy);
+        if (filterOptions.getSortOrder().isPresent() && filterOptions.
+                getSortOrder().get().equalsIgnoreCase("desc")) {
+            orderBy = String.format(" %s desc ", orderBy);
         }
 
         return orderBy;
