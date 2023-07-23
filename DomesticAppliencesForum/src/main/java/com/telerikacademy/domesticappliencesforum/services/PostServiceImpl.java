@@ -5,6 +5,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperati
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId, String mostComment) {
-        return postRepository.getAllPosts(userName, localDate, lastTen, tagId, mostComment);
+    public List<Post> getAllPosts(PostFilterOptions filterOptions) {
+        return postRepository.getAllPosts(filterOptions);
     }
     public Long countAllPosts(){
         return postRepository.countAllPosts();

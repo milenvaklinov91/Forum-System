@@ -4,12 +4,13 @@ package com.telerikacademy.domesticappliencesforum.services;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 
 import java.util.List;
 
 public interface PostService {
 
-    List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId, String mostComment);
+    List<Post> getAllPosts(PostFilterOptions filterOptions);
     Long countAllPosts();
     Post getById(int id);
 

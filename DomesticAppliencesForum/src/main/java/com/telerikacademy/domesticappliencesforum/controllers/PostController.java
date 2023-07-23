@@ -6,6 +6,7 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import com.telerikacademy.domesticappliencesforum.services.PostService;
 import org.springframework.http.HttpHeaders;
@@ -39,9 +40,13 @@ public class PostController {
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer lastTen,
             @RequestParam(required = false) Integer tagId,
-            @RequestParam(required = false) String mostComments
+            @RequestParam(required = false) String mostComments,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String orderBy
     ) {
-        return postService.getAllPosts(username, localDate, lastTen, tagId, mostComments);
+        PostFilterOptions filterOptions=new PostFilterOptions(username, localDate,
+                lastTen, tagId, mostComments,sortBy,orderBy);
+        return postService.getAllPosts(filterOptions);
     }
     @GetMapping("/count")
     public Long countAllPosts() {

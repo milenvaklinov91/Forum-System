@@ -110,7 +110,6 @@ public class CommentRepositoryImpl implements CommentRepository {
         comments = filterCommentsByDate(comments, localDate);
         comments = filterCommentsByMostLiked(comments, vote);
         return comments;
-        //todo за филтър виж лекцията с Пешо и демото
     }
 
     private List<Comment> filterCommentsByDate(List<Comment> comments, String date) {

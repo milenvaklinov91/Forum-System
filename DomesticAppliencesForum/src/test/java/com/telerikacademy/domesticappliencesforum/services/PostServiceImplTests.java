@@ -1,14 +1,12 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
-import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepositoryImpl;
-import com.telerikacademy.domesticappliencesforum.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,11 +38,12 @@ public class PostServiceImplTests {
     public void testGetAllPosts() {
         // Arrange
         List<Post> expectedPosts = new ArrayList<>();
-        when(postRepository.getAllPosts(anyString(), anyString(), anyInt(), anyInt(), anyString()))
+        PostFilterOptions filterOptions=Helper.createMockFilterOptions();
+        when(postRepository.getAllPosts(filterOptions))
                 .thenReturn(expectedPosts);
 
         // Act
-        List<Post> result = postService.getAllPosts("user", "2023-07-19", 10, 1, "mostComment");
+        List<Post> result = postService.getAllPosts(filterOptions);
 
         // Assert
         assertEquals(expectedPosts, result);

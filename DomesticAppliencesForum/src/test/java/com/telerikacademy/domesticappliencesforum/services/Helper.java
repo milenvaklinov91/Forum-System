@@ -4,6 +4,7 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 
 import java.time.LocalDateTime;
 
@@ -23,6 +24,16 @@ public class Helper {
         mockUser.setFirstName("MockFirstName");
         mockUser.setEmail("mock@user.com");
         return mockUser;
+    }
+    public static PostFilterOptions createMockFilterOptions() {
+        return new PostFilterOptions(
+                "username",
+                "2023-07-19",
+                10,
+                1,
+                "mostComment",
+                "sorted",
+                "sortOrder");
     }
 
     public static TagTypes createTag() {

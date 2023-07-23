@@ -1,12 +1,13 @@
 package com.telerikacademy.domesticappliencesforum.repositories;
 
 import com.telerikacademy.domesticappliencesforum.models.Post;
+import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 
 import java.util.List;
 
 public interface PostRepository {
 
-    List<Post> getAllPosts(String userName, String localDate, Integer lastTen, Integer tagId, String mostComments);
+    List<Post> getAllPosts(PostFilterOptions filterOptions);
     Long countAllPosts();
     void create(Post post);
 
