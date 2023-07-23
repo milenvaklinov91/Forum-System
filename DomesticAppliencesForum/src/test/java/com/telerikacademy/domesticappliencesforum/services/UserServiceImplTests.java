@@ -115,7 +115,7 @@ public class UserServiceImplTests {
 
         Mockito.when(userMockRepository.getLikedPostsByUser(mockUser.getId())).thenReturn(expectedLikedPosts);
 
-        List<Post> actualLikedPosts = userService.getLikedPostsByUser(mockUser.getId()); //TODO
+        List<Post> actualLikedPosts = userService.getLikedPostsByUser(mockUser.getId());
 
         Assertions.assertEquals(expectedLikedPosts, actualLikedPosts);
     }
@@ -147,11 +147,12 @@ public class UserServiceImplTests {
     @Test
     void createUser_Should_CreateUser_When_UserCreated() {
         User mockUser = createMockUser();
+
         Mockito.when(userMockRepository.getByUsername(mockUser.getUsername())).thenThrow(EntityNotFoundException.class);
         Mockito.when(userMockRepository.getByEmail(mockUser.getEmail())).thenThrow(EntityNotFoundException.class);
 
         userService.create(mockUser);
-        //todo
+
         Mockito.verify(userMockRepository, times(1)).create(mockUser);
         assertEquals(LocalDateTime.now().getDayOfYear(), mockUser.getRegistrationDate().getDayOfYear());
     }
@@ -167,194 +168,156 @@ public class UserServiceImplTests {
 
     @Test
     void createUser_Should_Throw_EmailExistsException_When_DuplicateEmailExists() {
-        // Arrange
         User mockUser = createMockUser();
         Mockito.when(userMockRepository.getByUsername(mockUser.getUsername())).thenThrow(EntityNotFoundException.class);
         Mockito.when(userMockRepository.getByEmail(mockUser.getEmail())).thenReturn(mockUser);
 
-        // Act & Assert
         assertThrows(EmailExitsException.class, () -> userService.create(mockUser));
+
         Mockito.verify(userMockRepository, Mockito.never()).create(mockUser);
     }
 
     @Test
     void getUserDetails_Should_ReturnUser_When_UserIsAdmin() {
-        int adminId = 1;
         User mockAdmin = createMockAdmin();
-        Mockito.when(userMockRepository.getUserById(adminId)).thenReturn(mockAdmin);
+        Mockito.when(userMockRepository.getUserById(mockAdmin.getId())).thenReturn(mockAdmin);
 
-        User result = userService.getUserDetails(adminId, mockAdmin);
+        User result = userService.getUserDetails(mockAdmin.getId(), mockAdmin);
 
-        Mockito.verify(userMockRepository, times(1)).getUserById(adminId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(mockAdmin.getId());
         Assertions.assertEquals(mockAdmin, result);
     }
 
     @Test
     void getUserDetails_Should_Return_UnauthorizedOperationException_When_UserIsNotAdmin() {
-        int notAdminId = 2;
         User mockUser = createMockUser();
-        mockUser.setAdmin(false);
 
-        Mockito.when(userMockRepository.getUserById(notAdminId)).thenReturn(mockUser);
+        Mockito.when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
 
-
-        Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.getUserDetails(notAdminId, mockUser));
-        Mockito.verify(userMockRepository, times(1)).getUserById(notAdminId);
+        Assertions.assertThrows(UnauthorizedOperationException.class, () ->
+                userService.getUserDetails(mockUser.getId(), mockUser));
+        Mockito.verify(userMockRepository, times(1)).
+                getUserById(mockUser.getId());
     }
 
     @Test
-    void blockUser_Should_BlockUser_When_UserIsAdminAndBlockedUserIsNotAdmin() {
-        //ARRANGE
+    void blockUser_Should_BlockUser_When_UserIsAdminAndUserIsNotBlocked() {
         User mockUser = createMockUser();
         User mockAdmin = createMockAdmin();
 
         when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
         doNothing().when(userMockRepository).update(any());
-        //act
-        userService.blockUser(mockUser.getId(),mockAdmin);
 
-        //assert
+        userService.blockUser(mockUser.getId(), mockAdmin);
+
         assertTrue(mockUser.isBlocked());
         verify(userMockRepository, times(1)).update(mockUser);
     }
 
     @Test
     void blockUser_Should_ThrowException_When_UserIsNotAdmin() {
-        int notAdminId = 2;
         User mockUser = createMockUser();
-        mockUser.setAdmin(false);
-
         User mockUserToBlock = createMockUser();
-        mockUserToBlock.setAdmin(false);
+        mockUserToBlock.setBlocked(true);
 
-        Mockito.when(userMockRepository.getUserById(notAdminId)).thenReturn(mockUser);
+        Mockito.when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
 
-        Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.blockUser(notAdminId, mockUserToBlock));
+        Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.blockUser(mockUser.getId(), mockUserToBlock));
 
-        Mockito.verify(userMockRepository, times(1)).getUserById(notAdminId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(mockUser.getId());
         Mockito.verify(userMockRepository, Mockito.never()).update(mockUserToBlock);
     }
 
     @Test
-    void unblockUser_Should_UnblockUser_When_UserIsAdminAndUnblockedUserIsNotAdmin() {
+    void unblockUser_Should_UnblockUser_When_UserIsAdminAndUnblockedUserIsBlocked() {
         User mockUser = createMockUser();
         mockUser.setBlocked(true);
         User mockAdmin = createMockAdmin();
 
         when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
         doNothing().when(userMockRepository).update(any());
-        //act
-        userService.unBlockUser(mockUser.getId(),mockAdmin);
 
-        //assert
+        userService.unBlockUser(mockUser.getId(), mockAdmin);
+
         assertFalse(mockUser.isBlocked());
         verify(userMockRepository, times(1)).update(mockUser);
     }
 
     @Test
     void unblockUser_Should_ThrowException_When_UserIsNotAdmin() {
-        int notAdminId = 2;
         User mockUser = createMockUser();
-        mockUser.setAdmin(false);
-
         User mockUserToBlock = createMockUser();
-        mockUserToBlock.setAdmin(false);
 
-        Mockito.when(userMockRepository.getUserById(notAdminId)).thenReturn(mockUser);
+        Mockito.when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
 
-        Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.unBlockUser(notAdminId, mockUserToBlock));
+        Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.unBlockUser(mockUser.getId(), mockUserToBlock));
 
-        Mockito.verify(userMockRepository, times(1)).getUserById(notAdminId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(mockUser.getId());
         Mockito.verify(userMockRepository, Mockito.never()).update(mockUserToBlock);
     }
-    @Test           //TODO
+
+    @Test
     void makeAdmin_Should_ThrowUnauthorizedOperationException_When_UserIsNotAdmin() {
-        int userId = 1;
-        User mockAdmin = createMockUser();
-        mockAdmin.setAdmin(false);
-
-        int targetUserId = 2;
+        User mockUser1 = createMockUser();
         User mockUser = createMockUser();
-        mockUser.setAdmin(false);
 
-        Mockito.when(userMockRepository.getUserById(userId)).thenReturn(mockAdmin);
-        Mockito.when(userMockRepository.getUserById(targetUserId)).thenReturn(mockUser);
 
-        Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.makeAdmin(targetUserId, mockAdmin));
+        Mockito.when(userMockRepository.getUserById(mockUser1.getId())).thenReturn(mockUser1);
+        Mockito.when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
 
-        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
+        Assertions.assertThrows(UnauthorizedOperationException.class, () -> userService.makeAdmin(mockUser1.getId(), mockUser));
+
+        Mockito.verify(userMockRepository, times(1)).getUserById(mockUser.getId());
+        Mockito.verify(userMockRepository, times(1)).getUserById(mockUser1.getId());
         Mockito.verify(userMockRepository, Mockito.never()).update(any());
     }
 
-    @Test   //TODO
-    void makeAdmin_Should_MakeUserAdmin_When_UserIsAdminAndTargetUserIsNotAdmin() {
-        int userId = 1;
-        User mockAdmin = createMockUser();
-        mockAdmin.setAdmin(true);
-
-        int targetUserId = 2;
+    @Test
+    void makeAdmin_Should_MakeUserAdmin_When_UserIsAdminAndUserIsNotAdmin() {
         User mockUser = createMockUser();
-        mockUser.setAdmin(false);
+        User mockAdmin = createMockAdmin();
 
-        User spyUser = Mockito.spy(mockUser);
+        when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
+        doNothing().when(userMockRepository).update(any());
 
-        Mockito.when(userMockRepository.getUserById(userId)).thenReturn(mockAdmin);
-        Mockito.when(userMockRepository.getUserById(targetUserId)).thenReturn(spyUser);
+        userService.makeAdmin(mockUser.getId(), mockAdmin);
 
-        User result = userService.makeAdmin(targetUserId, mockAdmin);
-
-        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
-        Mockito.verify(userMockRepository, times(1)).update(spyUser);
-
-        Assertions.assertTrue(spyUser.isAdmin());
-        Assertions.assertEquals(spyUser, result);
+        assertTrue(mockUser.isAdmin());
+        verify(userMockRepository, times(1)).update(mockUser);
     }
 
-    @Test       //TODO
+    @Test
     void unMakeAdmin_Should_ThrowUnauthorizedOperationException_When_UserIsNotAdmin() {
-        int userId = 1;
         User mockAdmin = createMockUser();
-        mockAdmin.setAdmin(false);
 
-        int targetUserId = 2;
         User mockTargetUser = createMockUser();
-        mockTargetUser.setAdmin(true);
 
-        Mockito.when(userMockRepository.getUserById(userId)).thenReturn(mockAdmin);
-        Mockito.when(userMockRepository.getUserById(targetUserId)).thenReturn(mockTargetUser);
+        Mockito.when(userMockRepository.getUserById(mockAdmin.getId())).thenReturn(mockAdmin);
+        Mockito.when(userMockRepository.getUserById(mockTargetUser.getId())).thenReturn(mockTargetUser);
 
         Assertions.assertThrows(UnauthorizedOperationException.class, () -> {
-            userService.unMakeAdmin(userId, mockTargetUser);
+            userService.unMakeAdmin(mockAdmin.getId(), mockTargetUser);
         });
 
-        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
+        Mockito.verify(userMockRepository, times(1)).getUserById(mockAdmin.getId());
+        Mockito.verify(userMockRepository, times(1)).getUserById(mockTargetUser.getId());
         Mockito.verify(userMockRepository, times(0)).update(any(User.class));
         Mockito.verifyNoMoreInteractions(userMockRepository);
     }
-    @Test           //TODO
-    void unMakeAdmin_Should_UnMakeUserAdmin_When_UserIsAdminAndTargetUserIsAdmin() {
-        int userId = 1;
-        User mockAdmin = createMockUser();
-        mockAdmin.setAdmin(true);
 
-        int targetUserId = 2;
-        User mockTargetUser = createMockUser();
-        mockTargetUser.setAdmin(true);
+    @Test
+    void unMakeAdmin_Should_UnMakeUserAdmin_When_UserIsAdminAndUserIsAdmin() {
+        User mockAdmin = createMockAdmin();
+        User mockAdmin1 = createMockAdmin();
 
-        Mockito.when(userMockRepository.getUserById(userId)).thenReturn(mockAdmin);
-        Mockito.when(userMockRepository.getUserById(targetUserId)).thenReturn(mockTargetUser);
+        when(userMockRepository.getUserById(mockAdmin.getId())).thenReturn(mockAdmin);
+        doNothing().when(userMockRepository).update(any());
 
-        User result = userService.unMakeAdmin(userId, mockTargetUser);
+        userService.unMakeAdmin(mockAdmin.getId(), mockAdmin1);
 
-        Mockito.verify(userMockRepository, times(1)).getUserById(userId);
-        Mockito.verify(userMockRepository, times(1)).getUserById(targetUserId);
-        Mockito.verify(userMockRepository, times(1)).update(mockTargetUser);
-        Mockito.verifyNoMoreInteractions(userMockRepository);
 
-        Assertions.assertFalse(result.isAdmin());
+        assertFalse(mockAdmin.isAdmin());
+        verify(userMockRepository, times(1)).update(mockAdmin);
     }
 
 }

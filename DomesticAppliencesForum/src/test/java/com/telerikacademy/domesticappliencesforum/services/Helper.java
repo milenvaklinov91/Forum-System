@@ -1,9 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
-import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.TagTypes;
-import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 
 import java.time.LocalDateTime;
@@ -25,6 +22,14 @@ public class Helper {
         mockUser.setEmail("mock@user.com");
         return mockUser;
     }
+
+    public static PhoneNumber createPhoneNumber(){
+        var mockPhoneNumber = new PhoneNumber();
+        mockPhoneNumber.setPhoneNumberId(1);
+        mockPhoneNumber.setPhoneNumber("+359888123456");
+        return mockPhoneNumber;
+    }
+
     public static PostFilterOptions createMockFilterOptions() {
         return new PostFilterOptions(
                 "username",

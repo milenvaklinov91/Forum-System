@@ -166,10 +166,4 @@ public class UserServiceImpl implements UserService {
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-
-
-
-   /*public void delete(int id) {
-        repository.delete(id);
-    }*/
 }
