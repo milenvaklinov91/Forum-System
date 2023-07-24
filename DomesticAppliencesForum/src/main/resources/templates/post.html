@@ -8,5 +8,11 @@
 <h2 th:text="${post.getTitle()}">Post Title</h2>
 <h2 th:text="${post.getContent()}">Post Content</h2>
 <h2 th:text="${post.getTag().getType()}">Post Tag</h2>
+<h2>Comments:</h2>
+<ul>
+    <li th:each="comment : ${post.getComments()}">
+        <p th:text="${comment.getComment()}"></p>
+    </li>
+</ul>
 </body>
 </html>
