@@ -15,8 +15,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.telerikacademy.domesticappliencesforum.services.Helper.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static jdk.internal.org.objectweb.asm.util.CheckClassAdapter.verify;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PhoneNumberServiceImplTests {
@@ -36,7 +38,7 @@ public class PhoneNumberServiceImplTests {
         when(phoneNumberMockRepository.getPhoneNumberById(Mockito.anyInt())).thenReturn(mockPhoneNumber);
         PhoneNumber result = phoneNumberService.getPhoneNumberById(mockPhoneNumber.getPhoneNumberId());
 
-        Assertions.assertEquals(mockPhoneNumber, result);
+        assertEquals(mockPhoneNumber, result);
     }
 
     @Test
@@ -50,33 +52,4 @@ public class PhoneNumberServiceImplTests {
         assertThrows(EntityDuplicateException.class, () -> phoneNumberService.createPhoneNumber(mockPhoneNumber, mockAdmin));
     }
 
-   /* @Test
-    void createPhoneNumber_Should_CreatePhoneNumber_When_AdminUserAndNoDuplicate() {
-        // ARRANGE
-        User mockUserAdmin = createMockAdmin();
-        PhoneNumber mockPhoneNumber = createPhoneNumber();
-
-
-        when(phoneNumberMockRepository.getPhoneNumberById(mockPhoneNumber.getPhoneNumberId()))
-                .thenThrow(EntityNotFoundException.class);
-
-        // ACT
-        phoneNumberService.createPhoneNumber(mockPhoneNumber, mockUserAdmin);
-
-        // ASSERT
-        verify(phoneNumberMockRepository, times(1)).createPhoneNumber(mockPhoneNumber);
-    }*/
-
-    /*@Test
-    void createPhoneNumber_Should_CreatePhoneNumber_When_PhoneNumberCreated(){
-        User mockUserAdmin = createMockAdmin();
-        PhoneNumber mockPhoneNumber = createPhoneNumber();
-
-        when(phoneNumberMockRepository.getPhoneNumberById(mockPhoneNumber.getPhoneNumberId()))
-                .thenReturn(null);
-
-        phoneNumberService.createPhoneNumber(mockPhoneNumber,mockUserAdmin);
-
-        verify(phoneNumberMockRepository,times(1),createPhoneNumber(any());
-    }*/
 }

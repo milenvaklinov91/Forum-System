@@ -166,7 +166,6 @@ public class UserServiceImplTests {
         Assertions.assertThrows(EntityNotFoundException.class, () -> userService.getLikedPostsByUser(mockUser.getId()));
     }
 
-
     @Test
     void getLikedPostsByUser_Should_ReturnListOfLikedPosts_WhenLikedPostsExist() {
         User mockUser = createMockUser();
