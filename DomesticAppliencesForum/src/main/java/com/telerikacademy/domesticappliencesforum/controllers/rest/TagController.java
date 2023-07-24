@@ -1,5 +1,6 @@
-package com.telerikacademy.domesticappliencesforum.controllers;
+package com.telerikacademy.domesticappliencesforum.controllers.rest;
 
+import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;

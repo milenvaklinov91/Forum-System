@@ -218,6 +218,8 @@ public class PostRepositoryImpl implements PostRepository {
             case "createTime":
                 orderBy = "createTime";
                 break;
+            case "tagTypeId":
+                orderBy="tag.tagTypeId";
         }
 
         orderBy = String.format(" ORDER BY %s ", orderBy);

@@ -1,7 +1,10 @@
 package com.telerikacademy.domesticappliencesforum.models.filterOptions;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Optional;
 
+@Component
 public class PostFilterOptions {
 
     private Optional<String> username;
@@ -11,6 +14,10 @@ public class PostFilterOptions {
     private Optional<String> mostComments;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
+
+    public PostFilterOptions() {
+        this(null, null, null, null, null, null,null);
+    }
 
     public PostFilterOptions(String username, String localDate,
                              Integer lastTen,

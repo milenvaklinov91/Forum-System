@@ -1,5 +1,6 @@
-package com.telerikacademy.domesticappliencesforum.controllers;
+package com.telerikacademy.domesticappliencesforum.controllers.rest;
 
+import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
 import com.telerikacademy.domesticappliencesforum.exceptions.*;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
