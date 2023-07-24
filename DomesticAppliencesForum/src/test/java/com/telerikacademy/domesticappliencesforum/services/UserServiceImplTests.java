@@ -14,6 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -97,6 +99,64 @@ public class UserServiceImplTests {
     }
 
     @Test
+    void update_Should_UpdateUser_When_UserExistsAndAdmin() {
+        User mockUser = createMockAdmin();
+        User mockAdmin = createMockUser();
+
+        when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
+
+        userService.update(mockUser, mockAdmin);
+
+        verify(userMockRepository, times(1)).update(mockUser);
+        assertTrue(mockUser.isAdmin());
+        assertFalse(mockUser.isBlocked());
+    }
+
+    @Test
+    void update_Should_BlockUser_When_LoggedUserIsBlocked() {
+        User loggedUser = createMockUser();
+        loggedUser.setBlocked(true);
+
+        User userToUpdate = createMockUser();
+
+        when(userMockRepository.getUserById(userToUpdate.getId())).thenReturn(userToUpdate);
+
+        userService.update(loggedUser, userToUpdate);
+
+        assertTrue(userToUpdate.isBlocked());
+    }
+
+    @Test
+    void update_Should_ThrowConflictException_When_UsernameIsDiffer() {
+        User mockUser = createMockUser();
+        User mockUser1 = createMockUser();
+        User userToUpdate = createMockUser();
+
+        when(userMockRepository.getUserById(userToUpdate.getId())).thenReturn(mockUser1);
+
+        mockUser1.setUsername("existingUsername");
+        userToUpdate.setUsername("newUsername");
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> userService.update(mockUser, userToUpdate));
+
+        assertEquals(HttpStatus.CONFLICT, exception.getStatus());
+        assertEquals("You cannot update username!", exception.getReason());
+
+        verify(userMockRepository, never()).update(any());
+    }
+
+    @Test
+    void update_Should_ThrowResponseStatusException_When_UserDoesNotExist() {
+        User mockAdmin = createMockAdmin();
+        User mockUser = createMockUser();
+
+        when(userMockRepository.getUserById(mockUser.getId())).thenThrow(EntityNotFoundException.class);
+
+        assertThrows(ResponseStatusException.class, () -> userService.update(mockAdmin, mockUser));
+    }
+
+    @Test
     void getLikedPostsByUser_Should_ThrowException_When_LikedPostsDoesNotExist() {
         User mockUser = createMockUser();
         List<Post> likedPosts = new ArrayList<>();
@@ -105,6 +165,7 @@ public class UserServiceImplTests {
 
         Assertions.assertThrows(EntityNotFoundException.class, () -> userService.getLikedPostsByUser(mockUser.getId()));
     }
+
 
     @Test
     void getLikedPostsByUser_Should_ReturnListOfLikedPosts_WhenLikedPostsExist() {

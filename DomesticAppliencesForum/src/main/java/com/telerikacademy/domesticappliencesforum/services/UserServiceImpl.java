@@ -97,27 +97,29 @@ public class UserServiceImpl implements UserService {
     public void update(User loggedUser, User user) {
         try {
             User existUser = repository.getUserById(user.getId());
+
             existUser.setFirstName(user.getFirstName());
             existUser.setLastName(user.getLastName());
             existUser.setEmail(user.getEmail());
             existUser.setPassword(user.getPassword());
+
             if (!existUser.getUsername().equals(user.getUsername())) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "You cannot update username!");
             }
+
+            if (loggedUser.isBlocked()) {
+                existUser.setBlocked(true);
+            }
+            if (loggedUser.isAdmin()) {
+                existUser.setAdmin(true);
+            }
+
+            repository.update(existUser);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        if (user.isBlocked()){
-            loggedUser.setBlocked(true);
-        }
-        if (user.isAdmin()){
-            loggedUser.setAdmin(true);
-        }
-
-        //todo
-        repository.update(user);
     }
-        //не ви чувам
+
     public User getUserDetails(int id, User user) {
         User admin = repository.getUserById(id);
         if (!admin.isAdmin()) {
