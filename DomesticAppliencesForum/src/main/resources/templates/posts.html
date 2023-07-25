@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>All Posts</title>
-  <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
 </head>
 <body>
-<div class="table">
-  <div class="header">
-    <div class="cell" th:text="#{post.label.title}">Title</div>
-    <div class="cell" th:text="#{post.label.content}">Content</div>
-    <div class="cell" th:text="#{post.label.tag}">Tag Name</div>
-  </div>
-  <div class="row" th:each="post : ${posts}">
-    <div class="cell">
-      <a href="#" th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}">Post</a>
+<div th:if="${posts.isEmpty()}">
+    <h2 th:text="#{posts.title.empty}">No Posts</h2>
+</div>
+<div th:unless="${posts.isEmpty()}">
+    <h2 th:text="#{posts.title}">All Posts</h2>
+
+    <div class="table">
+        <div class="header">
+            <div class="cell" th:text="#{post.label.title}">Title</div>
+            <div class="cell" th:text="#{post.label.content}">Content</div>
+            <div class="cell" th:text="#{post.label.tag}">Tag Name</div>
+        </div>
+        <div class="row" th:each="post : ${posts}">
+            <div class="cell">
+                <a href="#" th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}">Post</a>
+            </div>
+            <div class="cell" th:text="${post.getContent()}">Content</div>
+            <div class="cell" th:text="${post.getTag().getType()}">Tag</div>
+        </div>
     </div>
-    <div class="cell" th:text="${post.getContent()}">Content</div>
-    <div class="cell" th:text="${post.getTag().getType()}">Tag</div>
-  </div>
 </div>
 </body>
 </html>

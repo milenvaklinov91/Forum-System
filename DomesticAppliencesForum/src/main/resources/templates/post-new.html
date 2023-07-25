@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Post</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>New Post</h2>
+<form action="#" th:action="@{/posts/new}" th:object="${post}" method="post">
+  <label th:text="#{post.label.title}">POst</label>
+  <br/>
+  <input type="text" th:field="*{title}"/>
+  <label class="error" th:errors="*{title}">Title error placeholder</label>
+  <br/><br/>
+
+  <label th:text="#{post.label.content}">Content</label>
+  <br/>
+  <input type="text" th:field="*{content}"/>
+  <label class="error" th:errors="*{content}">Content error placeholder</label>
+  <br/><br/>
+  <label th:text="#{post.label.tag}">Tag</label>
+  <br/>
+  <select th:field="*{tagTypeID}">
+    <option th:each="tagType : ${tags}"
+            th:value="${tagType.getTagTypeId()}"
+            th:text="${tagType.getType()}">
+    PostTagOne
+    </option>
+  </select>
+  <label class="error" th:errors="*{tagTypeID}">Таг error placeholder</label>
+  <br/><br/>
+
+  <input type="submit" value="Save"/>
+</form>
+</body>
+</html>
