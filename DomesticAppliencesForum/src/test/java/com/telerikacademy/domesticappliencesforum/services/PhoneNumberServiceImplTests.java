@@ -15,17 +15,15 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.telerikacademy.domesticappliencesforum.services.Helper.*;
-import static jdk.internal.org.objectweb.asm.util.CheckClassAdapter.verify;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PhoneNumberServiceImplTests {
     @Mock
     PhoneNumberRepository phoneNumberMockRepository;
-    @Mock
-    UserRepository userMockRepository;
+
     @InjectMocks
     PhoneNumberServiceImpl phoneNumberService;
 
@@ -52,4 +50,19 @@ public class PhoneNumberServiceImplTests {
         assertThrows(EntityDuplicateException.class, () -> phoneNumberService.createPhoneNumber(mockPhoneNumber, mockAdmin));
     }
 
+    @Test
+    void createPhoneNumber_Should_CallRepositoryMethod_When_AdminUserAndNoDuplicateExists() {
+        User mockAdmin = createMockAdmin();
+        PhoneNumber mockPhoneNumber = createPhoneNumber();
+
+        when(phoneNumberMockRepository.getPhoneNumberById(mockPhoneNumber.getPhoneNumberId()))
+                .thenThrow(EntityNotFoundException.class);
+
+        phoneNumberService.createPhoneNumber(mockPhoneNumber, mockAdmin);
+
+        verify(phoneNumberMockRepository, times(1)).getPhoneNumberById(mockPhoneNumber.getPhoneNumberId());
+        verify(phoneNumberMockRepository, times(1)).createPhoneNumber(mockPhoneNumber);
+
+        verifyNoMoreInteractions(phoneNumberMockRepository);
+    }
 }
