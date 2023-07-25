@@ -113,18 +113,30 @@ public class UserServiceImplTests {
     }
 
     @Test
-    void update_Should_BlockUser_When_LoggedUserIsBlocked() {
-        User loggedUser = createMockUser();
-        loggedUser.setBlocked(true);
+    void update_Should_SetAdmin_When_UserIsAdmin() {
+        User mockAdmin = createMockAdmin();
+        User mockUser = createMockAdmin();
 
-        User userToUpdate = createMockUser();
+        when(userMockRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
 
-        when(userMockRepository.getUserById(userToUpdate.getId())).thenReturn(userToUpdate);
+        userService.update(mockAdmin, mockUser);
 
-        userService.update(loggedUser, userToUpdate);
-
-        assertTrue(userToUpdate.isBlocked());
+        assertTrue(mockUser.isAdmin());
     }
+
+    @Test
+    void update_Should_SetBlocked_When_UserIsBlocked() {
+        User mockUser = createMockUser();
+        User mockBlockUser = createMockUser();
+        mockBlockUser.setBlocked(true);
+
+        when(userMockRepository.getUserById(mockBlockUser.getId())).thenReturn(mockBlockUser);
+
+        userService.update(mockUser, mockBlockUser);
+
+        assertTrue(mockBlockUser.isBlocked());
+    }
+
 
     @Test
     void update_Should_ThrowConflictException_When_UsernameIsDiffer() {
