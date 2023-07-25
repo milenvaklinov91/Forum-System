@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.models.*;
+import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 
 import java.time.LocalDateTime;
@@ -65,5 +66,33 @@ public class Helper {
         mockComment.setComment("Comment should be between 32 and 3222 symbols");
         mockComment.setCreatedByUser(createMockUser());
         return mockComment;
+    }
+
+    public static Vote createVote(){
+        Post post=createMockPost();
+        VoteTypes voteTypes=type();
+        User user=createMockUser();
+        var mockVote=new Vote();
+        mockVote.setPost(post);
+        mockVote.setType(voteTypes);
+        mockVote.setCreatedBy(user);
+        return mockVote;
+    }
+    public static VoteDto createVoteDto(){
+        Post post=createMockPost();
+        VoteTypes voteTypes=type();
+        User user=createMockUser();
+        var mockVote=new VoteDto();
+        mockVote.setPostId(post.getPostId());
+        mockVote.setType(voteTypes.getVoteTypeID());
+        mockVote.setUserId(user.getId());
+        return mockVote;
+    }
+
+    public static VoteTypes type(){
+        var mockVoteType=new VoteTypes();
+        mockVoteType.setVoteTypeID(1);
+        mockVoteType.setType("like");
+        return mockVoteType;
     }
 }

@@ -2,7 +2,10 @@ package com.telerikacademy.domesticappliencesforum.controllers.rest;
 
 import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
 import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
+import com.telerikacademy.domesticappliencesforum.mappers.VoteMapper;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.Vote;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
@@ -21,31 +24,23 @@ public class VoteController {
     private final UserRepository userRepository;
     private PostRepository postRepository;
     private final AuthenticationHelper authenticationHelper;
+    private VoteMapper voteMapper;
 
     public VoteController(VoteService voteService, UserRepository userRepository,
-                          PostRepository postRepository, AuthenticationHelper authenticationHelper) {
+                          PostRepository postRepository, AuthenticationHelper authenticationHelper, VoteMapper voteMapper) {
         this.voteService = voteService;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.authenticationHelper = authenticationHelper;
+        this.voteMapper = voteMapper;
     }
-
-//    @GetMapping("/{id}/likes")
-//    public int getLikeForPost(@Valid @PathVariable int id) {
-//
-//        return voteService.getVoteCountForPost(id);
-//    }
-//
-//    @GetMapping("/{id}/dislikes")
-//    public int getDislikeForPost(@Valid @PathVariable int id) {
-//        return voteService.getDislikeForPost(id);
-//    }
 
     @PostMapping
     public void votePost(@RequestHeader HttpHeaders headers, @Valid @RequestBody VoteDto voteDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            voteService.votePost(voteDto, user);
+            Vote vote = voteMapper.fromVoteDto(voteDto);
+            voteService.votePost(vote, user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }

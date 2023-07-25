@@ -32,26 +32,4 @@ public class VoteRepositoryImpl implements VoteRepository {
         }
     }
 
-//    public int getLikeForPost(int postId) {
-//        try (Session session = sessionFactory.openSession()) {
-//            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =1");
-//            query.setParameter("post_id", postId);
-//            Long count = (Long) query.getSingleResult();
-//            return count.intValue();
-//        }
-//    }
-//
-//    public int getDislikeForPost(int postId) {
-//        try (Session session = sessionFactory.openSession()) {
-//            Query query = session.createQuery("SELECT COUNT(*) FROM Vote WHERE post.id = :post_id AND voteId =2");
-//            query.setParameter("post_id", postId);
-//            Long count = (Long) query.getSingleResult();
-//            return count.intValue();
-//        }
-//    }
-
-
-    //TODO getLikedPOstByUser, getMostLidedPosts(10), getDisLikedPostByUser,getMostDislikedPOsts(10)
-
-
 }

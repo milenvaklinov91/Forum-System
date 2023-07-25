@@ -31,30 +31,17 @@ public class VoteServiceImpl implements VoteService {
         this.voteTypesRepository = voteTypesRepository;
     }
 
-    public void votePost(VoteDto voteDto, User userReg) {
-        User user = userRepository.getUserById(voteDto.getUserId());
-        Post post = postRepository.getPostById(voteDto.getPostId());
-        VoteTypes type = voteTypesRepository.get(voteDto.getType());
 
-        if (voteRepository.existsByCreatedByAndPostAndVoteType(user, post, type)) {
+    public void votePost(Vote vote, User userReg) {
+        vote.setCreatedBy(userReg);
+        Post post = postRepository.getPostById(vote.getPost().getPostId());
+        VoteTypes type = voteTypesRepository.get(vote.getType().getVoteTypeID());
+        if (voteRepository.existsByCreatedByAndPostAndVoteType(userReg, post, type)) {
             throw new IllegalArgumentException("User has already voted on the post.");
-        }else if(user.isBlocked()){
+        }else if(userReg.isBlocked()){
             throw new UnauthorizedOperationException("You`re blocked!!!");
         }
-
-
-        Vote vote = voteMapper.fromVoteDto(voteDto, user, post, type);
         voteRepository.save(vote);
     }
-
-
-//    public int getVoteCountForPost(int postId) {
-//        return voteRepository.getLikeForPost(postId);
-//    }
-//
-//    public int getDislikeForPost(int postId) {
-//        return voteRepository.getDislikeForPost(postId);
-//    }
-
 
 }

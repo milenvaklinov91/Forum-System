@@ -4,6 +4,7 @@ import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.Vote;
 import com.telerikacademy.domesticappliencesforum.models.VoteTypes;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
@@ -27,22 +28,11 @@ public class VoteMapper {
         this.postRepository = postRepository;
     }
 
-    public VoteDto fromDto(Vote vote) {
-        VoteDto dto = new VoteDto();
-        dto.setUserId(vote.getCreatedBy().getId());
-        dto.setPostId(vote.getPost().getPostId());
-        dto.setType(vote.getType().getVoteTypeID());
-        return dto;
-    }
-
-    public Vote fromVoteDto(VoteDto voteDto, User user, Post post, VoteTypes voteType) {
-        user = userRepository.getUserById(voteDto.getUserId());
-        post = postRepository.getPostById(voteDto.getPostId());
+    public Vote fromVoteDto(VoteDto voteDto) {
         Vote vote = new Vote();
-
-        vote.setCreatedBy(user);
-        vote.setPost(post);
-        vote.setType(voteTypesRepository.get(voteType.getVoteTypeID()));
+        vote.setPost(postService.getById(voteDto.getPostId()));
+        vote.setType(voteTypesRepository.get(voteDto.getType()));
         return vote;
     }
+
 }
