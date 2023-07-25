@@ -4,12 +4,14 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller

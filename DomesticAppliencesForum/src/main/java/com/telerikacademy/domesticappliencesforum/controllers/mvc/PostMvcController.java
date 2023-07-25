@@ -13,8 +13,11 @@ import com.telerikacademy.domesticappliencesforum.services.interfaces.UserServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -68,10 +71,15 @@ public class PostMvcController {
     }
 
     @PostMapping("/new")
-    public String createPost(@ModelAttribute PostDto post) {
-        User creator=userService.getById(2);
-        Post newPost=modelMapper.fromPostDto(post);
-        postService.create(newPost,creator);
-        return "redirect:/posts";
+    public String createPost(@ModelAttribute PostDto post, HttpSession session) {
+        if (post.getTagTypeID() == 0) {
+            session.setAttribute("currentPost", post);
+            return "redirect:/tags/new";
+        } else {
+            User creator = userService.getById(2);
+            Post newPost = modelMapper.fromPostDto(post);
+            postService.create(newPost, creator);
+            return "redirect:/posts";
+        }
     }
 }
