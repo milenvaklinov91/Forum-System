@@ -124,15 +124,14 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
-    //TODO
     @PutMapping("/{id}")
-    public User update(@RequestHeader HttpHeaders headers,@PathVariable int id,
+    public String update(@RequestHeader HttpHeaders headers,@PathVariable int id,
                        @Valid @RequestBody UserDto userDto) {
         try {
             User loggedUser = authenticationHelper.tryGetUser(headers);
             User user = userMapper.fromUserDto(id,userDto);
             service.update(loggedUser,user);
-            return user;
+            return "User was successfully updated!";
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
@@ -186,12 +185,4 @@ public class UserController {
         }
     }
 
-    /*@DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        try {
-            service.delete(id);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-    }*/
 }

@@ -107,10 +107,10 @@ public class UserServiceImpl implements UserService {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "You cannot update username!");
             }
 
-            if (loggedUser.isBlocked()) {
+            if (user.isBlocked()) {
                 existUser.setBlocked(true);
             }
-            if (loggedUser.isAdmin()) {
+            if (user.isAdmin()) {
                 existUser.setAdmin(true);
             }
 

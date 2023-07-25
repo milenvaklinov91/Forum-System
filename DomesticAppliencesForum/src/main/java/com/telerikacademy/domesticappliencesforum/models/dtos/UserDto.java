@@ -1,8 +1,5 @@
 package com.telerikacademy.domesticappliencesforum.models.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.telerikacademy.domesticappliencesforum.models.enums.GenderTypes;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

@@ -14,30 +14,6 @@ public class UserMapper {
         this.userService = userService;
     }
 
-    /*public User fromUserDto(UserDto userDto) {
-
-        User user = new User();
-
-        user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-
-        return user;
-    }
-
-    public User fromUserDtoWithoutUsername(UserDto userDto) {
-
-        User user = new User();
-        user.setPassword(userDto.getPassword());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-
-        return user;
-    }*/
-
      public User fromUserDto(int id , UserDto userDto) {
 
         User user = fromUserDto(userDto);
@@ -47,7 +23,6 @@ public class UserMapper {
     }
 
      public User fromUserDto(UserDto userDto) {
-
         User user = new User();
 
         user.setUsername(userDto.getUsername());
