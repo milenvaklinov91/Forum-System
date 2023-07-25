@@ -8,7 +8,7 @@ import java.util.List;
 public interface TagTypesService {
     List<TagTypes> get();
 
-    TagTypes get(int id);
+    TagTypes getById(int id);
 
     void create(TagTypes tag);
 

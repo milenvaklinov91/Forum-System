@@ -25,7 +25,7 @@ public class TagTypesServiceImpl implements TagTypesService {
         return tagTypesRepository.get();
     }
 
-    public TagTypes get(int id) {
+    public TagTypes getById(int id) {
         return tagTypesRepository.get(id);
     }
 
