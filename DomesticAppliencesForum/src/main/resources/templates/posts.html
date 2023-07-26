@@ -17,6 +17,7 @@
             <div class="cell" th:text="#{post.label.title}">Title</div>
             <div class="cell" th:text="#{post.label.content}">Content</div>
             <div class="cell" th:text="#{post.label.tag}">Tag Name</div>
+            <div class="cell" th:text="#{post.label.createdBy}">Creator usernaname</div>
         </div>
         <div class="row" th:each="post : ${posts}">
             <div class="cell">
@@ -24,6 +25,7 @@
             </div>
             <div class="cell" th:text="${post.getContent()}">Content</div>
             <div class="cell" th:text="${post.getTag().getType()}">Tag</div>
+            <div class="cell" th:text="${post.getCreatedBy().getUsername()}">Creator</div>
         </div>
     </div>
 </div>
