@@ -47,10 +47,11 @@ public class UserMvcController {
         return "users";
     }
 
-    @GetMapping("/count")
-    public String countAllPosts() {
+    /*@GetMapping("/count")
+    public String countAllUsers() {
+        List<User> users = service.countAllUsers();
         return null;
-    }
+    }*/
 
     @GetMapping("/{id}")
     public String  getSingleUser(@PathVariable int id,Model model) {
@@ -65,11 +66,12 @@ public class UserMvcController {
     }
 
     @GetMapping("/username")
-    public User getUserByUsername(@RequestHeader HttpHeaders headers, String username) {
+    public String getUserByUsername(@RequestHeader HttpHeaders headers, String username , Model model) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             service.getUserDetails(user.getId(), user);
-            return service.getByUsername(username);
+            model.addAttribute("user", user);
+            return "user";
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
