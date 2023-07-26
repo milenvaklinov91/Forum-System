@@ -71,15 +71,54 @@ public class PostMvcController {
     }
 
     @PostMapping("/new")
-    public String createPost(@ModelAttribute PostDto post, HttpSession session) {
-        if (post.getTagTypeID() == 0) {
+    public String createPost(@Valid @ModelAttribute("post") PostDto post, BindingResult errors, Model model, HttpSession session) {
+        if (errors.hasErrors()) {
+            return "post-new";
+        } else if (post.getTagTypeID() == 0) {
             session.setAttribute("currentPost", post);
             return "redirect:/tags/new";
         } else {
-            User creator = userService.getById(2);
-            Post newPost = modelMapper.fromPostDto(post);
-            postService.create(newPost, creator);
+                User creator = userService.getById(2);
+                Post newPost = modelMapper.fromPostDto(post);
+                postService.create(newPost, creator);
+                return "redirect:/posts";
+        }
+    }
+
+    @GetMapping("/{id}/update")
+    public String showEditPostPage(@PathVariable int id, Model model) {
+        try {
+            Post post = postService.getById(id);
+            PostDto postDto = modelMapper.toDto(post);
+            model.addAttribute("postId", id);
+            model.addAttribute("post", postDto);
+            return "post-update";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+    }
+    @PostMapping("/{id}/update")
+    public String updatePost(@PathVariable int id,@Valid @ModelAttribute("post") PostDto post, BindingResult errors, Model model, HttpSession session) {
+        if (errors.hasErrors()) {
+            return "post-update";
+        } else {
+            User user = userService.getById(2);
+            Post newPost = modelMapper.fromDto(id,post);
+            postService.modify(newPost, user);
             return "redirect:/posts";
+        }
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deletePost(@PathVariable int id, Model model) {
+        try {
+            User user = userService.getById(2);
+            postService.delete(id, user);
+            return "redirect:/posts";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
         }
     }
 }
