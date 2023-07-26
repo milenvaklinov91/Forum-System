@@ -5,6 +5,7 @@ import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -19,7 +20,7 @@ public class PostDto {
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8192 symbols")
     private String content;
 
-    @Positive(message = "Tag type ID should be positive")
+    @Min(value=0,message = "Tag type ID should be positive")
     private int tagTypeID;
 
     public PostDto() {

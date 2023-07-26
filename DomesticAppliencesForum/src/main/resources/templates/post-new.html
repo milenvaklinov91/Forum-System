@@ -7,7 +7,7 @@
 </head>
 <body>
 <h2>New Post</h2>
-<form action="#" th:action="@{/posts/new}" th:object="${post}" method="post">
+<form th:fragment="post-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${post}" method="post">
   <label th:text="#{post.label.title}">Post</label>
   <br/>
   <input type="text" th:field="*{title}"/>
