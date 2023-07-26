@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Single User</title>
+</head>
+<body>
+<h3 th:text="${user.getUsername()}">Username: Username</h3>
+<h3 th:text="${user.getFirstName()}">Firstname: FirstName</h3>
+<h3 th:text="${user.getLastName()}">Lastname: LastName</h3>
+<h3 th:text="${user.getEmail()}">Email: Email</h3>
+</body>
+</html>

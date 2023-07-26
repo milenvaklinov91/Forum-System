@@ -23,7 +23,7 @@ public class PostMapper {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-        post.setTag(tagTypesService.get(postDto.getTagTypeID()));
+        post.setTag(tagTypesService.getById(postDto.getTagTypeID()));
         return post;
     }
 

@@ -61,7 +61,6 @@ public class PostMvcController {
             model.addAttribute("error", e.getMessage());
             return "not-found";
         }
-
     }
 
     @GetMapping("/new")
