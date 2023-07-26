@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface VoteService {
   void votePost(Vote vote, User userReg);
+  List<Vote> getVotesByPostId(int postId);
 
 }

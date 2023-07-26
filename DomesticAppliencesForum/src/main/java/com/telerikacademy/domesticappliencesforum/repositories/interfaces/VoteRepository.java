@@ -5,9 +5,11 @@ import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.Vote;
 import com.telerikacademy.domesticappliencesforum.models.VoteTypes;
 
+import java.util.List;
+
 public interface VoteRepository {
     boolean existsByCreatedByAndPostAndVoteType(User createdBy, Post post, VoteTypes voteType);
 
     void save(Vote vote);
-
+    List<Vote> getVotesByPostId(int postId);
 }

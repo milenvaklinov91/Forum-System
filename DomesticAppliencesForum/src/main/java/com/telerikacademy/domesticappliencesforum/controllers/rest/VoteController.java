@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/votes")
@@ -33,6 +34,11 @@ public class VoteController {
         this.postRepository = postRepository;
         this.authenticationHelper = authenticationHelper;
         this.voteMapper = voteMapper;
+    }
+
+    @GetMapping("/{postId}")
+    public List<Vote> getVotesByPostId(@PathVariable int postId){
+        return voteService.getVotesByPostId(postId);
     }
 
     @PostMapping

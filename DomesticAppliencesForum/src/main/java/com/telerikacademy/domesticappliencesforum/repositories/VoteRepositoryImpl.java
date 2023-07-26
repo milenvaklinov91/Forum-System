@@ -4,7 +4,10 @@ import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class VoteRepositoryImpl implements VoteRepository {
@@ -23,6 +26,13 @@ public class VoteRepositoryImpl implements VoteRepository {
                     .setParameter("voteType", voteType)
                     .getSingleResult();
             return count > 0;
+        }
+    }
+    public List<Vote> getVotesByPostId(int postId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Vote> query = session.createQuery("FROM Vote v WHERE v.post.id = :postId", Vote.class);
+            query.setParameter("postId", postId);
+            return query.getResultList();
         }
     }
 

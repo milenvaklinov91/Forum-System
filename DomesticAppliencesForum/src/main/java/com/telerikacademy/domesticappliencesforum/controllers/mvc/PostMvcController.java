@@ -5,8 +5,11 @@ import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.Vote;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
+import com.telerikacademy.domesticappliencesforum.repositories.PostRepositoryImpl;
+import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,15 +32,22 @@ public class PostMvcController {
     private final TagTypesService tagTypesService;
     private final PostMapper modelMapper;
 
+    private final PostRepositoryImpl postRepository;
+
+    private final VoteRepositoryImpl voteRepository;
+
     @Autowired
     public PostMvcController(PostService postService,
                              UserService userService,
                              TagTypesService tagTypesService,
-                             PostMapper modelMapper) {
+                             PostMapper modelMapper, PostRepositoryImpl postRepository, VoteRepositoryImpl voteRepository) {
         this.postService = postService;
         this.userService = userService;
         this.tagTypesService = tagTypesService;
         this.modelMapper = modelMapper;
+
+        this.postRepository = postRepository;
+        this.voteRepository = voteRepository;
     }
 
     @ModelAttribute("tags")
@@ -119,5 +130,36 @@ public class PostMvcController {
             model.addAttribute("error", e.getMessage());
             return "not-found";
         }
+    }
+
+    @GetMapping("/{id}/likes")
+    public String getPostVotes(@PathVariable int id, Model model) {
+        try {
+            List<Vote> votes = voteRepository.getVotesByPostId(id);
+
+            int likes = 0;
+            int dislikes = 0;
+            List<String> usersWhoLiked = new ArrayList<>();
+            List<String> usersWhoDisliked = new ArrayList<>();
+
+            for (Vote vote : votes) {
+                if (vote.getType().getVoteTypeID() == 1) {
+                    likes++;
+                    usersWhoLiked.add(vote.getCreatedBy().getUsername());
+                } else if (vote.getType().getVoteTypeID() == 2) {
+                    dislikes++;
+                    usersWhoDisliked.add(vote.getCreatedBy().getUsername());
+                }
+            }
+
+            model.addAttribute("postId", id);
+            model.addAttribute("likes", likes);
+            model.addAttribute("dislikes", dislikes);
+            model.addAttribute("usersWhoLiked", usersWhoLiked);
+            model.addAttribute("usersWhoDisliked", usersWhoDisliked);
+        } catch (EntityNotFoundException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+        return "vote";
     }
 }

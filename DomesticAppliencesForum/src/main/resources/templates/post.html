@@ -14,6 +14,9 @@
 <ul>
     <li th:each="comment : ${post.getComments()}">
         <p th:text="${comment.getComment()}"></p>
+        <p>
+            <span th:text="'Created by:'+ ${comment.getCreatedByUser().getUsername()}"></span>
+        </p>
     </li>
 </ul>
 </body>

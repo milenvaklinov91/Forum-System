@@ -72,4 +72,16 @@ public class TagMvcController {
             return "tag-new";
         }
     }
+
+//    @GetMapping("/{id}/delete")
+//    public String deleteTag(@PathVariable int id, Model model) {
+//        try {
+//            User user = userService.getById(1);
+//            tagTypesService.delete(id, user);
+//            return "redirect:/tags";
+//        } catch (EntityNotFoundException e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "not-found";
+//        }
+//    }
 }

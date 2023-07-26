@@ -12,6 +12,8 @@ import com.telerikacademy.domesticappliencesforum.services.interfaces.VoteServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VoteServiceImpl implements VoteService {
     private final VoteRepository voteRepository;
@@ -42,6 +44,9 @@ public class VoteServiceImpl implements VoteService {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         }
         voteRepository.save(vote);
+    }
+    public List<Vote> getVotesByPostId(int postId){
+        return voteRepository.getVotesByPostId(postId);
     }
 
 }
