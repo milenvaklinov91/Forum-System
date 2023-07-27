@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Tag</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>New Tag</h2>
+<form action="#" th:action="@{/tags/new}" th:object="${tag}" method="post">
+    <label th:text="#{tag.label.title}">Tag</label>
+    <br/>
+    <input type="text" th:field="*{type}"/>
+    <label class="error" th:errors="*{type}">Title error placeholder</label>
+    <br/>
+    <input type="submit" value="Save"/>
+</form>
+</body>
+</html>

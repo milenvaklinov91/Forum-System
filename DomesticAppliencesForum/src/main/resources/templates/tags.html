@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Tags</title>
+  <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:if="${tags.isEmpty()}">
+    <h2 th:text="#{tags.title.empty}">No Tags</h2>
+</div>
+<div th:unless="${tags.isEmpty()}">
+    <h2 th:text="#{tags.title}">All Posts</h2>
+  <div class="table">
+       <div class="header">
+         <div class="cell" th:text="#{tags.label.type}">Type</div>
+       </div>
+    <div class="row" th:each="tag : ${tags}">
+      <div class="cell">
+        <a href="#" th:href="@{/tags/{id}(id=${tag.getTagTypeId()})}" th:text="${tag.getType()}">Tag</a>
+  </div>
+</div>
+  </div>
+</div>
+</body>
+</html>

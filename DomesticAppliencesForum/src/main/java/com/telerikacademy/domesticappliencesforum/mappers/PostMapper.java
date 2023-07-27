@@ -23,7 +23,7 @@ public class PostMapper {
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
-        post.setTag(tagTypesService.get(postDto.getTagTypeID()));
+        post.setTag(tagTypesService.getById(postDto.getTagTypeID()));
         return post;
     }
 
@@ -33,6 +33,14 @@ public class PostMapper {
         Post repositoryPost = postService.getById(id);
         post.setCreatedBy(repositoryPost.getCreatedBy());
         return post;
+    }
+
+    public PostDto toDto(Post post) {
+        PostDto postDto = new PostDto();
+        postDto.setTitle(post.getTitle());
+        postDto.setContent(post.getContent());
+        postDto.setTagTypeID(post.getTag().getTagTypeId());
+        return postDto;
     }
 
 

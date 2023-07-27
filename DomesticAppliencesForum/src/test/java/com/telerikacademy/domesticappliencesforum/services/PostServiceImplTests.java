@@ -23,8 +23,6 @@ import java.util.Set;
 import static com.telerikacademy.domesticappliencesforum.services.Helper.createMockPost;
 import static com.telerikacademy.domesticappliencesforum.services.Helper.createMockUser;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

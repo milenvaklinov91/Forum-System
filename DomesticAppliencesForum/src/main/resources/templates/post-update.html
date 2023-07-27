@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Post</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2 th:text="#{post.edit}">Edit Post</h2>
+
+<form th:replace="post-new.html :: post-form"></form>
+
+</body>
+</html>

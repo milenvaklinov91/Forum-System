@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Post Likes</title>
+  <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>
+  <span th:text="'Likes for Post with ID:' + ${postId}"></span>
+</h2>
+<p> <span th:text="'Total likes:' + ${likes}"></span></p>
+<p>Users Who Liked: <span th:each="user : ${usersWhoLiked}" th:text="${user} + ' '"></span></p>
+<p> <span th:text="'Total dislikes:' + ${dislikes}"></span></p>
+<p>Users Who Disliked: <span th:each="user : ${usersWhoDisliked}" th:text="${user} + ' '"></span></p>
+</body>
+</body>
+</html>
