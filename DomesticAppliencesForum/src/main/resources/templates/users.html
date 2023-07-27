@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<div th:if="${users.isEmpty()}">
+    <h1 th:text="#{users.title.empty}">No Users</h1>
+</div>
+<div th:unless="${users.isEmpty()}">
+    <h1 th:text="#{users.title}">All Users</h1>
+
+<div class="table">
+    <div class="header">
+        <div class="cell" th:text="#{user.label.username}">Username</div>
+        <div class="cell" th:text="#{user.label.firstName}">FirstName</div>
+        <div class="cell" th:text="#{user.label.lastName}">LastName</div>
+        <div class="cell" th:text="#{user.label.email}">Email</div>
+    </div>
+    <div class="row" th:each="user : ${users}">
+        <div class="cell">
+            <a href="#" th:href="@{/users/{id}(id=${user.getId()})}"
+               th:text="${user.getUsername}">User</a>
+        </div>
+        <div class="cell" th:text="${user.getFirstName}">FirstName</div>
+        <div class="cell" th:text="${user.getLastName}">LastName</div>
+        <div class="cell" th:text="${user.getEmail}">Email</div>
+    </div>
+</div>
+</body>
+</html>
