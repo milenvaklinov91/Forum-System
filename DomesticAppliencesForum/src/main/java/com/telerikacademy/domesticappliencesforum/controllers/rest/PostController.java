@@ -42,11 +42,12 @@ public class PostController {
             @RequestParam(required = false) Integer lastTen,
             @RequestParam(required = false) Integer tagId,
             @RequestParam(required = false) String mostComments,
+            @RequestParam(required = false) String topLiked,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder
     ) {
         PostFilterOptions filterOptions = new PostFilterOptions(username, localDate,
-                lastTen, tagId, mostComments, sortBy, sortOrder);
+                lastTen, tagId, mostComments,topLiked, sortBy, sortOrder);
         return postService.getAllPosts(filterOptions);
     }
 

@@ -26,24 +26,30 @@ public class HomeMvcController {
     }
 
     @GetMapping
-    public String showHomePage(Model model){
-    PostFilterOptions topCommentedOption = new PostFilterOptions();
-    topCommentedOption.getMostComments();
-    List<Post> topCommentedPosts = postService.getAllPosts(topCommentedOption);
+    public String showHomePage(Model model) {
+        PostFilterOptions topCommentedOption = new PostFilterOptions();
+        topCommentedOption.getMostComments();
+        List<Post> topCommentedPosts = postService.getAllPosts(topCommentedOption);
 
-    PostFilterOptions latestPostsOption = new PostFilterOptions();
-    latestPostsOption.getLastTen();
-    List<Post> latestPosts = postService.getAllPosts(latestPostsOption);
+        PostFilterOptions latestPostsOption = new PostFilterOptions();
+        latestPostsOption.getLastTen();
+        List<Post> latestPosts = postService.getAllPosts(latestPostsOption);
 
-    Long numberOfUsers = userService.countAllUsers();
-    Long numberOfPosts = postService.countAllPosts();
+        PostFilterOptions mostLikedPostsOption = new PostFilterOptions();
+        mostLikedPostsOption.getTopLiked();
+        List<Post> mostLikedPost = postService.getAllPosts(latestPostsOption);
 
-    model.addAttribute("topCommentedPosts", topCommentedPosts);
-    model.addAttribute("latestPosts", latestPosts);
-    model.addAttribute("numberOfUsers", numberOfUsers);
-    model.addAttribute("numberOfPosts", numberOfPosts);
 
-    return "homePage";
-}
+        Long numberOfUsers = userService.countAllUsers();
+        Long numberOfPosts = postService.countAllPosts();
+
+        model.addAttribute("topCommentedPosts", topCommentedPosts);
+        model.addAttribute("latestPosts", latestPosts);
+        model.addAttribute("mostLikedPost",mostLikedPost);
+        model.addAttribute("numberOfUsers", numberOfUsers);
+        model.addAttribute("numberOfPosts", numberOfPosts);
+
+        return "homePage";
     }
+}
 

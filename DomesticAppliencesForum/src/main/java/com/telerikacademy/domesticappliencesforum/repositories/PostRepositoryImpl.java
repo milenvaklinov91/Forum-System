@@ -49,6 +49,14 @@ public class PostRepositoryImpl implements PostRepository {
 
             } else if (filterOptions.getLastTen().isPresent()) {
                 stringBuilder.append(" ORDER BY postId DESC ");
+            }else if(filterOptions.getTopLiked().isPresent()) {
+                stringBuilder = new StringBuilder(
+                        "SELECT p FROM Post p " +
+                                "LEFT JOIN p.votes v " +
+                                "WHERE v.type = 1 " +
+                                "GROUP BY p.id " +
+                                "ORDER BY COUNT(v) DESC"
+                );
             } else {
                 if (!filters.isEmpty()) {
                     stringBuilder.append(" WHERE ");

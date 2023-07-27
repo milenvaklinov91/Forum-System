@@ -5,6 +5,12 @@
     <title>Single Post</title>
 </head>
 <body>
+<ul>
+    <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">See all posts</a></h3></li>
+</ul>
+<ul>
+    <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
+</ul>
 <h2 th:text="${post.getTitle()}">Post Title</h2>
 <h2 th:text="${post.getContent()}">Post Content</h2>
 <h2>
@@ -19,5 +25,11 @@
         </p>
     </li>
 </ul>
+<p th:text="'Likes: ' + ${likes} + ', Dislikes: ' + ${disLikes}"></p>
+<div>
+    <a href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See votes</a>
+</div>
+
+</div>
 </body>
 </html>

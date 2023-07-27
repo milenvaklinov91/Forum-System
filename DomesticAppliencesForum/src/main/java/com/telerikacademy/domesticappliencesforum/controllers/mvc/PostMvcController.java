@@ -66,7 +66,11 @@ public class PostMvcController {
     public String showSinglePost(@PathVariable int id, Model model) {
         try {
             Post post = postService.getById(id);
+            int likes=postRepository.getPostLikes(id);
+            int disLikes=postRepository.getPostDisLikes(id);
             model.addAttribute("post", post);
+            model.addAttribute("likes",likes);
+            model.addAttribute("disLikes",disLikes);
             return "post";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -132,10 +136,11 @@ public class PostMvcController {
         }
     }
 
-    @GetMapping("/{id}/likes")
-    public String getPostVotes(@PathVariable int id, Model model) {
+    @GetMapping("/{id}/seeVotes")
+    public String seePostVotes(@PathVariable int id, Model model) {
         try {
             List<Vote> votes = voteRepository.getVotesByPostId(id);
+            Post post=postService.getById(id);
 
             int likes = 0;
             int dislikes = 0;
@@ -153,6 +158,7 @@ public class PostMvcController {
             }
 
             model.addAttribute("postId", id);
+            model.addAttribute("post", post);
             model.addAttribute("likes", likes);
             model.addAttribute("dislikes", dislikes);
             model.addAttribute("usersWhoLiked", usersWhoLiked);
@@ -162,4 +168,6 @@ public class PostMvcController {
         }
         return "vote";
     }
+
+
 }

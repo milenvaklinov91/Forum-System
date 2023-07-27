@@ -5,6 +5,9 @@
     <title>Home Page</title>
 </head>
 <body>
+<ul>
+    <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
+</ul>
 <h2 th:text="#{home.welcome}">Welcome!</h2>
 <p>Total number of users: <span th:text="${numberOfUsers}"></span></p>
 <p>Total number of posts: <span th:text="${numberOfPosts}"></span></p>
@@ -22,4 +25,12 @@
         <a th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}"></a>
     </li>
 </ul>
+<h2 th:text="#{home.topTenLiked}">Top 10 Most Liked Posts:</h2>
+<ul>
+    <li th:each="post : ${mostLikedPost}">
+        <a th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}"></a>
+    </li>
+</ul>
+
+
 </body>

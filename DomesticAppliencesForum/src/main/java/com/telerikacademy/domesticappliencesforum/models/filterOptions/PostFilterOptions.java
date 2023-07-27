@@ -12,25 +12,32 @@ public class PostFilterOptions {
     private Optional<Integer> lastTen;
     private Optional<Integer> tagId;
     private Optional<String> mostComments;
+    private Optional<String> topLiked;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
     public PostFilterOptions() {
-        this(null, null, null, null, null, null,null);
+        this(null, null, null, null, null,null, null,null);
     }
 
     public PostFilterOptions(String username, String localDate,
                              Integer lastTen,
                              Integer tagId, String mostComments,
+                             String topLiked,
                              String sortBy, String sortOrder) {
         this.username = Optional.ofNullable(username);
         this.localDate = Optional.ofNullable(localDate);
         this.lastTen = Optional.ofNullable(lastTen);
         this.tagId = Optional.ofNullable(tagId);
         this.mostComments = Optional.ofNullable(mostComments);
+        this.topLiked=Optional.ofNullable(topLiked);
         this.sortBy = Optional.ofNullable(sortBy);
         this.sortOrder = Optional.ofNullable(sortOrder);
 
+    }
+
+    public Optional<String> getTopLiked() {
+        return topLiked;
     }
 
     public Optional<String> getUsername() {

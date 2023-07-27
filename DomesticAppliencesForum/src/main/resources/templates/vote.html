@@ -6,8 +6,14 @@
   <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<ul>
+  <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home page</a></h3></li>
+</ul>
+<ul>
+  <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
+</ul>
 <h2>
-  <span th:text="'Likes for Post with ID:' + ${postId}"></span>
+  <span th:text="'Likes for Post :' + ${post.getTitle()}"></span>
 </h2>
 <p> <span th:text="'Total likes:' + ${likes}"></span></p>
 <p>Users Who Liked: <span th:each="user : ${usersWhoLiked}" th:text="${user} + ' '"></span></p>
