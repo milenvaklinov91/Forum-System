@@ -170,8 +170,8 @@ public class CommentRepositoryImpl implements CommentRepository {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(
                     "SELECT COUNT(v) " +
-                            "FROM Vote v " +
-                            "WHERE v.comment.id = :comment_id AND v.type.id = 1"
+                            "FROM VoteComment v " +
+                            "WHERE v.comment.id = :comment_id AND v.typeId.id = 1"
             );
             query.setParameter("comment_id", commentId);
             Long likeCount = (Long) query.uniqueResult();
@@ -182,17 +182,17 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
     }
 
-    public int getPostDisLikes(int postId) {
+    public int getCommentDisLikes(int commentId) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(
                     "SELECT COUNT(v) " +
-                            "FROM Vote v " +
-                            "WHERE v.post.id = :post_id AND v.type.id = 2"
+                            "FROM VoteComment v " +
+                            "WHERE v.comment.id = :comment_id AND v.typeId.id = 2"
             );
-            query.setParameter("post_id", postId);
+            query.setParameter("comment_id", commentId);
             Long likeCount = (Long) query.uniqueResult();
             if (likeCount == 0) {
-                throw new EntityNotFoundException("This post dont have disLikes!");
+                throw new EntityNotFoundException("This comment doesn't have any dislikes!");
             }
             return likeCount.intValue();
         }
