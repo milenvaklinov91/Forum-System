@@ -10,7 +10,15 @@ public class FilterOptionsComment {
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
-    public FilterOptionsComment(Integer username, String localDate, Integer vote, String sortBy, String sortOrder) {
+    public FilterOptionsComment() {
+        this(null,null,null,null,null);
+    }
+
+    public FilterOptionsComment(Integer username,
+                                String localDate,
+                                Integer vote,
+                                String sortBy,
+                                String sortOrder) {
         this.username = Optional.ofNullable(String.valueOf(username));
         this.localDate = Optional.ofNullable(localDate);
         this.vote = Optional.ofNullable(vote);

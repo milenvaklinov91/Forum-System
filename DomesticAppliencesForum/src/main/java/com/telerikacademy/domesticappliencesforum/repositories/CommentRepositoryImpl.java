@@ -10,6 +10,8 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,14 +42,14 @@ public class CommentRepositoryImpl implements CommentRepository {
         try (Session session = sessionFactory.openSession()) {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
-
-            filterOptionsComment.getUsername().ifPresent(value -> {
-                filters.add("comment.createdByUser.username like :username");
-                params.put("username", String.format("%%%s%%", value));
-            });
-            filterOptionsComment.getLocalDate().ifPresent(value -> {
-                filters.add("create_date like :localDate");
-                params.put("localDate",value);
+//            filterOptionsComment.getUsername().ifPresent(username -> {
+//                filters.add(" createdByUser.username = :userName ");
+//                params.put("userName", username);
+//            });
+            filterOptionsComment.getLocalDate().ifPresent(localDate -> {
+                LocalDateTime dateTime = LocalDateTime.parse(localDate, DateTimeFormatter.ISO_DATE_TIME);
+                filters.add("createTime = :localDate");
+                params.put("localDate",dateTime);
             });
 //            filterOptionsComment.getVote().ifPresent(value -> {
 //                filters.add("vote like :vote");
@@ -162,5 +164,37 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
 
         return orderBy;
+    }
+
+    public int getCommentLikes(int commentId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT COUNT(v) " +
+                            "FROM Vote v " +
+                            "WHERE v.comment.id = :comment_id AND v.type.id = 1"
+            );
+            query.setParameter("comment_id", commentId);
+            Long likeCount = (Long) query.uniqueResult();
+            if (likeCount == 0) {
+                throw new EntityNotFoundException("This comment doesn't have any likes!");
+            }
+            return likeCount.intValue();
+        }
+    }
+
+    public int getPostDisLikes(int postId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT COUNT(v) " +
+                            "FROM Vote v " +
+                            "WHERE v.post.id = :post_id AND v.type.id = 2"
+            );
+            query.setParameter("post_id", postId);
+            Long likeCount = (Long) query.uniqueResult();
+            if (likeCount == 0) {
+                throw new EntityNotFoundException("This post dont have disLikes!");
+            }
+            return likeCount.intValue();
+        }
     }
 }
