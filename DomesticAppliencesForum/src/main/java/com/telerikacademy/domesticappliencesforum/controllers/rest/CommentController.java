@@ -83,12 +83,12 @@ public class CommentController {
         commentService.delete(id, user);
     }
 
-    @GetMapping("/{id}/Commentlikes")
+    @GetMapping("/{id}/commentlikes")
     public int getCommentLikes(@PathVariable int id) {
         return commentService.getCommentLikes(id);
     }
 
-    @GetMapping("/{id}/Commentdislikes")
+    @GetMapping("/{id}/commentdislikes")
     public int getCommentDisLikes(@PathVariable int id) {
         return commentService.getCommentDisLikes(id);
     }
