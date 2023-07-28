@@ -56,7 +56,7 @@ public class TagTypesServiceImplTests {
         when(tagRepository.get(tagTypeId)).thenReturn(expectedTagType);
 
         // Act
-        TagTypes result = tagService.get(tagTypeId);
+        TagTypes result = tagService.getById(tagTypeId);
 
         // Assert
         assertNotNull(result);
