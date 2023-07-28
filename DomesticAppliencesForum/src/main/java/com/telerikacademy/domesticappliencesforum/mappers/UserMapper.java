@@ -1,7 +1,8 @@
 package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
+import com.telerikacademy.domesticappliencesforum.models.dtos.user.RegisterDto;
+import com.telerikacademy.domesticappliencesforum.models.dtos.user.UserDto;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.stereotype.Component;
 
@@ -14,23 +15,21 @@ public class UserMapper {
         this.userService = userService;
     }
 
-     public User fromUserDto(int id , UserDto userDto) {
+     /*public User fromUserDto(int id , UserDto userDto) {
 
         User user = fromUserDto(userDto);
 
         user.setId(id);
         return user;
-    }
+    }*/
 
-     public User fromUserDto(UserDto userDto) {
+    public User fromDto(RegisterDto registerDto) {
         User user = new User();
-
-        user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-
+        user.setUsername(registerDto.getUsername());
+        user.setPassword(registerDto.getPassword());
+        user.setFirstName(registerDto.getFirstName());
+        user.setLastName(registerDto.getLastName());
+        user.setEmail(registerDto.getEmail());
         return user;
     }
 }

@@ -1,4 +1,4 @@
-package com.telerikacademy.domesticappliencesforum.models.dtos;
+package com.telerikacademy.domesticappliencesforum.models.dtos.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

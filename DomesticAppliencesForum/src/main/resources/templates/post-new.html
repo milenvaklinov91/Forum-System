@@ -7,45 +7,46 @@
 </head>
 <body>
 <h2>New Post</h2>
-<form th:fragment="post-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${post}" method="post">
-  <label th:text="#{post.label.title}">Post</label>
-  <br/>
-  <input type="text" th:field="*{title}"/>
-  <label class="error" th:errors="*{title}">Title error placeholder</label>
-  <br/><br/>
+<form th:fragment="post-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${post}"
+      method="post">
+    <label th:text="#{post.label.title}">Post</label>
+    <br/>
+    <input type="text" th:field="*{title}"/>
+    <label class="error" th:errors="*{title}">Title error placeholder</label>
+    <br/><br/>
 
-  <label th:text="#{post.label.content}">Content</label>
-  <br/>
-  <input type="text" th:field="*{content}"/>
-  <label class="error" th:errors="*{content}">Content error placeholder</label>
-  <br/><br/>
+    <label th:text="#{post.label.content}">Content</label>
+    <br/>
+    <input type="text" th:field="*{content}"/>
+    <label class="error" th:errors="*{content}">Content error placeholder</label>
+    <br/><br/>
 
-  <label th:text="#{post.label.tag}">Tag</label>
-  <br/>
-  <select th:field="*{tagTypeID}">
-    <option th:each="tagType : ${tags}"
-            th:value="${tagType.getTagTypeId()}"
-            th:text="${tagType.getType()}">
-    </option>
-    <option value="0">Other</option>
-  </select>
-  <label class="error" th:errors="*{tagTypeID}">Tag error placeholder</label>
-  <br/><br/>
+    <label th:text="#{post.label.tag}">Tag</label>
+    <br/>
+    <select th:field="*{tagTypeID}">
+        <option th:each="tagType : ${tags}"
+                th:value="${tagType.getTagTypeId()}"
+                th:text="${tagType.getType()}">
+        </option>
+        <option value="0">Other</option>
+    </select>
+    <label class="error" th:errors="*{tagTypeID}">Tag error placeholder</label>
+    <br/><br/>
 
 
-<!--  <label th:text="#{post.label.tag}">Tag</label>-->
-<!--  <br/>-->
-<!--  <select th:field="*{tagTypeID}">-->
-<!--    <option th:each="tagType : ${tags}"-->
-<!--            th:value="${tagType.getTagTypeId()}"-->
-<!--            th:text="${tagType.getType()}">-->
-<!--    PostTagOne-->
-<!--    </option>-->
-<!--  </select>-->
-<!--  <label class="error" th:errors="*{tagTypeID}">Tag error placeholder</label>-->
-<!--  <br/><br/>-->
+    <!--  <label th:text="#{post.label.tag}">Tag</label>-->
+    <!--  <br/>-->
+    <!--  <select th:field="*{tagTypeID}">-->
+    <!--    <option th:each="tagType : ${tags}"-->
+    <!--            th:value="${tagType.getTagTypeId()}"-->
+    <!--            th:text="${tagType.getType()}">-->
+    <!--    PostTagOne-->
+    <!--    </option>-->
+    <!--  </select>-->
+    <!--  <label class="error" th:errors="*{tagTypeID}">Tag error placeholder</label>-->
+    <!--  <br/><br/>-->
 
-  <input type="submit" value="Save"/>
+    <input type="submit" value="Save"/>
 </form>
 </body>
 </html>
