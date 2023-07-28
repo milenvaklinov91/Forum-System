@@ -40,14 +40,14 @@ public class AuthenticationMvcController {
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("login", new LoginDto());
-        return "LoginView";
+        return "userLoginView";
     }
 
     @PostMapping("/login")
     public String handleLogin(@Valid @ModelAttribute("login") LoginDto login, BindingResult bindingResult,
                               HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return "LoginView";
+            return "userLoginView";
         }
 
         try {
@@ -56,7 +56,7 @@ public class AuthenticationMvcController {
             return "redirect:/";
         } catch (AuthorizationException e) {
             bindingResult.rejectValue("username", "auth_error", e.getMessage());
-            return "LoginView";
+            return "userLoginView";
         }
     }
 
@@ -69,28 +69,28 @@ public class AuthenticationMvcController {
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
         model.addAttribute("register", new RegisterDto());
-        return "RegisterView";
+        return "userRegisterView";
     }
 
     @PostMapping("/register")
     public String handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "RegisterView";
+            return "userRegisterView";
         }
 
         if (!register.getPassword().equals(register.getPasswordConfirm())) {
             bindingResult.rejectValue("passwordConfirm", "password_error", "Password confirmation should match password.");
-            return "RegisterView";
+            return "userRegisterView";
         }
 
         try {
             User user = userMapper.fromDto(register);
-           // userService.create(user);
+            userService.create(user);
             return "redirect:/auth/login";
         } catch (EntityDuplicateException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
-            return "RegisterView";
+            return "userRegisterView";
         }
     }
 
