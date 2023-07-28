@@ -11,6 +11,7 @@ import java.util.List;
 public interface CommentService {
 
     List<Comment> getAllComments(FilterOptionsComment filterOptionsComment);
+    Long countAllComments();
 
     Comment browse(int id);
 
@@ -21,4 +22,7 @@ public interface CommentService {
     void delete(int id, User user);
 
     Comment getCommentById(int id);
+
+    int getCommentLikes(int commentId);
+    int getCommentDisLikes(int commentId);
 }

@@ -67,7 +67,12 @@ public class CommentRepositoryImpl implements CommentRepository {
             return query.list();
         }
     }
-
+    public Long countAllComments() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("select count(c) from Comment c where 1=1", Long.class);
+            return query.getSingleResult();
+        }
+    }
 
     @Override
     public void create(Comment comment) {
@@ -107,40 +112,40 @@ public class CommentRepositoryImpl implements CommentRepository {
             return comment;
         }
     }
-
-    public List<Comment> filter(List<Comment> comments, String username, String localDate, Integer vote) {
-        comments = filterCommentsByAuthor(comments, username);
-        comments = filterCommentsByDate(comments, localDate);
-        comments = filterCommentsByMostLiked(comments, vote);
-        return comments;
-    }
-
-    private List<Comment> filterCommentsByDate(List<Comment> comments, String date) {
-        if (comments != null && date != null) {
-            comments = comments.stream()
-                    .filter(comment -> comment.getCreateTime().equals(date))
-                    .collect(Collectors.toList());
-        }
-        return comments;
-    }
-
-    private List<Comment> filterCommentsByAuthor(List<Comment> comments, String username) {
-        if (comments != null && username != null) {
-            comments = comments.stream()
-                    .filter(comment -> comment.getCreatedByUser().equals(username))
-                    .collect(Collectors.toList());
-        }
-        return comments;
-    }
-
-    private List<Comment> filterCommentsByMostLiked(List<Comment> comments, Integer vote) {
-//        if (comments != null && vote != null) {
+//
+//    public List<Comment> filter(List<Comment> comments, String username, String localDate, Integer vote) {
+//        comments = filterCommentsByAuthor(comments, username);
+//        comments = filterCommentsByDate(comments, localDate);
+//        comments = filterCommentsByMostLiked(comments, vote);
+//        return comments;
+//    }
+//
+//    private List<Comment> filterCommentsByDate(List<Comment> comments, String date) {
+//        if (comments != null && date != null) {
 //            comments = comments.stream()
-//                    .filter(comment -> comment.getVote() >= vote)
+//                    .filter(comment -> comment.getCreateTime().equals(date))
 //                    .collect(Collectors.toList());
 //        }
-        return comments;
-    }
+//        return comments;
+//    }
+//
+//    private List<Comment> filterCommentsByAuthor(List<Comment> comments, String username) {
+//        if (comments != null && username != null) {
+//            comments = comments.stream()
+//                    .filter(comment -> comment.getCreatedByUser().equals(username))
+//                    .collect(Collectors.toList());
+//        }
+//        return comments;
+//    }
+//
+//    private List<Comment> filterCommentsByMostLiked(List<Comment> comments, Integer vote) {
+////        if (comments != null && vote != null) {
+////            comments = comments.stream()
+////                    .filter(comment -> comment.getVote() >= vote)
+////                    .collect(Collectors.toList());
+////        }
+//        return comments;
+//    }
 
     private String generateOrderBy(FilterOptionsComment filterOptionsComment) {
         if (filterOptionsComment.getSortBy().isEmpty()) {
@@ -152,8 +157,8 @@ public class CommentRepositoryImpl implements CommentRepository {
             case "createDate":
                 orderBy = "createDate";
                 break;
-            case "vote":
-                orderBy = "vote";
+            case "voteComment":
+                orderBy = "voteComment";
                 break;
         }
 

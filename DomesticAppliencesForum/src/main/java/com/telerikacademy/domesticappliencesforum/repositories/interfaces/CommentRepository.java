@@ -10,6 +10,7 @@ import java.util.List;
 public interface CommentRepository {
 
     List<Comment> getAllComments(FilterOptionsComment filterOptionsComment);
+    Long countAllComments();
 
     void create(Comment comment);
 
@@ -18,4 +19,7 @@ public interface CommentRepository {
     void delete(int id);
 
     Comment getCommentById(int id);
+
+    int getCommentLikes(int commentId);
+    int getCommentDisLikes(int commentId);
 }
