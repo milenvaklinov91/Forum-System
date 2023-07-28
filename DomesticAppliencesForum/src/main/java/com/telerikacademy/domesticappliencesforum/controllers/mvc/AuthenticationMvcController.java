@@ -44,8 +44,7 @@ public class AuthenticationMvcController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(@Valid @ModelAttribute("login") LoginDto login,
-                              BindingResult bindingResult,
+    public String handleLogin(@Valid @ModelAttribute("login") LoginDto login, BindingResult bindingResult,
                               HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "LoginView";
