@@ -66,7 +66,7 @@ public class TagMvcController {
         }
         try {
             tagTypesService.create(tag);
-            return "redirect:/tags";
+            return "redirect:/posts/new";
         } catch (EntityDuplicateException e) {
             errors.rejectValue("type","tag.exist",e.getMessage());
             return "tag-new";

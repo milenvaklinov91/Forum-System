@@ -29,6 +29,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Long countAllComments() {
+        return commentRepository.countAllComments();
+    }
+
+    @Override
     public Comment browse(int id) {
         return commentRepository.getCommentById(id);
     }
@@ -60,5 +65,15 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Comment getCommentById(int id) {
         return commentRepository.getCommentById(id);
+    }
+
+    @Override
+    public int getCommentLikes(int commentId) {
+        return commentRepository.getCommentLikes(commentId);
+    }
+
+    @Override
+    public int getCommentDisLikes(int commentId) {
+        return commentRepository.getCommentDisLikes(commentId);
     }
 }
