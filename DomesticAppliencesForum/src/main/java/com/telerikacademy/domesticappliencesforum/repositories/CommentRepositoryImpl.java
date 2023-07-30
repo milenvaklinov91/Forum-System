@@ -40,33 +40,44 @@ public class CommentRepositoryImpl implements CommentRepository {
     @Override
     public List<Comment> getAllComments(FilterOptionsComment filterOptionsComment) {
         try (Session session = sessionFactory.openSession()) {
+            StringBuilder queryString = new StringBuilder("from Comment");
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
-//            filterOptionsComment.getUsername().ifPresent(username -> {
-//                filters.add(" createdByUser.username = :userName ");
-//                params.put("userName", username);
-//            });
+            filterOptionsComment.getUsername().ifPresent(username -> {
+                filters.add(" createdByUser.username = :username ");
+                params.put("username", username);
+            });
             filterOptionsComment.getLocalDate().ifPresent(localDate -> {
                 LocalDateTime dateTime = LocalDateTime.parse(localDate, DateTimeFormatter.ISO_DATE_TIME);
                 filters.add("createTime = :localDate");
-                params.put("localDate",dateTime);
+                params.put("localDate", dateTime);
             });
-//            filterOptionsComment.getVote().ifPresent(value -> {
-//                filters.add("vote like :vote");
-//                params.put("vote",value);
-//            }); /todo това щее мога да го извиквам като имам лайкове
-            StringBuilder queryString = new StringBuilder("from Comment comment");
-            if (!filters.isEmpty()) {
-                queryString
-                        .append(" where ")
-                        .append(String.join(" and ", filters));
+            if (filterOptionsComment.getMostLiked().isPresent()) {
+                queryString = new StringBuilder("SELECT c FROM Comment c " +
+                        "LEFT JOIN c.votes cv " +
+                        "WHERE cv.type = 1 " +
+                        "GROUP BY c.id " +
+                        "ORDER BY COUNT(cv) DESC");
+            } else if (filterOptionsComment.getMostDisliked().isPresent()) {
+                queryString = new StringBuilder("SELECT c FROM Comment c " +
+                        "LEFT JOIN c.vote cv " +
+                        "WHERE cv.type = -1 " +
+                        "GROUP BY c.id " +
+                        "ORDER BY COUNT(cv) DESC");
+            } else {
+                if (!filters.isEmpty()) {
+                    queryString
+                            .append(" WHERE ")
+                            .append(String.join(" AND ", filters));
+                }
             }
-            System.out.println(queryString);
-            Query<Comment> query = session.createQuery(queryString.toString(), Comment.class);
-            query.setProperties(params);
-            return query.list();
+                queryString.append(generateOrderBy(filterOptionsComment));
+                Query<Comment> query = session.createQuery(queryString.toString(), Comment.class);
+                query.setProperties(params);
+                return query.list();
+            }
         }
-    }
+
     public Long countAllComments() {
         try (Session session = sessionFactory.openSession()) {
             Query<Long> query = session.createQuery("select count(c) from Comment c where 1=1", Long.class);
@@ -154,12 +165,13 @@ public class CommentRepositoryImpl implements CommentRepository {
 
         String orderBy = "";
         switch (filterOptionsComment.getSortBy().get()) {
+            case "username":
+                orderBy = "createdBy.username";
+                break;
             case "createDate":
                 orderBy = "createDate";
                 break;
-            case "voteComment":
-                orderBy = "voteComment";
-                break;
+
         }
 
         orderBy = String.format(" order by %s", orderBy);
@@ -203,3 +215,4 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
     }
 }
+

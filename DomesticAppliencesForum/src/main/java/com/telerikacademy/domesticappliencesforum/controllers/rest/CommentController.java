@@ -40,9 +40,12 @@ public class CommentController {
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer vote,
             @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortOrder
-            ) {
-        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(userId, localDate, vote, sortBy, sortOrder);
+            @RequestParam(required = false) String sortOrder,
+            @RequestParam(required = false) String mostLiked,
+            @RequestParam(required = false) String mostDisliked
+
+    ) {
+        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(userId, localDate, vote, sortBy, sortOrder,mostLiked,mostDisliked);
         return commentService.getAllComments(filterOptionsComment);
     }
 

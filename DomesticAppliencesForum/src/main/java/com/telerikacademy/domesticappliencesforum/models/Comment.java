@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Entity
@@ -26,6 +27,10 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post postId;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER)
+    private Set<VoteComment> voteComments;
 
     public Comment() {
 
@@ -69,5 +74,13 @@ public class Comment {
 
     public void setPostId(Post postId) {
         this.postId = postId;
+    }
+
+    public Set<VoteComment> getVoteComments() {
+        return voteComments;
+    }
+
+    public void setVoteComments(Set<VoteComment> voteComments) {
+        this.voteComments = voteComments;
     }
 }
