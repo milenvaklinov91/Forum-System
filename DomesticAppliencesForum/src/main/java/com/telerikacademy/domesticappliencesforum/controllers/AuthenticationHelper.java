@@ -39,6 +39,17 @@ public class AuthenticationHelper {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
     }
+    public User verifyAuthentication(String username, String password) {
+        try {
+            User user = userService.getByUsername(username);
+            if (!user.getPassword().equals(password)) {
+                throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+            }
+            return user;
+        } catch (EntityNotFoundException e) {
+            throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
+        }
+    }
 
     private String getUsername(String userInfo) {
         int firstSpace = userInfo.indexOf(" ");

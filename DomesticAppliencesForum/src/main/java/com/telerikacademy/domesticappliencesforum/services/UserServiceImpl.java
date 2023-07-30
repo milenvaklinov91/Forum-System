@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
         this.repository = repository;
     }
 
-    public List<User> getAll() {
+    public List<User> getAll() {        //admin
         return repository.getAll();
     }
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         return repository.countAllUsers();
     }
 
-    public User getById(int id) {
+    public User getById(int id) {   //admin or ownuser
         return repository.getUserById(id);
     }
 

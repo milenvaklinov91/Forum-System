@@ -1,28 +1,20 @@
 package com.telerikacademy.domesticappliencesforum.controllers.mvc;
 
 import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
-import com.telerikacademy.domesticappliencesforum.exceptions.DuplicatePasswordException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
-import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
-import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
+import com.telerikacademy.domesticappliencesforum.models.dtos.user.UserDto;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/users")
@@ -65,7 +57,30 @@ public class UserMvcController {
         }
     }
 
-    @GetMapping("/username")
+    @GetMapping("/new")
+    public String showNewUserPage(Model model) {
+        model.addAttribute("user", new UserDto());
+        return "user-new";
+    }
+
+    /*@PostMapping("/new")
+    public String createUser(@Valid @ModelAttribute ("user") UserDto userDto, BindingResult errors){
+        if (errors.hasErrors()){
+            return "user-new";
+        }
+        try {
+            User user = userMapper.fromUserDto(userDto);
+            service.create(user);
+            return "redirect:/users";
+        } catch (EntityDuplicateException e){
+            errors.rejectValue("username","username_exists",e.getMessage());
+            return "user-new";
+        }
+    }*/
+
+
+
+   /* @GetMapping("/username")
     public String getUserByUsername(@RequestHeader HttpHeaders headers, String username , Model model) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -99,7 +114,7 @@ public class UserMvcController {
         }
     }
 
-    /*@GetMapping("/{id}/all-posts")
+    *//*@GetMapping("/{id}/all-posts")
     public List<Post> getAllPost(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);
         service.getUserDetails(user.getId(), user);
@@ -113,7 +128,7 @@ public class UserMvcController {
         service.getUserDetails(user.getId(), user);
         Set<Comment> allComment = (getUserById(id).getComments());
         return new ArrayList<>(allComment);
-    }*/
+    }*//*
     @GetMapping("/{id}/liked-posts")
     public List<Post> getLikedPostsByUser(@PathVariable int id) {
         return service.getLikedPostsByUser(id);
@@ -124,16 +139,7 @@ public class UserMvcController {
         return service.getDisLikedPostsByUser(id);
     }
 
-    @PostMapping
-    public User create(@Valid @RequestBody UserDto userDto) {
-        try {
-            User user = userMapper.fromUserDto(userDto);
-            service.create(user);
-            return user;
-        } catch (EntityDuplicateException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }
-    }
+
     @PutMapping("/{id}")
     public String update(@RequestHeader HttpHeaders headers,@PathVariable int id,
                          @Valid @RequestBody UserDto userDto) {
@@ -194,6 +200,6 @@ public class UserMvcController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
-
+*/
 
 }

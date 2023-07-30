@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New User</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>Create New User</h2>
+<form action="#" th:action="@{/user/new}" th:object="${user}" method="post">
+
+    <label th:text="#{user.label.username}">Username</label>
+    <br/>
+    <input type="text" th:field="*{username}"/>
+    <label class="error" th:errors="*{username}">Username error placeholder</label>
+    <br/><br/>
+
+    <label th:text="#{user.label.password}">Password</label>
+    <br/>
+    <input type="text" th:field="*{password}"/>
+    <label class="error" th:errors="*{password}">Password error placeholder</label>
+    <br/><br/>
+
+    <label th:text="#{user.label.firstName}">FirstName</label>
+    <br/>
+    <input type="text" th:field="*{firstName}"/>
+    <br/><label class="error" th:errors="*{firstName}">FirstName error placeholder</label>
+    <br/><br/>
+
+    <label th:text="#{user.label.lastName}">LastName</label>
+    <br/>
+    <input type="text" th:field="*{lastName}"/>
+    <label class="error" th:errors="*{lastName}">LastName error placeholder</label>
+    <br/><br/>
+
+    <label th:text="#{user.label.email}">Email</label>
+    <br/>
+    <input type="text" th:field="*{email}"/>
+    <label class="error" th:errors="*{email}">Email error placeholder</label>
+    <br/><br/>
+
+    <input type="submit" value="Save"/>
+</form>
+</body>
+</html>

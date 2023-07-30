@@ -6,7 +6,7 @@ import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.dtos.UserDto;
+import com.telerikacademy.domesticappliencesforum.models.dtos.user.UserDto;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -114,7 +114,7 @@ public class UserController {
         return service.getDisLikedPostsByUser(id);
     }
 
-    @PostMapping
+    /*@PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
             User user = userMapper.fromUserDto(userDto);
@@ -123,8 +123,8 @@ public class UserController {
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
-    }
-    @PutMapping("/{id}")
+    }*/
+    /*@PutMapping("/{id}")
     public String update(@RequestHeader HttpHeaders headers,@PathVariable int id,
                        @Valid @RequestBody UserDto userDto) {
         try {
@@ -135,7 +135,7 @@ public class UserController {
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
-    }
+    }*/
 
     @PutMapping("/{id}/block")
     public User blockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {

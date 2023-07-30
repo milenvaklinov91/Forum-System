@@ -37,7 +37,7 @@ public class HomeMvcController {
 
         PostFilterOptions mostLikedPostsOption = new PostFilterOptions();
         mostLikedPostsOption.getTopLiked();
-        List<Post> mostLikedPost = postService.getAllPosts(latestPostsOption);
+        List<Post> mostLikedPost = postService.getAllPosts(mostLikedPostsOption);
 
 
         Long numberOfUsers = userService.countAllUsers();

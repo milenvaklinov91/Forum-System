@@ -38,6 +38,7 @@ public class Helper {
                 10,
                 1,
                 "mostComment",
+                "topLiked",
                 "sorted",
                 "sortOrder");
     }

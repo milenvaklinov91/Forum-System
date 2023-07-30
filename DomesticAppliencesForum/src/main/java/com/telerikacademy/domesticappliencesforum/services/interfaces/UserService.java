@@ -24,6 +24,8 @@ public interface UserService {
 
     List<Post> getLikedPostsByUser(int userId);
 
+    public void create(User user);
+
     void update(User user, User user1);
 
     User blockUser(int id, User user);
