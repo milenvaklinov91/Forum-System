@@ -58,6 +58,21 @@ create table comments
         foreign key (user_id) references users (user_id)
 );
 
+create table vote_comments
+(
+    vote_comment_id int not null
+        primary key,
+    comment_id      int null,
+    user_id         int null,
+    vote_type_id    int null,
+    constraint vote_comments_comments_comment_id_fk
+        foreign key (comment_id) references comments (comment_id),
+    constraint vote_comments_users_user_id_fk
+        foreign key (user_id) references users (user_id),
+    constraint vote_comments_vote_types_vote_type_id_fk
+        foreign key (vote_type_id) references vote_types (vote_type_id)
+);
+
 create table vote_types
 (
     vote_type_id int auto_increment
