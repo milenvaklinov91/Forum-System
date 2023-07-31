@@ -36,7 +36,7 @@ public class CommentController {
 
     @GetMapping
     public List<Comment> getAllComments(
-            @RequestParam(required = false) Integer userId,
+            @RequestParam(required = false) String username,
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer vote,
             @RequestParam(required = false) String sortBy,
@@ -45,7 +45,7 @@ public class CommentController {
             @RequestParam(required = false) String mostDisliked
 
     ) {
-        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(userId, localDate, vote, sortBy, sortOrder,mostLiked,mostDisliked);
+        FilterOptionsComment filterOptionsComment = new FilterOptionsComment(username, localDate, vote, sortBy, sortOrder,mostLiked,mostDisliked);
         return commentService.getAllComments(filterOptionsComment);
     }
 

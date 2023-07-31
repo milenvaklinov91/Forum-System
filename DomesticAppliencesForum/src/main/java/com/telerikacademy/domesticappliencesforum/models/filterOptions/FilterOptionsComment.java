@@ -14,11 +14,12 @@ public class FilterOptionsComment {
 
 
 
-    public FilterOptionsComment() {
+    public FilterOptionsComment(){
         this(null,null,null,null,null, null,null);
     }
 
-    public FilterOptionsComment(Integer username,
+
+    public FilterOptionsComment(String username,
                                 String localDate,
                                 Integer vote,
                                 String sortBy,

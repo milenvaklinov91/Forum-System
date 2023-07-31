@@ -43,10 +43,10 @@ public class CommentRepositoryImpl implements CommentRepository {
             StringBuilder queryString = new StringBuilder("from Comment");
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
-            filterOptionsComment.getUsername().ifPresent(username -> {
-                filters.add(" createdByUser.username = :username ");
-                params.put("username", username);
-            });
+//            filterOptionsComment.getUsername().ifPresent(username -> {
+//                filters.add(" createdByUser.username = :username ");
+//                params.put("username", username);
+//            });
             filterOptionsComment.getLocalDate().ifPresent(localDate -> {
                 LocalDateTime dateTime = LocalDateTime.parse(localDate, DateTimeFormatter.ISO_DATE_TIME);
                 filters.add("createTime = :localDate");
