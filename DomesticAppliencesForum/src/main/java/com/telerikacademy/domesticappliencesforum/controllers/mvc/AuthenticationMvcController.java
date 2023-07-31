@@ -39,7 +39,7 @@ public class AuthenticationMvcController {
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
-        model.addAttribute("login", new LoginDto());
+        model.addAttribute("loginDto", new LoginDto());
         return "userLoginView";
     }
 
@@ -68,7 +68,7 @@ public class AuthenticationMvcController {
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
-        model.addAttribute("register", new RegisterDto());
+        model.addAttribute("registerDto", new RegisterDto());
         return "userRegisterView";
     }
 
@@ -80,7 +80,8 @@ public class AuthenticationMvcController {
         }
 
         if (!register.getPassword().equals(register.getPasswordConfirm())) {
-            bindingResult.rejectValue("passwordConfirm", "password_error", "Password confirmation should match password.");
+            bindingResult.rejectValue("passwordConfirm", "password_error",
+                    "Password confirmation should match password.");
             return "userRegisterView";
         }
 

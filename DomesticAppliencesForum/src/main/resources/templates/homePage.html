@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,8 +8,13 @@
 <body>
 <ul>
     <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
+    <li th:if="${isAdmin}"><h3><a href="#" th:href="@{/admin}" th:text="#{navigation.admin}">Admin Portal</a></h3></li>
+    <li th:unless="${isAuthenticated}"><h3><a th:href="@{/auth/login}" href="#">Login</a></h3></li>
+    <li th:unless="${isAuthenticated}"><h3><a th:href="@{/auth/register}" href="#">Register</a></h3></li>
+    <li th:if="${isAuthenticated}"><h3><a th:href="@{/auth/logout}" href="#">Logout</a></h3></li>
 </ul>
 <h2 th:text="#{home.welcome}">Welcome!</h2>
+<h2 th:text="${session.currentUser}" th:if="${isAuthenticated}"></h2>
 <p>Total number of users: <span th:text="${numberOfUsers}"></span></p>
 <p>Total number of posts: <span th:text="${numberOfPosts}"></span></p>
 
@@ -33,4 +39,4 @@
 </ul>
 
 
-</body>
+</body>-->
