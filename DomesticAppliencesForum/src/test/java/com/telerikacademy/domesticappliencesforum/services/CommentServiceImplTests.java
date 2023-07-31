@@ -1,5 +1,6 @@
 package com.telerikacademy.domesticappliencesforum.services;
 
+import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
@@ -16,11 +17,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.telerikacademy.domesticappliencesforum.services.Helper.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -153,4 +156,123 @@ public class CommentServiceImplTests {
         assertThrows(UnauthorizedOperationException.class, () -> commentService.modify(mockComment, anotherUser));
         verify(commentRepository).modify(mockComment);
     }
+    @Test
+    public void testDelete_Should_CallRepository_When_UserIsAdmin() {
+        // Arrange
+        int commentId = 1;
+        User adminUser = createMockUser();
+        adminUser.setAdmin(true);
+
+
+        Comment mockComment = createMockCommentComment();
+        when(commentRepository.getCommentById(commentId)).thenReturn(mockComment);
+
+        // Act & Assert
+        assertDoesNotThrow(() -> commentService.delete(commentId, adminUser));
+        verify(commentRepository).delete(commentId);
+    }
+
+    @Test
+    public void testDelete_Should_CallRepository_When_UserIsCreator() {
+        // Arrange
+        int commentId = 1;
+        User createdByMockUser = createMockUser();
+        Comment mockComment = createMockCommentComment();
+        mockComment.setCreatedByUser(createdByMockUser);
+
+        when(commentRepository.getCommentById(commentId)).thenReturn(mockComment);
+
+        // Act & Assert
+        assertDoesNotThrow(() -> commentService.delete(commentId, createdByMockUser));
+        verify(commentRepository).delete(commentId);
+    }
+
+    @Test
+    public void testDelete_Should_Throw_When_UserIsNotCreatorAndNotAdmin() {
+        // Arrange
+        int commentId = 1;
+        User createdByMockUser = createMockUser();
+        User anotherUser = createMockUser();
+        Comment mockComment = createMockCommentComment();
+        mockComment.setCreatedByUser(createdByMockUser);
+
+        when(commentRepository.getCommentById(commentId)).thenReturn(mockComment);
+        doThrow(UnauthorizedOperationException.class).when(commentRepository).delete(commentId);
+
+        // Act & Assert
+        assertThrows(UnauthorizedOperationException.class, () -> commentService.delete(commentId, anotherUser));
+        verify(commentRepository).delete(commentId);
+    }
+
+    @Test
+    public void testDelete_Should_Throw_When_UserIsBlocked() {
+        // Arrange
+        int commentId = 1;
+        User blockedMockUser = createMockUser();
+        blockedMockUser.setBlocked(true);
+        Comment mockComment = createMockCommentComment();
+        mockComment.setCreatedByUser(blockedMockUser);
+
+        when(commentRepository.getCommentById(commentId)).thenReturn(mockComment);
+
+        // Act & Assert
+        assertThrows(UnauthorizedOperationException.class, () -> commentService.delete(commentId, blockedMockUser));
+        verify(commentRepository, never()).delete(commentId);
+    }
+
+    @Test
+    public void testGetCommentLikes_Should_ReturnPositiveLikes() {
+        // Arrange
+        int commentId = 1;
+        int expectedLikes = 1;
+
+        when(commentRepository.getCommentLikes(commentId)).thenReturn(expectedLikes);
+
+        // Act
+        int actualLikes = commentService.getCommentLikes(commentId);
+
+        // Assert
+        assertEquals(expectedLikes, actualLikes);
+    }
+
+    @Test
+    public void testGetPostLikes_Should_ReturnZeroLikes() {
+        // Arrange
+        int commentId = 1;
+        int expectedLikes = 0;
+
+        when(commentRepository.getCommentLikes(commentId)).thenReturn(expectedLikes);
+        // Act
+        int actualLikes = commentService.getCommentLikes(commentId);
+        // Assert
+        assertEquals(expectedLikes, actualLikes);
+    }
+    @Test
+    public void testGetPostDisLikes_Should_ReturnPositiveLikes() {
+        int commentId = 1;
+        int expectedDisLikes = 1;
+
+        when(commentRepository.getCommentDisLikes(commentId)).thenReturn(expectedDisLikes);
+        // Act
+        int result = commentService.getCommentDisLikes(commentId);
+
+        // Assert
+        assertEquals(expectedDisLikes, result);
+    }
+
+    @Test
+    public void testGetPostDisLikes_Should_ReturnZeroLikes() {
+        // Arrange
+        int commentId = 1;
+        int expectedDisLikes = 0;
+
+        when(commentRepository.getCommentLikes(commentId)).thenReturn(expectedDisLikes);
+
+        // Act
+        int actualDisLikes = commentService.getCommentLikes(commentId);
+
+        // Assert
+        assertEquals(expectedDisLikes, actualDisLikes);
+    }
+
 }
