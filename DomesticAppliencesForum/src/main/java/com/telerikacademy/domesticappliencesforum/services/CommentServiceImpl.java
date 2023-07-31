@@ -50,6 +50,9 @@ public class CommentServiceImpl implements CommentService {
         if (!(comment.getCreatedByUser().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized to perform this operation as your are not the owner of this comment");
         }
+        else if(comment.getCreatedByUser().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!");
+        }
         commentRepository.modify(comment);
     }
 
