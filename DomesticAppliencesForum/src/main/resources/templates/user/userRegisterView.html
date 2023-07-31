@@ -8,7 +8,7 @@
 <body>
 <h2>Register</h2>
 
-<form action="#" th:action="@{/auth/register}" th:object="${register}" method="post">
+<form action="#" th:action="@{/auth/register}" th:object="${registerDto}" method="post">
   <label th:text="#{user.label.username}">Username</label>
   <br/>
   <input type="text" th:field="*{username}"/>
