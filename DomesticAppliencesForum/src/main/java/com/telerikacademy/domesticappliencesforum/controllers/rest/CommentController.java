@@ -96,4 +96,9 @@ public class CommentController {
         return commentService.getCommentDisLikes(id);
     }
 
+    @GetMapping("/count")
+    public Long countAllComments() {
+        return commentService.countAllComments();
+    }
+
 }

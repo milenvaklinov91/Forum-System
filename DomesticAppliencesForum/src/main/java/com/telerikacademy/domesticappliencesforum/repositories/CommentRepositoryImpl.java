@@ -54,16 +54,16 @@ public class CommentRepositoryImpl implements CommentRepository {
             });
             if (filterOptionsComment.getMostLiked().isPresent()) {
                 queryString = new StringBuilder("SELECT c FROM Comment c " +
-                        "LEFT JOIN c.votes cv " +
-                        "WHERE cv.type = 1 " +
+                        "LEFT JOIN c.voteComments vc " +
+                        "WHERE vc.typeId = 1 " +
                         "GROUP BY c.id " +
-                        "ORDER BY COUNT(cv) DESC");
+                        "ORDER BY COUNT(vc) DESC");
             } else if (filterOptionsComment.getMostDisliked().isPresent()) {
                 queryString = new StringBuilder("SELECT c FROM Comment c " +
-                        "LEFT JOIN c.vote cv " +
-                        "WHERE cv.type = -1 " +
+                        "LEFT JOIN c.voteComments vc " +
+                        "WHERE vc.typeId = -1 " +
                         "GROUP BY c.id " +
-                        "ORDER BY COUNT(cv) DESC");
+                        "ORDER BY COUNT(vc) DESC");
             } else {
                 if (!filters.isEmpty()) {
                     queryString

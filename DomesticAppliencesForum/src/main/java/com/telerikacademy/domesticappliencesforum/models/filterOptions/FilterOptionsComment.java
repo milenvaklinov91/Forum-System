@@ -6,6 +6,7 @@ public class FilterOptionsComment {
 
     private Optional<String> username;
     private Optional<String> localDate;
+    //todo изобщо имаме ли нужда от този vote във филтрите?
     private Optional<Integer> vote;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
