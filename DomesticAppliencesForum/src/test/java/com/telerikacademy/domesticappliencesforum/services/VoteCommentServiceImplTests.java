@@ -21,7 +21,7 @@ public class VoteCommentServiceImplTests {
 
     @InjectMocks
     private VoteCommentServiceImpl voteCommentService;
-
+//todo both tests don't work
     @Test
     public void testVoteComment_SuccessfulVote() {
         // Arrange
@@ -44,7 +44,7 @@ public class VoteCommentServiceImplTests {
 
 
     @Test
-    public void create_Should_Throw_When_UserIsBlocked() {
+    public void voteComment_Should_Throw_When_UserIsBlocked() {
         // Arrange
         VoteComment voteComment = Helper.createVoteComment();
         User user = Helper.createMockUser();
