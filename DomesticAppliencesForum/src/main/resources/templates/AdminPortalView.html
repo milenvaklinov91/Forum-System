@@ -6,7 +6,7 @@
 </head>
 <body>
 <ul>
-  <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></h3></li>
+  <li><h3><a href="#" th:href="@{/static}" th:text="#{navigation.home}">Home</a></h3></li>
   <li><h3><a href="#" th:href="@{/beers}" th:text="#{navigation.allUsers}">Browse all users</a></h3></li>
   <li th:if="${isAuthenticated}"><h3><a th:href="@{/auth/logout}" href="#">Logout</a></h3></li>
 </ul>

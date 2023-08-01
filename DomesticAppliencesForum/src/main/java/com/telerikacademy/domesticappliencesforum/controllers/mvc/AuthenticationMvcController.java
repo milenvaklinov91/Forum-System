@@ -73,7 +73,7 @@ public class AuthenticationMvcController {
     }
 
     @PostMapping("/register")
-    public String handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
+    public String handleRegister(@Valid @ModelAttribute("registerDto") RegisterDto register,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "userRegisterView";
