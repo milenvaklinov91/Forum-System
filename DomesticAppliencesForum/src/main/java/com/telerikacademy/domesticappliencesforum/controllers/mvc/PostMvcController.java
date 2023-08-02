@@ -80,12 +80,19 @@ public class PostMvcController {
 
     @GetMapping("/new")
     public String showNewPostPage(Model model, HttpSession session) {
+        PostDto post = (PostDto) session.getAttribute("currentPost");
         try {
             authenticationHelper.tryGetCurrentUser(session);
+                if (post == null) {
+                    post = new PostDto();
+                } else {
+                    session.removeAttribute("currentPost");
+                }
+
         } catch (AuthorizationException e) {
             return "redirect:auth/login";
         }
-        model.addAttribute("post", new PostDto());
+        model.addAttribute("post", post);
         return "post-new";
     }
 

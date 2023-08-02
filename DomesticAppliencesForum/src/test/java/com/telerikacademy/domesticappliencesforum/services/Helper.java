@@ -5,6 +5,7 @@ import com.telerikacademy.domesticappliencesforum.models.dtos.VoteDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Helper {
@@ -56,7 +57,7 @@ public class Helper {
         mockPost.setPostId(1);
         mockPost.setTitle("Title Post");
         mockPost.setContent("Content post it should be between 32 and 3222 symbols");
-        mockPost.setCreateTime(LocalDateTime.now());
+        mockPost.setCreateTime(LocalDate.EPOCH.now());
         mockPost.setCreatedBy(createMockUser());
         mockPost.setTag(createTag());
         return mockPost;

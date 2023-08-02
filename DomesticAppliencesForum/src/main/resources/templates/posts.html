@@ -8,7 +8,7 @@
 <body>
 <ul>
     <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
-    <li><h3><a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-beer}">Create a new post</a></h3></li>
+    <li><h3><a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post}">Create a new post</a></h3></li>
 </ul>
 <div th:if="${posts.isEmpty()}">
     <h2 th:text="#{posts.title.empty}">No Posts</h2>
@@ -20,30 +20,23 @@
         <div class="header">
             <div class="cell" th:text="#{post.label.title}">Title</div>
             <div class="cell" th:text="#{post.label.content}">Content</div>
-            <div class="cell" th:text="#{post.label.comment}">Comments</div>
             <div class="cell" th:text="#{post.label.tag}">Tag Name</div>
             <div class="cell" th:text="#{post.label.createdBy}">Creator username</div>
+            <div class="cell" th:text="#{post.label.createdDate}">Created date</div>
         </div>
         <div class="row" th:each="post : ${posts}">
             <div class="cell">
                 <a href="#" th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}">Post</a>
             </div>
             <div class="cell" th:text="${post.getContent()}">Content</div>
-            <div class="cell">
-                <ul th:if="${post.getComments().size() > 0}">
-                    <li th:each="comment : ${post.getComments()}" id="comment-[[${comment.getCommentId()}]]">
-                        <a href="#" th:href="@{/comments/{id}(id=${comment.getCommentId()})}" th:text="${comment.getComment()}">Comment</a>
-                    </li>
-                </ul>
-                <span th:unless="${post.getComments().size() > 0}">No comments</span>
-            </div>
             <div class="cell" th:text="${post.getTag().getType()}">Tag</div>
             <div class="cell">
                 <a th:href="@{/users/{userId}(userId=${post.getCreatedBy().getId()})}" th:text="${post.getCreatedBy().getUsername()}">Creator</a>
             </div>
-            <div class="cell">
-            <a href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See votes</a>
-                </div>
+            <div class="cell" th:text="${post.getCreateTime()}">Created Date</div>
+            <!-- <div class="cell">
+             <a href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See votes</a>
+                 </div>-->
 
         </div>
     </div>
