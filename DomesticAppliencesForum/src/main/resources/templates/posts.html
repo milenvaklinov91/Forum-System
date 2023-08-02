@@ -20,9 +20,9 @@
         <div class="header">
             <div class="cell" th:text="#{post.label.title}">Title</div>
             <div class="cell" th:text="#{post.label.content}">Content</div>
-            <div class="cell" th:text="#{post.label.tag}">Tag Name</div>
-            <div class="cell" th:text="#{post.label.createdBy}">Creator username</div>
-            <div class="cell" th:text="#{post.label.createdDate}">Created date</div>
+            <div class="cell" th:text="#{post.label.tag}">Tag</div>
+            <div class="cell" th:text="#{post.label.createdBy}">Creator</div>
+            <div class="cell" th:text="#{post.label.createdDate}">Created</div>
         </div>
         <div class="row" th:each="post : ${posts}">
             <div class="cell">
@@ -34,10 +34,6 @@
                 <a th:href="@{/users/{userId}(userId=${post.getCreatedBy().getId()})}" th:text="${post.getCreatedBy().getUsername()}">Creator</a>
             </div>
             <div class="cell" th:text="${post.getCreateTime()}">Created Date</div>
-            <!-- <div class="cell">
-             <a href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See votes</a>
-                 </div>-->
-
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelp
 import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
@@ -172,7 +173,7 @@ public class PostMvcController {
         } catch (EntityDuplicateException e) {
             errors.rejectValue("name", "duplicate_post", e.getMessage());
             return "post-update";
-        } catch (AuthorizationException e) {
+        } catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
         }
@@ -193,7 +194,7 @@ public class PostMvcController {
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
-        } catch (AuthorizationException e) {
+        } catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
         }

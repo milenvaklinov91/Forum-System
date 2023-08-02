@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -47,7 +48,7 @@ public class UserMvcController {
         try {
             User user = service.getById(id);
             model.addAttribute("user", user);
-            return "user";
+            return "singleUser";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
@@ -57,7 +58,12 @@ public class UserMvcController {
     @GetMapping("/new")
     public String showNewUserPage(Model model) {
         model.addAttribute("user", new UserDto());
-        return "user-new";
+        return "userRegisterView";
+    }
+
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session) {
+        return session.getAttribute("currentUser") != null;
     }
 
 }

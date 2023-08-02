@@ -39,7 +39,7 @@ public class AuthenticationMvcController {
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
-        model.addAttribute("loginDto", new LoginDto());
+        model.addAttribute("login", new LoginDto());
         return "userLoginView";
     }
 
@@ -68,12 +68,12 @@ public class AuthenticationMvcController {
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
-        model.addAttribute("registerDto", new RegisterDto());
+        model.addAttribute("register", new RegisterDto());
         return "userRegisterView";
     }
 
     @PostMapping("/register")
-    public String handleRegister(@Valid @ModelAttribute("registerDto") RegisterDto register,
+    public String handleRegister(@Valid @ModelAttribute("register") RegisterDto register,
                                  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "userRegisterView";

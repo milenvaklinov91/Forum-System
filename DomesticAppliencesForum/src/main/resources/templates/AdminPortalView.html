@@ -5,12 +5,13 @@
     <title>Admin Portal</title>
 </head>
 <body>
+<h2 th:text="#{admin.title}">Admin Portal</h2>
+<!--<h2 th:text="${session.currentUser}" th:if="${isAuthenticated}"></h2>-->
 <ul>
-  <li><h3><a href="#" th:href="@{/static}" th:text="#{navigation.home}">Home</a></h3></li>
-  <li><h3><a href="#" th:href="@{/beers}" th:text="#{navigation.allUsers}">Browse all users</a></h3></li>
+  <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></h3></li>
+  <li><h3><a href="#" th:href="@{/users}" th:text="#{navigation.allUsers}">See all users</a></h3></li>
+  <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
   <li th:if="${isAuthenticated}"><h3><a th:href="@{/auth/logout}" href="#">Logout</a></h3></li>
 </ul>
-<h2 th:text="#{admin.title}">Admin Portal</h2>
-<h2 th:text="${session.currentUser}" th:if="${isAuthenticated}"></h2>
 </body>
 </html>
