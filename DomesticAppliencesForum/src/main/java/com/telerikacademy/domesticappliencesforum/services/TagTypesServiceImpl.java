@@ -7,6 +7,7 @@ import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.TagTypesRepository;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,13 @@ import java.util.List;
 @Service
 public class TagTypesServiceImpl implements TagTypesService {
     private final TagTypesRepository tagTypesRepository;
+    private final UserService userService;
 
     @Autowired
-    public TagTypesServiceImpl(TagTypesRepository tagTypesRepository) {
+    public TagTypesServiceImpl(TagTypesRepository tagTypesRepository, UserService userService) {
         this.tagTypesRepository = tagTypesRepository;
+
+        this.userService = userService;
     }
 
     public List<TagTypes> get() {
@@ -30,6 +34,10 @@ public class TagTypesServiceImpl implements TagTypesService {
     }
 
     public void create(TagTypes tag) {
+        User user = new User();
+        if (user.isBlocked()) {     //todo
+            throw new UnauthorizedOperationException("You`re blocked!!!");
+        }
         boolean duplicateExists = true;
         try {
             tagTypesRepository.getByName(tag.getType());

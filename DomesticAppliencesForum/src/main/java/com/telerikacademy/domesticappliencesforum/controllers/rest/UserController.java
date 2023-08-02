@@ -6,7 +6,6 @@ import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.dtos.user.UserDto;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -177,7 +175,7 @@ public class UserController {
     public User unMakeAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return service.unMakeAdmin(id, user);
+            return service.demoteAdmin(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (DuplicatePasswordException e) {

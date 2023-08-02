@@ -1,11 +1,12 @@
 package com.telerikacademy.domesticappliencesforum.controllers.mvc;
 
+import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
+import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
-import com.telerikacademy.domesticappliencesforum.models.Post;
+import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,12 @@ public class TagMvcController {
     private final TagTypesService tagTypesService;
     private final UserService userService;
 
-    public TagMvcController(TagTypesService tagTypesService, UserService userService) {
+    private final AuthenticationHelper authenticationHelper;
+
+    public TagMvcController(TagTypesService tagTypesService, UserService userService, AuthenticationHelper authenticationHelper) {
         this.tagTypesService = tagTypesService;
         this.userService = userService;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping
@@ -61,7 +65,12 @@ public class TagMvcController {
     }
 
     @PostMapping("/new")
-    public String createTag(@Valid @ModelAttribute("tag") TagTypes tag, BindingResult errors) {
+    public String createTag(@Valid @ModelAttribute("tag") TagTypes tag, BindingResult errors,
+                            Model model, HttpSession session) {
+        User user = authenticationHelper.tryGetCurrentUser(session);
+        if (user.isBlocked()) {
+            throw new AuthorizationException("You are not authorized!");
+        }
         if (errors.hasErrors()) {
             return "tag-new";
         }
@@ -71,18 +80,10 @@ public class TagMvcController {
         } catch (EntityDuplicateException e) {
             errors.rejectValue("type", "tag.exist", e.getMessage());
             return "tag-new";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
         }
     }
 
-//    @GetMapping("/{id}/delete")
-//    public String deleteTag(@PathVariable int id, Model model) {
-//        try {
-//            User user = userService.getById(1);
-//            tagTypesService.delete(id, user);
-//            return "redirect:/tags";
-//        } catch (EntityNotFoundException e) {
-//            model.addAttribute("error", e.getMessage());
-//            return "not-found";
-//        }
-//    }
 }

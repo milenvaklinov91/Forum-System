@@ -52,11 +52,10 @@ public class UserMvcController {
     public String blockUser(@PathVariable int id, Model model, HttpSession session) {
         try {
             User admin = authenticationHelper.tryGetCurrentUser(session);
-            if (!admin.isAdmin()){
+            if (!admin.isAdmin()) {
                 throw new AuthorizationException("You are not authorized!");
             }
-            User user = service.getById(id);
-            service.blockUser(user.getId(), admin);
+            service.blockUser(id, admin);
             return "redirect:/users";
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
@@ -73,11 +72,51 @@ public class UserMvcController {
     public String unblockUser(@PathVariable int id, Model model, HttpSession session) {
         try {
             User admin = authenticationHelper.tryGetCurrentUser(session);
-            if (!admin.isAdmin()){
+            if (!admin.isAdmin()) {
                 throw new AuthorizationException("You are not authorized!");
             }
-            User user = service.getById(id);
-            service.unBlockUser(user.getId(), admin);
+
+            service.unBlockUser(id, admin);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}/make-admin")
+    public String makeAdmin(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()) {
+                throw new AuthorizationException("You are not authorized!");
+            }
+            service.makeAdmin(id, admin);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}/demote-admin")
+    public String demoteAdmin(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()) {
+                throw new AuthorizationException("You are not authorized!");
+            }
+            service.demoteAdmin(id, admin);
             return "redirect:/users";
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
