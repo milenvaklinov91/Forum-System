@@ -368,7 +368,7 @@ public class UserServiceImplTests {
         Mockito.when(userMockRepository.getUserById(mockTargetUser.getId())).thenReturn(mockTargetUser);
 
         Assertions.assertThrows(UnauthorizedOperationException.class, () -> {
-            userService.unMakeAdmin(mockAdmin.getId(), mockTargetUser);
+            userService.demoteAdmin(mockAdmin.getId(), mockTargetUser);
         });
 
         Mockito.verify(userMockRepository, times(1)).getUserById(mockAdmin.getId());
@@ -385,7 +385,7 @@ public class UserServiceImplTests {
         when(userMockRepository.getUserById(mockAdmin.getId())).thenReturn(mockAdmin);
         doNothing().when(userMockRepository).update(any());
 
-        userService.unMakeAdmin(mockAdmin.getId(), mockAdmin1);
+        userService.demoteAdmin(mockAdmin.getId(), mockAdmin1);
 
 
         assertFalse(mockAdmin.isAdmin());

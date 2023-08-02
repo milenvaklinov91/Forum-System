@@ -36,8 +36,11 @@ public class PostRepositoryImpl implements PostRepository {
                 params.put("userName", username);
             });
             filterOptions.getLocalDate().ifPresent(date -> {
+                LocalDateTime dateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME);
                 filters.add(" createTime = :date ");
+                params.put("date", dateTime);
                 params.put("date", date);
+
             });
             filterOptions.getTagId().ifPresent(tagId -> {
                 filters.add(" tag.tagTypeId = :tagId ");

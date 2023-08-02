@@ -158,7 +158,7 @@ public class UserServiceImpl implements UserService {
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public User unMakeAdmin(int id, User user) {
+    public User demoteAdmin(int id, User user) {
         User user1 = repository.getUserById(id);
         if (user.isAdmin() && user1.isAdmin()) {
             user1.setAdmin(false);

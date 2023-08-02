@@ -34,7 +34,7 @@ public interface UserService {
 
     User makeAdmin(int id, User user);
 
-    User unMakeAdmin(int id, User user);
+    User demoteAdmin(int id, User user);
 
     /*void delete(int id);*/
 

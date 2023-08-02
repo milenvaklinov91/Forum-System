@@ -129,7 +129,11 @@ public class PostMvcController {
         } catch (EntityDuplicateException e) {
             errors.rejectValue("name", "duplicate_post", e.getMessage());
             return "post-new";
-        }
+        } catch (UnauthorizedOperationException e) {
+        model.addAttribute("error", e.getMessage());
+        return "AccessDeniedView";
+    }
+
     }
 
     @GetMapping("/{id}/update")

@@ -6,7 +6,7 @@
 </head>
 <body>
 <ul>
-    <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
+    <h3><a th:if="${isAuthenticated}" href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3>
     <li th:if="${isAdmin}"><h3><a href="#" th:href="@{/admin}" th:text="#{navigation.admin}">Admin Portal</a></h3></li>
     <li th:unless="${isAuthenticated}"><h3><a th:href="@{/auth/login}" href="#">Login</a></h3></li>
     <li th:unless="${isAuthenticated}"><h3><a th:href="@{/auth/register}" href="#">Register</a></h3></li>

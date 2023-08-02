@@ -3,6 +3,8 @@ package com.telerikacademy.domesticappliencesforum.controllers.mvc;
 import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
 import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
+import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
+import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.user.LoginDto;
@@ -12,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -94,5 +93,46 @@ public class AuthenticationMvcController {
             return "userRegisterView";
         }
     }
+
+   /* @GetMapping("/{id}/block")
+    public String blockUser(@PathVariable int id, Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:auth/login";
+        }
+        try {
+            userService.blockUser(id, user);
+            return "redirect:/users";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }*/
+
+    @GetMapping("/{id}/unblock")
+    public String unblockUser(@PathVariable int id, Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:auth/login";
+        }
+        try {
+            userService.unBlockUser(id, user);
+            return "redirect:/users";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
 
 }
