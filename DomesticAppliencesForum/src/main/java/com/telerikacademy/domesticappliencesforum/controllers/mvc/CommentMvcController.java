@@ -11,6 +11,7 @@ import com.telerikacademy.domesticappliencesforum.repositories.CommentRepository
 import com.telerikacademy.domesticappliencesforum.repositories.VoteCommentRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import jdk.dynalink.linker.LinkerServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ import java.util.List;
 public class CommentMvcController {
     private final CommentService commentService;
     private final CommentRepositoryImpl commentRepository;
-
+    @Autowired
     public CommentMvcController(CommentService commentService
             ,CommentRepositoryImpl commentRepository) {
         this.commentService = commentService;
@@ -34,19 +35,19 @@ public class CommentMvcController {
 
     @GetMapping("/{id}")
     public String showSingleComment(@PathVariable int id, Model model) {
-        try {
+//        try {
             Comment comment = commentService.getCommentById(id);
              model.addAttribute("comment", comment);
             return "comment";
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            return "not-found";
-        }
+//        } catch (EntityNotFoundException e) {
+//            model.addAttribute("error", e.getMessage());
+//            return "not-found";
+//        }
     }
-    @GetMapping
-    public String showAllComments(Model model) {
-        List<Comment> comments = commentService.getAllComments(new FilterOptionsComment());
-        model.addAttribute("comments", comments);
-        return "comments";
-    }
+//    @GetMapping
+//    public String showAllComments(Model model) {
+//        List<Comment> comments = commentService.getAllComments(new FilterOptionsComment());
+//        model.addAttribute("comments", comments);
+//        return "comments";
+//    }
 }
