@@ -51,10 +51,11 @@ public class TagMvcController {
 
     @GetMapping("/new")
     public String showNewTagPage(Model model) {
-        try{
-        model.addAttribute("tag", new TagTypes());
-        return "tag-new";}catch (EntityNotFoundException e){
-            model.addAttribute("error",e.getMessage());
+        try {
+            model.addAttribute("tag", new TagTypes());
+            return "tag-new";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
             return "not-found";
         }
     }
@@ -68,7 +69,7 @@ public class TagMvcController {
             tagTypesService.create(tag);
             return "redirect:/posts/new";
         } catch (EntityDuplicateException e) {
-            errors.rejectValue("type","tag.exist",e.getMessage());
+            errors.rejectValue("type", "tag.exist", e.getMessage());
             return "tag-new";
         }
     }

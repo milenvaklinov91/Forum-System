@@ -1,14 +1,12 @@
 package com.telerikacademy.domesticappliencesforum.models.filterOptions;
 
-
-
+import java.time.LocalDateTime;
 import java.util.Optional;
-
 
 public class PostFilterOptions {
 
     private Optional<String> username;
-    private Optional<String> localDate;
+    private Optional<LocalDateTime> localDate;
     private Optional<Integer> lastTen;
     private Optional<Integer> tagId;
     private Optional<String> mostComments;
@@ -17,10 +15,10 @@ public class PostFilterOptions {
     private Optional<String> sortOrder;
 
     public PostFilterOptions() {
-        this(null, null, null, null, null,null, null,null);
+        this(null, null, null, null, null, null, null, null);
     }
 
-    public PostFilterOptions(String username, String localDate,
+    public PostFilterOptions(String username, LocalDateTime localDate,
                              Integer lastTen,
                              Integer tagId, String mostComments,
                              String topLiked,
@@ -30,7 +28,7 @@ public class PostFilterOptions {
         this.lastTen = Optional.ofNullable(lastTen);
         this.tagId = Optional.ofNullable(tagId);
         this.mostComments = Optional.ofNullable(mostComments);
-        this.topLiked=Optional.ofNullable(topLiked);
+        this.topLiked = Optional.ofNullable(topLiked);
         this.sortBy = Optional.ofNullable(sortBy);
         this.sortOrder = Optional.ofNullable(sortOrder);
 
@@ -44,7 +42,7 @@ public class PostFilterOptions {
         return username;
     }
 
-    public Optional<String> getLocalDate() {
+    public Optional<LocalDateTime> getLocalDate() {
         return localDate;
     }
 

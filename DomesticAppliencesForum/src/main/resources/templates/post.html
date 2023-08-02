@@ -6,10 +6,11 @@
 </head>
 <body>
 <ul>
-    <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">See all posts</a></h3></li>
+    <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></h3></li>
 </ul>
 <ul>
     <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
+
 </ul>
 <h2 th:text="${post.getTitle()}">Post Title</h2>
 <h2 th:text="${post.getContent()}">Post Content</h2>
@@ -28,6 +29,10 @@
 <p th:text="'Likes: ' + ${likes} + ', Dislikes: ' + ${disLikes}"></p>
 <div>
     <a href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See votes</a>
+    <h3>
+        <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/update}">Update</a>
+        <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/delete}">Delete</a>
+    </h3>
 </div>
 
 </div>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,7 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPosts(
             @RequestParam(required = false) String username,
-            @RequestParam(required = false) String localDate,
+            @RequestParam(required = false) LocalDateTime localDate,
             @RequestParam(required = false) Integer lastTen,
             @RequestParam(required = false) Integer tagId,
             @RequestParam(required = false) String mostComments,

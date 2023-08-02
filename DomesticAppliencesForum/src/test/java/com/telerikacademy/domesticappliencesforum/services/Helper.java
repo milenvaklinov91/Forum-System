@@ -35,7 +35,7 @@ public class Helper {
     public static PostFilterOptions createMockFilterOptions() {
         return new PostFilterOptions(
                 "username",
-                "2023-07-19",
+                LocalDateTime.now(),
                 10,
                 1,
                 "mostComment",

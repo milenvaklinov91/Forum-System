@@ -15,15 +15,13 @@ import com.telerikacademy.domesticappliencesforum.repositories.PostRepositoryImp
 import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
-import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationException;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -33,22 +31,18 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostMvcController {
     private final PostService postService;
-    private final UserService userService;
     private final TagTypesService tagTypesService;
     private final PostMapper modelMapper;
     private final PostRepositoryImpl postRepository;
     private final VoteRepositoryImpl voteRepository;
-
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
     public PostMvcController(PostService postService,
-                             UserService userService,
                              TagTypesService tagTypesService,
                              PostMapper modelMapper, PostRepositoryImpl postRepository,
                              VoteRepositoryImpl voteRepository, AuthenticationHelper authenticationHelper) {
         this.postService = postService;
-        this.userService = userService;
         this.tagTypesService = tagTypesService;
         this.modelMapper = modelMapper;
         this.postRepository = postRepository;
@@ -222,6 +216,11 @@ public class PostMvcController {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         return "vote";
+    }
+
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session) {
+        return session.getAttribute("currentUser") != null;
     }
 
 
