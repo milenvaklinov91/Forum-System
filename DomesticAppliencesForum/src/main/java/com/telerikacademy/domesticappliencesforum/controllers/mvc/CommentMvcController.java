@@ -35,19 +35,19 @@ public class CommentMvcController {
 
     @GetMapping("/{id}")
     public String showSingleComment(@PathVariable int id, Model model) {
-//        try {
+        try {
             Comment comment = commentService.getCommentById(id);
              model.addAttribute("comment", comment);
             return "comment";
-//        } catch (EntityNotFoundException e) {
-//            model.addAttribute("error", e.getMessage());
-//            return "not-found";
-//        }
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
     }
-//    @GetMapping
-//    public String showAllComments(Model model) {
-//        List<Comment> comments = commentService.getAllComments(new FilterOptionsComment());
-//        model.addAttribute("comments", comments);
-//        return "comments";
-//    }
+    @GetMapping
+    public String showAllComments(Model model) {
+        List<Comment> comments = commentService.getAllComments(new FilterOptionsComment());
+        model.addAttribute("comments", comments);
+        return "comments";
+    }
 }
