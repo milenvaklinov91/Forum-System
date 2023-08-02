@@ -151,9 +151,9 @@ public class PostRepositoryImpl implements PostRepository {
             );
             query.setParameter("post_id", postId);
             Long likeCount = (Long) query.uniqueResult();
-            if (likeCount == 0) {
+          /*  if (likeCount == 0) {
                 throw new EntityNotFoundException("This post dont have likes!");
-            }
+            }*/
             return likeCount.intValue();
         }
     }
@@ -167,9 +167,9 @@ public class PostRepositoryImpl implements PostRepository {
             );
             query.setParameter("post_id", postId);
             Long likeCount = (Long) query.uniqueResult();
-            if (likeCount == 0) {
+        /*    if (likeCount == 0) {
                 throw new EntityNotFoundException("This post dont have disLikes!");
-            }
+            }*/
             return likeCount.intValue();
         }
     }

@@ -66,11 +66,18 @@ public class PostMvcController {
     public String showSinglePost(@PathVariable int id, Model model) {
         try {
             Post post = postService.getById(id);
-            int likes = postRepository.getPostLikes(id);
-            int disLikes = postRepository.getPostDisLikes(id);
             model.addAttribute("post", post);
-            model.addAttribute("likes", likes);
-            model.addAttribute("disLikes", disLikes);
+
+            int likes = postRepository.getPostLikes(id);
+            if (likes > 0) {
+                model.addAttribute("likes", likes);
+            }
+
+            int disLikes = postRepository.getPostDisLikes(id);
+            if (disLikes > 0) {
+                model.addAttribute("disLikes", disLikes);
+            }
+
             return "post";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());

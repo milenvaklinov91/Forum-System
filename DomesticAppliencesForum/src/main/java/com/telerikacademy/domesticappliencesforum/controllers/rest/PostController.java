@@ -39,7 +39,7 @@ public class PostController {
     @GetMapping
     public List<Post> getAllPosts(
             @RequestParam(required = false) String username,
-            @RequestParam(required = false) LocalDateTime localDate,
+            @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer lastTen,
             @RequestParam(required = false) Integer tagId,
             @RequestParam(required = false) String mostComments,

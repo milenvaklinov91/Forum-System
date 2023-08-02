@@ -6,7 +6,7 @@ import java.util.Optional;
 public class PostFilterOptions {
 
     private Optional<String> username;
-    private Optional<LocalDateTime> localDate;
+    private Optional<String> localDate;
     private Optional<Integer> lastTen;
     private Optional<Integer> tagId;
     private Optional<String> mostComments;
@@ -18,7 +18,7 @@ public class PostFilterOptions {
         this(null, null, null, null, null, null, null, null);
     }
 
-    public PostFilterOptions(String username, LocalDateTime localDate,
+    public PostFilterOptions(String username, String localDate,
                              Integer lastTen,
                              Integer tagId, String mostComments,
                              String topLiked,
@@ -42,7 +42,7 @@ public class PostFilterOptions {
         return username;
     }
 
-    public Optional<LocalDateTime> getLocalDate() {
+    public Optional<String> getLocalDate() {
         return localDate;
     }
 
