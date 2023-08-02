@@ -13,10 +13,13 @@
 </div>
 
 <h3>
-    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/update}">Block</a>
-    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/delete}">Unblock</a>
-    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/update}">Make Admin</a>
-    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/delete}">Unmake Admin</a>
+    <a th:if="${isAuthenticated}" href="#" th:href="@{/users/{id}/block(id=${user.getId()})}" th:object="${user}"
+       methods="get">Block</a>
+    <a th:if="${isAuthenticated}" href="#" th:href="@{/users/{id}/unblock(id=${user.getId()})}" th:object="${user}"
+       methods="get">Unblock</a>
+    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/makeadmin}">Make Admin</a>
+    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/demoteadmin}">Demote
+        Admin</a>
 </h3>
 
 </div>

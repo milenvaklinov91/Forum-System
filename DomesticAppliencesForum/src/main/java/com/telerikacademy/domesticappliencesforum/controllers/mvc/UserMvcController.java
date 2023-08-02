@@ -1,10 +1,10 @@
 package com.telerikacademy.domesticappliencesforum.controllers.mvc;
 
 import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
+import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
-import com.telerikacademy.domesticappliencesforum.mappers.UserMapper;
+import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.dtos.user.UserDto;
 import com.telerikacademy.domesticappliencesforum.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,15 +18,14 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserMvcController {
     private final UserServiceImpl service;
-    private final UserMapper userMapper;
     private final AuthenticationHelper authenticationHelper;
 
+
     @Autowired
-    public UserMvcController(UserServiceImpl service, UserMapper userMapper,
-                             AuthenticationHelper authenticationHelper) {
+    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper) {
 
         this.service = service;
-        this.userMapper = userMapper;
+
         this.authenticationHelper = authenticationHelper;
     }
 
@@ -37,14 +36,8 @@ public class UserMvcController {
         return "allUsers";
     }
 
-    /*@GetMapping("/count")
-    public String countAllUsers() {
-        List<User> users = service.countAllUsers();
-        return null;
-    }*/
-
     @GetMapping("/{id}")
-    public String  getSingleUser(@PathVariable int id,Model model) {
+    public String getSingleUser(@PathVariable int id, Model model) {
         try {
             User user = service.getById(id);
             model.addAttribute("user", user);
@@ -55,11 +48,53 @@ public class UserMvcController {
         }
     }
 
-    @GetMapping("/new")
+    @GetMapping("/{id}/block")
+    public String blockUser(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()){
+                throw new AuthorizationException("You are not authorized!");
+            }
+            User user = service.getById(id);
+            service.blockUser(user.getId(), admin);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}/unblock")
+    public String unblockUser(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()){
+                throw new AuthorizationException("You are not authorized!");
+            }
+            User user = service.getById(id);
+            service.unBlockUser(user.getId(), admin);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    /*@GetMapping("/new")
     public String showNewUserPage(Model model) {
         model.addAttribute("user", new UserDto());
         return "userRegisterView";
-    }
+    }*/
 
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
