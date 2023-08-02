@@ -43,10 +43,12 @@ public class CommentRepositoryImpl implements CommentRepository {
             StringBuilder queryString = new StringBuilder("from Comment");
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
+            //todo да мога да филстиррам по username
 //            filterOptionsComment.getUsername().ifPresent(username -> {
 //                filters.add(" createdByUser.username = :username ");
 //                params.put("username", username);
 //            });
+            //todo да мога да филтрирам по дата
             filterOptionsComment.getLocalDate().ifPresent(localDate -> {
                 LocalDateTime dateTime = LocalDateTime.parse(localDate, DateTimeFormatter.ISO_DATE_TIME);
                 filters.add("createTime = :localDate");
@@ -64,6 +66,8 @@ public class CommentRepositoryImpl implements CommentRepository {
                         "WHERE vc.typeId = -1 " +
                         "GROUP BY c.id " +
                         "ORDER BY COUNT(vc) DESC");
+            } else if (filterOptionsComment.getSortBy().isPresent()) {
+                queryString.append(" ORDER BY create_date DESC ");
             } else {
                 if (!filters.isEmpty()) {
                     queryString

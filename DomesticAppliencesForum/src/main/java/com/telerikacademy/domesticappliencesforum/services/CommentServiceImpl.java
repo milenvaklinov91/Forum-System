@@ -41,8 +41,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void create(Comment comment, User user) {
         comment.setCreatedByUser(user);
-        comment.setCreateTime(LocalDateTime.now());
-        commentRepository.create(comment);
+        if(comment.getCreatedByUser().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!");
+        }        commentRepository.create(comment);
     }
 
     @Override
@@ -61,6 +62,9 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentRepository.getCommentById(id);
         if (!(user.isAdmin() || comment.getCreatedByUser().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("Only admins and comment owners are authorized to delete this comment");
+        }
+        else if(comment.getCreatedByUser().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!");
         }
         commentRepository.delete(id);
     }
