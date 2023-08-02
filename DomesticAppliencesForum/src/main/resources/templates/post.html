@@ -35,6 +35,12 @@
     </h3>
 </div>
 
+<h3>
+    <a href="#" th:href="@{/posts/{id}/update(id=${post.getPostId()})}">Update</a>
+    <a href="#" th:href="@{/posts/{id}/delete(id=${post.getPostId()})}">Delete</a>
+
+</h3>
+
 </div>
 </body>
 </html>
