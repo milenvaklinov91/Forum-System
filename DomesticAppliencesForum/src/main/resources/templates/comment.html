@@ -6,9 +6,10 @@
 </head>
 <body>
 <h3 th:text="${comment.getComment()}">Comment Nqkav Content</h3>
-<!--<h2>-->
-<!--  <span th:text="'#' + ${comment.get}"></span>-->
-<!--</h2>-->
+<h2>
+  <a href="#" th:href="@{'/comments/' + ${comment.getPost().getPostId()} }"
+     th:text="${comment.getPost().getTitle()}">Related Post</a>
+</h2>
 </div>
 </body>
 </html>
