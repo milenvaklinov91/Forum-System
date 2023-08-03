@@ -1,6 +1,7 @@
 package com.telerikacademy.domesticappliencesforum.controllers.rest;
 
 import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
+import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.models.TagTypes;
@@ -37,12 +38,15 @@ public class TagController {
     }
 
     @PostMapping
-    public TagTypes create(@Valid @RequestBody TagTypes tag) {
+    public TagTypes create(@Valid @RequestBody TagTypes tag, @RequestHeader HttpHeaders headers) {
         try {
-            tagTypesService.create(tag);
+            User user = authenticationHelper.tryGetUser(headers);
+            tagTypesService.create(tag, user);
             return tag;
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 

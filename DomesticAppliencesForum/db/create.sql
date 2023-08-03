@@ -1,11 +1,13 @@
-create table tag_types
+create schema forum_system;
+
+create table forum_system.tag_types
 (
     tag_type_id int auto_increment
         primary key,
     type        varchar(45) null
 );
 
-create table users
+create table forum_system.users
 (
     user_id           int auto_increment
         primary key,
@@ -19,7 +21,7 @@ create table users
     is_blocked        tinyint(1)  not null
 );
 
-create table phone_number
+create table forum_system.phone_number
 (
     phone_number_id int auto_increment
         primary key,
@@ -29,7 +31,7 @@ create table phone_number
         foreign key (user_id) references users (user_id)
 );
 
-create table posts
+create table forum_system.posts
 (
     post_id     int auto_increment
         primary key,
@@ -44,7 +46,29 @@ create table posts
         foreign key (user_id) references users (user_id)
 );
 
-create table vote_comments
+
+create table forum_system.comments
+(
+    comment_id  int auto_increment
+        primary key,
+    comment     varchar(8192) not null,
+    create_date datetime      not null,
+    user_id     int           not null,
+    post_id     int           not null,
+    constraint comments_posts_post_id_fk
+        foreign key (post_id) references posts (post_id) on delete cascade,
+    constraint comments_users_user_id_fk
+        foreign key (user_id) references users (user_id)
+);
+
+create table forum_system.vote_types
+(
+    vote_type_id int auto_increment
+        primary key,
+    type         varchar(45) not null
+);
+
+create table forum_system.vote_comments
 (
     vote_comment_id int auto_increment
         primary key,
@@ -59,28 +83,7 @@ create table vote_comments
         foreign key (vote_type_id) references vote_types (vote_type_id)
 );
 
-create table comments
-(
-    comment_id  int auto_increment
-        primary key,
-    comment     varchar(8192) not null,
-    create_date datetime      not null,
-    user_id     int           not null,
-    post_id     int           not null,
-    constraint comments_posts_post_id_fk
-        foreign key (post_id) references posts (post_id),
-    constraint comments_users_user_id_fk
-        foreign key (user_id) references users (user_id)
-);
-
-create table vote_types
-(
-    vote_type_id int auto_increment
-        primary key,
-    type         varchar(45) not null
-);
-
-create table votes
+create table forum_system.votes
 (
     vote_id    int auto_increment
         primary key,
@@ -91,6 +94,6 @@ create table votes
         foreign key (user_id) references users (user_id),
     constraint votes_posts_post_id_fk
         foreign key (post_id) references posts (post_id),
-    constraint votes_vote_types_vote_type_id_fk
+    constraint votes_vote_types_type_fk
         foreign key (type) references vote_types (vote_type_id)
 );

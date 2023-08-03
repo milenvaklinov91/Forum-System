@@ -37,7 +37,6 @@ public class TagMvcController {
         List<TagTypes> tags = tagTypesService.get();
         model.addAttribute("tags", tags);
         return "tags";
-
     }
 
     @GetMapping("/{id}")
@@ -50,7 +49,6 @@ public class TagMvcController {
             model.addAttribute("error", e.getMessage());
             return "not-found";
         }
-
     }
 
     @GetMapping("/new")
@@ -68,14 +66,11 @@ public class TagMvcController {
     public String createTag(@Valid @ModelAttribute("tag") TagTypes tag, BindingResult errors,
                             Model model, HttpSession session) {
         User user = authenticationHelper.tryGetCurrentUser(session);
-        if (user.isBlocked()) {
-            throw new AuthorizationException("You are not authorized!");
-        }
         if (errors.hasErrors()) {
             return "tag-new";
         }
         try {
-            tagTypesService.create(tag);
+            tagTypesService.create(tag, user);
             return "redirect:/posts/new";
         } catch (EntityDuplicateException e) {
             errors.rejectValue("type", "tag.exist", e.getMessage());

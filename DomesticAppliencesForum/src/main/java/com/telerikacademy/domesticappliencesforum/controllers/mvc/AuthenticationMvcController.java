@@ -94,45 +94,4 @@ public class AuthenticationMvcController {
         }
     }
 
-   /* @GetMapping("/{id}/block")
-    public String blockUser(@PathVariable int id, Model model, HttpSession session) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetCurrentUser(session);
-        } catch (AuthorizationException e) {
-            return "redirect:auth/login";
-        }
-        try {
-            userService.blockUser(id, user);
-            return "redirect:/users";
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            return "not-found";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "AccessDeniedView";
-        }
-    }*/
-
-    @GetMapping("/{id}/unblock")
-    public String unblockUser(@PathVariable int id, Model model, HttpSession session) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetCurrentUser(session);
-        } catch (AuthorizationException e) {
-            return "redirect:auth/login";
-        }
-        try {
-            userService.unBlockUser(id, user);
-            return "redirect:/users";
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            return "not-found";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "AccessDeniedView";
-        }
-    }
-
-
 }

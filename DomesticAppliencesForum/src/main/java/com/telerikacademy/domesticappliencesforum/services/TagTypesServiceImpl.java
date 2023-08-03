@@ -33,9 +33,8 @@ public class TagTypesServiceImpl implements TagTypesService {
         return tagTypesRepository.get(id);
     }
 
-    public void create(TagTypes tag) {
-        User user = new User();
-        if (user.isBlocked()) {     //todo
+    public void create(TagTypes tag,User user) {
+        if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         }
         boolean duplicateExists = true;

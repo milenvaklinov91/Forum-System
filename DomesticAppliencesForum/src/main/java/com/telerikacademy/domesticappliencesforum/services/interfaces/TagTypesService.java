@@ -10,7 +10,7 @@ public interface TagTypesService {
 
     TagTypes getById(int id);
 
-    void create(TagTypes tag);
+    void create(TagTypes tag,User user);
 
     TagTypes filterByName(List<TagTypes> tags, String name);
 
