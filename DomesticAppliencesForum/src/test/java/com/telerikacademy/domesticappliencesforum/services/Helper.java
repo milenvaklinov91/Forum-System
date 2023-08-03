@@ -35,10 +35,12 @@ public class Helper {
 
     public static PostFilterOptions createMockFilterOptions() {
         return new PostFilterOptions(
-                "username",
+                "title",
+                "content",
                 "2023-07-19",
                 10,
                 1,
+                "mostRecently",
                 "mostComment",
                 "topLiked",
                 "sorted",

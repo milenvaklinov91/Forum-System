@@ -31,11 +31,11 @@ public class PostRepositoryImpl implements PostRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterOptions.getUsername().ifPresent(username -> {
+            filterOptions.getTitle().ifPresent(username -> {
                 filters.add(" createdBy.username = :userName ");
                 params.put("userName", username);
             });
-            filterOptions.getLocalDate().ifPresent(date -> {
+            filterOptions.getContent().ifPresent(date -> {
                 LocalDateTime dateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME);
                 filters.add(" createTime = :date ");
                 params.put("date", dateTime);
@@ -51,7 +51,7 @@ public class PostRepositoryImpl implements PostRepository {
 
             } else if (filterOptions.getLastTen().isPresent()) {
                 stringBuilder.append(" ORDER BY postId DESC ");
-            }else if(filterOptions.getTopLiked().isPresent()) {
+            }else if(filterOptions.getMostLiked().isPresent()) {
                 stringBuilder = new StringBuilder(
                         "SELECT p FROM Post p " +
                                 "LEFT JOIN p.votes v " +

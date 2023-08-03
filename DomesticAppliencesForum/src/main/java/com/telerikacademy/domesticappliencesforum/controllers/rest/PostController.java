@@ -38,17 +38,19 @@ public class PostController {
 
     @GetMapping
     public List<Post> getAllPosts(
-            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String content,
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer lastTen,
             @RequestParam(required = false) Integer tagId,
+            @RequestParam(required = false) String mostRecently,
             @RequestParam(required = false) String mostComments,
             @RequestParam(required = false) String topLiked,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder
     ) {
-        PostFilterOptions filterOptions = new PostFilterOptions(username, localDate,
-                lastTen, tagId, mostComments,topLiked, sortBy, sortOrder);
+        PostFilterOptions filterOptions = new PostFilterOptions(title,content,localDate,
+                lastTen, tagId,mostRecently, mostComments,topLiked, sortBy, sortOrder);
         return postService.getAllPosts(filterOptions);
     }
 

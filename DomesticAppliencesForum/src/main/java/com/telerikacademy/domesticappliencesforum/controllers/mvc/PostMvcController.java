@@ -11,6 +11,7 @@ import com.telerikacademy.domesticappliencesforum.models.TagTypes;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.Vote;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostFilterDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImpl;
@@ -56,10 +57,32 @@ public class PostMvcController {
         return tagTypesService.get();
     }
 
-    @GetMapping
+    /*@GetMapping
     public String showAllPosts(Model model) {
         List<Post> posts = postService.getAllPosts(new PostFilterOptions());
         model.addAttribute("posts", posts);
+        return "posts";
+    }*/
+
+    @GetMapping
+    public String showAllPosts(@ModelAttribute("filter") PostFilterDto filter, Model model) {
+
+        PostFilterOptions filterOptions = new PostFilterOptions(
+                filter.getTitle(),
+                filter.getContent(),
+                filter.getLocalDate(),
+                filter.getLastTen(),
+                filter.getTagId(),
+                filter.getMostRecently(),
+                filter.getMostComments(),
+                filter.getMostLiked(),
+                filter.getSortBy(),
+                filter.getSortOrder()
+        );
+
+        List<Post> posts = postService.getAllPosts(filterOptions);
+        model.addAttribute("posts", posts);
+        model.addAttribute("filter", filter);
         return "posts";
     }
 

@@ -66,7 +66,7 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.getPostById(id);
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
-        } else if (!user.isAdmin() || post.getCreatedBy().getUsername().equals(user.getUsername())) {
+        } else if (!(user.isAdmin() || post.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         postRepository.delete(id);

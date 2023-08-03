@@ -10,6 +10,96 @@
     <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
     <li><h3><a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post}">Create a new post</a></h3></li>
 </ul>
+
+<form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
+    <input type="text" placeholder="Title" th:field="*{title}" />
+    <input type="text" placeholder="Content" th:field="*{content}" />
+
+
+    <!--<select th:field="*{styleId}">
+        <option value="">Any Style</option>
+        <option th:each="style : ${styles}"
+                th:value="${style.getId()}"
+                th:text="${style.getName()}">
+            BeerStyleOne
+        </option>
+    </select>-->
+
+    <select th:field="*{sortBy}">
+        <option value="">Default Sort</option>
+        <option value="localDate">Created Time</option>
+        <option value="lastTen">Last Ten</option>
+        <option value="tagId">Tag</option>
+        <option value="mostRecently">Most Recently</option>
+        <option value="mostComment">Most Comment</option>
+        <option value="mostLiked">Most Liked</option>
+    </select>
+
+    <select th:field="*{sortOrder}">
+        <option value="asc">Asc</option>
+        <option value="desc">Desc</option>
+    </select>
+
+    <input type="submit" value="Search">
+</form>
+
+<form action="#" th:action="@{/posts}" method="get">
+    <input type="submit" value="Reset">
+</form>
+
+<div th:if="${posts.isEmpty()}">
+    <h2 th:text="#{posts.title.empty}">No Posts</h2>
+</div>
+<div th:unless="${posts.isEmpty()}">
+    <h2 th:text="#{posts.title}">All Posts</h2>
+
+
+    <div class="table">
+        <div class="header">
+            <div class="cell"><a th:text="#{post.label.title}"
+                                 th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                                 th:href="${urlBuilder.replaceQueryParam('sortBy', 'title').toUriString()}">Title</a></div>
+            <div class="cell"><a th:text="#{post.label.content}"
+                                 th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                                 th:href="${urlBuilder.replaceQueryParam('sortBy', 'content').toUriString()}">Content</a></div>
+            <div class="cell"><a th:text="#{post.label.tag}"
+                                 th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                                 th:href="${urlBuilder.replaceQueryParam('sortBy', 'tag').toUriString()}">Tag</a></div>
+            <div class="cell"><a th:text="#{post.label.createdBy}"
+                                 th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                                 th:href="${urlBuilder.replaceQueryParam('sortBy', 'creator').toUriString()}">Creator</a></div>
+            <div class="cell"><a th:text="#{post.label.createdDate}"
+                                 th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
+                                 th:href="${urlBuilder.replaceQueryParam('sortBy', 'created').toUriString()}">Created</a></div>
+        </div>
+        <div class="row" th:each="post : ${posts}">
+            <div class="cell">
+                <a href="#" th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}">Post</a>
+            </div>
+            <div class="cell" th:text="${post.getContent()}">Content</div>
+            <div class="cell" th:text="${post.getTag().getType()}">Tag</div>
+            <div class="cell">
+                <a th:href="@{/users/{userId}(userId=${post.getCreatedBy().getId()})}" th:text="${post.getCreatedBy().getUsername()}">Creator</a>
+            </div>
+            <div class="cell" th:text="${post.getCreateTime()}">Created Date</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<!--
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Posts</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+    <li><h3><a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post}">Create a new post</a></h3></li>
+</ul>
 <div th:if="${posts.isEmpty()}">
     <h2 th:text="#{posts.title.empty}">No Posts</h2>
 </div>
@@ -38,4 +128,4 @@
     </div>
 </div>
 </body>
-</html>
+</html>-->
