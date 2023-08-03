@@ -7,6 +7,7 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
@@ -106,5 +107,51 @@ public class CommentMvcController {
         }
     }
 
+    @GetMapping("/{id}/update")
+    public String showEditCommentPage(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:auth/login";
+        }
+        try {
+            Comment comment = commentService.getCommentById(id);
+            CommentDto commentDto = modelMapper.toDto(comment);
+            model.addAttribute("commentId", id);
+            model.addAttribute("comment", commentDto);
+            return "comment-update";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+    }
+    @PostMapping("/{id}/update")
+    public String updateComment(@PathVariable int id, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult errors,
+                             Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:auth/login";
+        }
+        if (errors.hasErrors()) {
+            return "comment-update";
+        }
+        try {
+            Comment newComment = modelMapper.fromCommentDtoWithID(id, commentDto);
+            commentService.modify(newComment, user);
+            return "redirect:/comments";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (EntityDuplicateException e) {
+            errors.rejectValue("name", "duplicate_comment", e.getMessage());
+            return "comment-update";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+
+    }
 }
 

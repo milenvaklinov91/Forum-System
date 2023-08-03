@@ -27,6 +27,11 @@
     </li>
 </ul>
 <p th:unless="${post.getComments().size() > 0}">No comments</p>
+<form action="/posts/{postId}/comment-new" method="post">
+    <textarea name="commentText" rows="4" cols="50" placeholder="Add your comment here"></textarea>
+    <br>
+    <input type="submit" value="Add Comment">
+</form>
 <p th:if="${likes != null or disLikes != null}">
     <span th:if="${likes != null}">
         Likes: <span th:text="${likes}"></span>

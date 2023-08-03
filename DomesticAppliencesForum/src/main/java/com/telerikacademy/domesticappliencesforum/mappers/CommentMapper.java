@@ -1,7 +1,9 @@
 package com.telerikacademy.domesticappliencesforum.mappers;
 
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,11 @@ public class CommentMapper {
         Comment repositoryComment = commentService.browse(id);
         comment.setCreatedByUser(repositoryComment.getCreatedByUser());
         return comment;
+    }
+    public CommentDto toDto(Comment comment) {
+        CommentDto commentDto = new CommentDto();
+        commentDto.setContent(comment.getComment());
+        commentDto.setPostId(comment.getPostId().getPostId());
+        return commentDto;
     }
 }

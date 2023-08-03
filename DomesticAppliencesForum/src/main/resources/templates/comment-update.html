@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Comment</title>
+  <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2 th:text="#{comment.edit}">Edit Comment</h2>
+
+<form th:replace="comment-new.html :: comment-form"></form>
+
+</body>
+</html>
