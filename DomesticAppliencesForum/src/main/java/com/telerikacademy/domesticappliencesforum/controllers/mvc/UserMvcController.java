@@ -140,4 +140,14 @@ public class UserMvcController {
         return session.getAttribute("currentUser") != null;
     }
 
+    @ModelAttribute("isAdmin")
+    public boolean populateIsAdmin(HttpSession session) {
+        try {
+            User currentUser = authenticationHelper.tryGetCurrentUser(session);
+            return currentUser.isAdmin();
+        } catch (AuthorizationException e) {
+            return false;
+        }
+    }
+
 }

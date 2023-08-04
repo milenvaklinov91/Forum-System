@@ -14,19 +14,19 @@
     <h2 th:text="#{comment.title}">All Comments</h2>
 <div class="table">
     <div class="header">
-        <div class="cell" th:text="#{comment.label.comment}">Comment</div>
-        <div class="cell" th:text="#{comment.label.createdBy}">Created by</div>
-        <div class="cell" th:text="#{comment.label.createdDate}">Created on</div>
+        <div class="cellSingleUser" th:text="#{comment.label.comment}">Comment</div>
+        <div class="cellSingleUser" th:text="#{comment.label.createdBy}">Created by</div>
+        <div class="cellSingleUser" th:text="#{comment.label.createdDate}">Created on</div>
 <!--        <div class="cell" th:text="#{comment.label.post}">Created on</div>-->
     </div>
     <div class="row" th:each="comment : ${comments}">
-        <div class="cell">
+        <div class="cellSingleUser">
             <a href="#" th:href="@{/comments/{id}(id=${comment.getCommentId()})}" th:text="${comment.getComment()}">Content about the comment</a>
         </div>
-        <div class="cell">
+        <div class="cellSingleUser">
             <a th:href="@{/users/{userId}(userId=${comment.getCreatedByUser().getId()})}" th:text="${comment.getCreatedByUser().getUsername()}">Created by</a>
         </div>
-        <div class="cell" th:text="${comment.getCreateTime()}">Created on</div>
+        <div class="cellSingleUser" th:text="${comment.getCreateTime()}">Created on</div>
     </div>
 </div>
 </div>

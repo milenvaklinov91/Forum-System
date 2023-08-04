@@ -20,18 +20,18 @@
 
     <div class="table">
         <div class="header">
-            <div class="cell" th:text="#{user.label.username}">Username</div>
-            <div class="cell" th:text="#{user.label.firstName}">FirstName</div>
-            <div class="cell" th:text="#{user.label.lastName}">LastName</div>
-            <div class="cell" th:text="#{user.label.email}">Email</div>
+            <div class="cellSingleUser" th:text="#{user.label.username}">Username</div>
+            <div class="cellSingleUser" th:text="#{user.label.firstName}">FirstName</div>
+            <div class="cellSingleUser" th:text="#{user.label.lastName}">LastName</div>
+            <div class="cellSingleUser" th:text="#{user.label.email}">Email</div>
         </div>
         <div class="row" th:each="user : ${users}">
-            <div class="cell">
+            <div class="cellSingleUser">
                 <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a>
             </div>
-            <div class="cell" th:text="${user.getFirstName}">FirstName</div>
-            <div class="cell" th:text="${user.getLastName}">LastName</div>
-            <div class="cell" th:text="${user.getEmail}">Email</div>
+            <div class="cellSingleUser" th:text="${user.getFirstName}">FirstName</div>
+            <div class="cellSingleUser" th:text="${user.getLastName}">LastName</div>
+            <div class="cellSingleUser" th:text="${user.getEmail}">Email</div>
         </div>
     </div>
 </div>

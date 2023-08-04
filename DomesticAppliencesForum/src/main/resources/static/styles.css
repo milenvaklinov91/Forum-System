@@ -15,11 +15,16 @@
     display: table-row;
 }
 
-.cell {
+.cellSingleUser {
     display: table-cell;
     width: 24%;
 }
 
 .error {
     color: red;
+}
+
+.cellSingleUser {
+    display: table-cell;
+    width: 19%;
 }
