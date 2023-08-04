@@ -21,10 +21,6 @@ insert into forum_system.votes(user_id, post_id, type)
 values (1,1,1),
        (1,1,2);
 
-insert into forum_system.vote_comments(comment_id, user_id, vote_type_id)
-values (1,1,1),
-       (1,1,2);
-
 insert into forum_system.phone_number(user_id, phone_number)
 values (1,'0888123456');
 
@@ -32,3 +28,7 @@ insert into forum_system.comments(comment, create_date, user_id, post_id)
 values ('comment',now(),1,1),
        ('comment',now(),2,2),
        ('comment',now(),2,2);
+
+insert into forum_system.vote_comments(comment_id, user_id, vote_type_id)
+values (1,1,1),
+       (1,1,2);
