@@ -24,7 +24,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User createdBy;
     @Column(name = "create_date")
-    private LocalDate createTime = LocalDate.now();// LocalDateTime.now();
+    private LocalDate createTime = LocalDate.now();
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tag_type_id")

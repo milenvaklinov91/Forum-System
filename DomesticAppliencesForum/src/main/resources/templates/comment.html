@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Single Comment</title>
+    <meta charset="UTF-8">
+    <title>Single Comment</title>
 </head>
 <body>
-<h3 th:text="${comment.getComment()}">Comment Nqkav Content</h3>
-<h2>
-  <a href="#" th:href="@{'/comments/' + ${comment.getPost().getPostId()} }"
-     th:text="${comment.getPost().getTitle()}">Related Post</a>
-</h2>
+<ul>
+    <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></h3></li>
+</ul>
+
+<h2 th:text="${comment.getComment()}">Comment</h2>
+
+<!--<h2>Comments:</h2>
+<ul th:if="${comment != null and comment.getComment() > 0}">
+    <li th:each="comment : ${comment.getComment()}">
+        <p th:text="${comment.getComment()()}"></p>
+        <p>
+            <span th:text="'Created by: ' + ${comment.getCreatedByUser().getUsername()()}"></span>
+        </p>
+    </li>
+</ul>-->
+<p th:unless="${comment != null and comment.getComment() > 0}">No comments</p>
+
+
+<p th:if="${likes != null or disLikes != null}">
+    <span th:if="${likes != null}">
+        Likes: <span th:text="${likes}"></span>
+    </span>
+    <span th:if="${disLikes != null}">
+        Dislikes: <span th:text="${disLikes}"></span>
+    </span>
+</p>
+
+<div th:if="${likes != null or disLikes != null}">
+    <a href="/comments/{commentId}/seeVotes" th:href="@{'/comments/' + ${comment.getCommentId()} + '/seeVotes'}">See votes</a>
 </div>
+
+<h3>
+    <a th:if="${isAuthenticated}" th:href="@{'/posts/' + ${post.id} + '/update'}">Update</a>
+    <a th:if="${isAuthenticated}" th:href="@{'/posts/' + ${post.id} + '/delete'}">Delete</a>
+</h3>
+
 </body>
 </html>

@@ -116,7 +116,7 @@ public class Helper {
         var mockComment = new Comment();
         mockComment.setCommentId(1);
         mockComment.setComment("Comment should be between 32 and 8192 symbols");
-        mockComment.setCreateTime(LocalDateTime.now());
+        mockComment.setCreateTime(LocalDate.now());
         mockComment.setCreatedByUser(createMockUser());
         mockComment.setPostId(createMockPost());
         return mockComment;

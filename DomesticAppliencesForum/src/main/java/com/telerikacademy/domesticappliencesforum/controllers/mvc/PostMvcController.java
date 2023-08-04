@@ -57,12 +57,6 @@ public class PostMvcController {
         return tagTypesService.get();
     }
 
-    /*@GetMapping
-    public String showAllPosts(Model model) {
-        List<Post> posts = postService.getAllPosts(new PostFilterOptions());
-        model.addAttribute("posts", posts);
-        return "posts";
-    }*/
 
     @GetMapping
     public String showAllPosts(@ModelAttribute("filter") PostFilterDto filter, Model model) {

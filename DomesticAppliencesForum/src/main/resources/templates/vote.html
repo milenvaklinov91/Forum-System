@@ -19,6 +19,14 @@
 <p>Users Who Liked: <span th:each="user : ${usersWhoLiked}" th:text="${user} + ' '"></span></p>
 <p> <span th:text="'Total dislikes:' + ${dislikes}"></span></p>
 <p>Users Who Disliked: <span th:each="user : ${usersWhoDisliked}" th:text="${user} + ' '"></span></p>
+
+<h2>
+  <span th:text="'Likes for Comment :' + ${comment.getComment()}"></span>
+</h2>
+<p> <span th:text="'Total likes:' + ${likes}"></span></p>
+<p>Users Who Liked: <span th:each="user : ${usersWhoLiked}" th:text="${user} + ' '"></span></p>
+<p> <span th:text="'Total dislikes:' + ${dislikes}"></span></p>
+<p>Users Who Disliked: <span th:each="user : ${usersWhoDisliked}" th:text="${user} + ' '"></span></p>
 </body>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.telerikacademy.domesticappliencesforum.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User createdByUser;
     @Column(name = "create_date")
-    private LocalDateTime createTime = LocalDateTime.now();
+    private LocalDate createTime = LocalDate.now();
 
     @JsonIgnore
     @ManyToOne
@@ -60,12 +61,12 @@ public class Comment {
         this.createdByUser = createdByUser;
     }
 
-    public LocalDateTime getCreateTime() {
+    public LocalDate getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime localDateTime) {
-        this.createTime = localDateTime;
+    public void setCreateTime(LocalDate localDate) {
+        this.createTime = localDate;
     }
 
     public Post getPostId() {

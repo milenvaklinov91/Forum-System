@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>New Comment</title>
-    <link href="../static/styles.css" th:href="@{/styles.css}" rel="stylesheet"/>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
 </head>
 <body>
 <h2>New Comment</h2>
-<form th:fragment="comment-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${comment}"
+<form th:fragment="comment-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}"
+      th:object="${comment}"
+
       method="post">
     <label th:text="#{comment.label.comment}">Comment</label>
     <br/>
-    <input type="text" th:field="*{content}"/>
-    <label class="error" th:errors="*{content}">Comment error placeholder</label>
+    <input type="text" th:field="*{comment}"/>
+    <label class="error" th:errors="*{comment}">Comment error placeholder</label>
     <br/><br/>
     <input type="submit" value="Save" />
 </form>

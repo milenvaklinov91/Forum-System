@@ -7,6 +7,9 @@
 
 </head>
 <body>
+
+<li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></h3></li>
+
 <div th:if="${comments.isEmpty()}">
     <h2 th:text="#{comment.title.empty}">No Comments</h2>
 </div>

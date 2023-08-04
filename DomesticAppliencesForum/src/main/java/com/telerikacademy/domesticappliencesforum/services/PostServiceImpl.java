@@ -46,7 +46,6 @@ public class PostServiceImpl implements PostService {
         if (post.getCreatedBy().isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         }
-        //post.setCreateTime(LocalDateTime.now());
         postRepository.create(post);
     }
 

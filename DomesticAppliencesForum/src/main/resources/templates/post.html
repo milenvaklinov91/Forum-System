@@ -17,21 +17,7 @@
 <h2>
     <span th:text="'#' + ${post.getTag().getType()}"></span>
 </h2>
-<h2>Comments:</h2>
-<ul th:if="${post.getComments().size() > 0}">
-    <li th:each="comment : ${post.getComments()}">
-        <p th:text="${comment.getComment()}"></p>
-        <p>
-            <span th:text="'Created by:'+ ${comment.getCreatedByUser().getUsername()}"></span>
-        </p>
-    </li>
-</ul>
-<p th:unless="${post.getComments().size() > 0}">No comments</p>
-<form action="/posts/{postId}/comment-new" method="post">
-    <textarea name="commentText" rows="4" cols="50" placeholder="Add your comment here"></textarea>
-    <br>
-    <input type="submit" value="Add Comment">
-</form>
+
 <p th:if="${likes != null or disLikes != null}">
     <span th:if="${likes != null}">
         Likes: <span th:text="${likes}"></span>
@@ -43,6 +29,41 @@
 <div th:if="${likes != null or disLikes != null}">
     <a href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See votes</a>
 </div>
+
+<h3>
+    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/update}">Update</a>
+    <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/delete}">Delete</a>
+</h3>
+
+<h2>Comments:</h2>
+<ul th:if="${post.getComments().size() > 0}">
+    <li th:each="comment : ${post.getComments()}">
+        <p th:text="${comment.getComment()}"></p>
+        <p>
+            <span th:text="'Created by:'+ ${comment.getCreatedByUser().getUsername()}"></span>
+        </p>
+    </li>
+</ul>
+
+<p th:if="${likes != null or disLikes != null}">
+    <span th:if="${likes != null}">
+        Likes: <span th:text="${likes}"></span>
+    </span>
+    <span th:if="${disLikes != null}">
+        Dislikes: <span th:text="${disLikes}"></span>
+    </span>
+</p>
+<div th:if="${likes != null or disLikes != null}">
+    <a href="/comments/{id}/seeVotes" th:href="@{'/comments/' + ${post.getPostId()} + '/seeVotes'}">See votes</a>
+</div>
+
+<p th:unless="${post.getComments().size() > 0}">No comments</p>
+
+<form action="/posts/{postId}/comment-new" method="post">
+    <textarea name="commentText" rows="4" cols="50" placeholder="Add your comment here"></textarea>
+    <br>
+    <input type="submit" value="Add Comment">
+</form>
 
 <h3>
     <a th:if="${isAuthenticated}" href="#" th:href="@{__${#httpServletRequest.requestURI}__/update}">Update</a>
