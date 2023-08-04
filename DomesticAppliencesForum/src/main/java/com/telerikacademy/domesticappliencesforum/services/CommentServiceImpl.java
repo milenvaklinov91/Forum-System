@@ -2,6 +2,7 @@ package com.telerikacademy.domesticappliencesforum.services;
 
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.CommentRepository;
@@ -39,8 +40,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void create(Comment comment, User user) {
+    public void create(Comment comment, Post post, User user) {
         comment.setCreatedByUser(user);
+        comment.setPostId(post);
         if(comment.getCreatedByUser().isBlocked()){
             throw new UnauthorizedOperationException("You`re blocked!");
         }        commentRepository.create(comment);

@@ -6,11 +6,13 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateExce
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
+import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.Vote;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.CommentRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImpl;
@@ -34,16 +36,18 @@ public class CommentMvcController {
     private final VoteRepositoryImpl voteRepository;
     private final CommentRepositoryImpl commentRepository;
     private final AuthenticationHelper authenticationHelper;
-    private final CommentMapper modelMapper;
+    private final CommentMapper commentMapper;
+    private final PostMapper postMapper;
 
     @Autowired
     public CommentMvcController(CommentService commentService
-            , VoteRepositoryImpl voteRepository, CommentRepositoryImpl commentRepository, AuthenticationHelper authenticationHelper, CommentMapper modelMapper) {
+            , VoteRepositoryImpl voteRepository, CommentRepositoryImpl commentRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper, PostMapper postMapper) {
         this.commentService = commentService;
         this.voteRepository = voteRepository;
         this.commentRepository = commentRepository;
         this.authenticationHelper = authenticationHelper;
-        this.modelMapper = modelMapper;
+        this.commentMapper = commentMapper;
+        this.postMapper = postMapper;
     }
 
     @GetMapping("/{id}")
@@ -83,8 +87,8 @@ public class CommentMvcController {
         return "comment-new";
     }
 
-    @PostMapping("/new")
-    public String createNewComment(@Valid @ModelAttribute("comment") CommentDto commentDto,
+    @PostMapping("/new/{postId}")
+    public String createNewComment(@PathVariable int postId, @Valid @ModelAttribute("comment")CommentDto commentDto, PostDto postDto,
                                    BindingResult errors, Model model, HttpSession session) {
         User user;
         try {
@@ -93,11 +97,12 @@ public class CommentMvcController {
             return "redirect:auth/login";
         }
         if (errors.hasErrors()) {
-            return "comment-new";
+            return "redirect:/posts/" + postId;
         }
         try {
-            Comment newComment = modelMapper.fromCommentDto(commentDto);
-            commentService.create(newComment, user);
+            Comment newComment = commentMapper.fromCommentDto(commentDto);
+            Post newPost = postMapper.fromPostDto(postDto);
+            commentService.create(newComment,newPost,user);
             return "redirect:/comments";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -120,7 +125,7 @@ public class CommentMvcController {
         }
         try {
             Comment comment = commentService.getCommentById(id);
-            CommentDto commentDto = modelMapper.toDto(comment);
+            CommentDto commentDto = commentMapper.toDto(comment);
             model.addAttribute("commentId", id);
             model.addAttribute("comment", commentDto);
             return "comment-update";
@@ -143,7 +148,7 @@ public class CommentMvcController {
             return "comment-update";
         }
         try {
-            Comment newComment = modelMapper.fromCommentDtoWithID(id, commentDto);
+            Comment newComment = commentMapper.fromCommentDtoWithID(id, commentDto);
             commentService.modify(newComment, user);
             return "redirect:/comments";
         } catch (EntityNotFoundException e) {

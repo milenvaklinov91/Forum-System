@@ -15,7 +15,7 @@ public interface CommentService {
 
     Comment browse(int id);
 
-    void create(Comment comment, User user);
+    void create(Comment comment,Post post, User user);
 
     void modify(Comment comment, User user);
 

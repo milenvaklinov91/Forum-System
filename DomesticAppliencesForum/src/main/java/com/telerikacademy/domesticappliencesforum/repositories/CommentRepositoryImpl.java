@@ -115,8 +115,6 @@ public class CommentRepositoryImpl implements CommentRepository {
         }
     }
 
-
-
     @Override
     public Comment getCommentById(int id) {
         try (Session session = sessionFactory.openSession()) {

@@ -23,12 +23,10 @@ public class Comment {
     private User createdByUser;
     @Column(name = "create_date")
     private LocalDate createTime = LocalDate.now();
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post postId;
-
     @JsonIgnore
     @OneToMany(mappedBy = "comment", fetch = FetchType.EAGER)
     private Set<VoteComment> voteComments;

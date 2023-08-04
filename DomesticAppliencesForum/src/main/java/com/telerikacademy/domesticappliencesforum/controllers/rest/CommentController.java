@@ -5,9 +5,12 @@ import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationExcept
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
+import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.Comment;
+import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.UserRepository;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
@@ -25,13 +28,16 @@ public class CommentController {
     private final CommentService commentService;
     private final UserRepository userRepository;
     private final AuthenticationHelper authenticationHelper;
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
 
-    public CommentController(CommentService commentService, UserRepository userRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper) {
+    private final  PostMapper postMapper;
+
+    public CommentController(CommentService commentService, UserRepository userRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper, PostMapper postMapper) {
         this.commentService = commentService;
         this.userRepository = userRepository;
         this.authenticationHelper = authenticationHelper;
         this.commentMapper = commentMapper;
+        this.postMapper = postMapper;
     }
 
     @GetMapping
@@ -55,11 +61,13 @@ public class CommentController {
     }
 
     @PostMapping
-    public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CommentDto commentDto) {
+    public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody
+                    CommentDto commentDto, PostDto postDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Comment comment = commentMapper.fromCommentDto(commentDto);
-            commentService.create(comment, user);
+            Post post = postMapper.fromPostDto(postDto);
+            commentService.create(comment,post, user);
             return comment;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.FOUND, e.getMessage());

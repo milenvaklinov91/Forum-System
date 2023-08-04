@@ -5,16 +5,16 @@ import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationExcept
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
+import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
-import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.TagTypes;
-import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.Vote;
+import com.telerikacademy.domesticappliencesforum.models.*;
+import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostFilterDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImpl;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,9 @@ import java.util.List;
 public class PostMvcController {
     private final PostService postService;
     private final TagTypesService tagTypesService;
-    private final PostMapper modelMapper;
+    private final CommentService commentService;
+    private final PostMapper postMapper;
+    private final CommentMapper commentMapper;
     private final PostRepositoryImpl postRepository;
     private final VoteRepositoryImpl voteRepository;
     private final AuthenticationHelper authenticationHelper;
@@ -42,11 +44,13 @@ public class PostMvcController {
     @Autowired
     public PostMvcController(PostService postService,
                              TagTypesService tagTypesService,
-                             PostMapper modelMapper, PostRepositoryImpl postRepository,
+                             CommentService commentService, PostMapper postMapper, CommentMapper commentMapper, PostRepositoryImpl postRepository,
                              VoteRepositoryImpl voteRepository, AuthenticationHelper authenticationHelper) {
         this.postService = postService;
         this.tagTypesService = tagTypesService;
-        this.modelMapper = modelMapper;
+        this.commentService = commentService;
+        this.postMapper = postMapper;
+        this.commentMapper = commentMapper;
         this.postRepository = postRepository;
         this.voteRepository = voteRepository;
         this.authenticationHelper = authenticationHelper;
@@ -107,11 +111,11 @@ public class PostMvcController {
         PostDto post = (PostDto) session.getAttribute("currentPost");
         try {
             authenticationHelper.tryGetCurrentUser(session);
-                if (post == null) {
-                    post = new PostDto();
-                } else {
-                    session.removeAttribute("currentPost");
-                }
+            if (post == null) {
+                post = new PostDto();
+            } else {
+                session.removeAttribute("currentPost");
+            }
 
         } catch (AuthorizationException e) {
             return "redirect:auth/login";
@@ -136,7 +140,7 @@ public class PostMvcController {
             return "redirect:/tags/new";
         }
         try {
-            Post newPost = modelMapper.fromPostDto(post);
+            Post newPost = postMapper.fromPostDto(post);
             postService.create(newPost, user);
             return "redirect:/posts";
         } catch (EntityNotFoundException e) {
@@ -146,10 +150,38 @@ public class PostMvcController {
             errors.rejectValue("name", "duplicate_post", e.getMessage());
             return "post-new";
         } catch (UnauthorizedOperationException e) {
-        model.addAttribute("error", e.getMessage());
-        return "AccessDeniedView";
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
     }
 
+    @PostMapping("/{postId}")
+    public String createNewComment(@PathVariable int postId, @Valid @ModelAttribute("comment") CommentDto commentDto, PostDto postDto,
+                                   BindingResult errors, Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:auth/login";
+        }
+        if (errors.hasErrors()) {
+            return "redirect:/posts/" + postId;
+        }
+        try {
+            Comment newComment = commentMapper.fromCommentDto(commentDto);
+            Post newPost = postMapper.fromPostDto(postDto);
+            commentService.create(newComment,newPost,user);
+            return "redirect:/comments";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (EntityDuplicateException e) {
+            errors.rejectValue("name", "duplicate_comment", e.getMessage());
+            return "comment-new";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
     }
 
     @GetMapping("/{id}/update")
@@ -161,7 +193,7 @@ public class PostMvcController {
         }
         try {
             Post post = postService.getById(id);
-            PostDto postDto = modelMapper.toDto(post);
+            PostDto postDto = postMapper.toDto(post);
             model.addAttribute("postId", id);
             model.addAttribute("post", postDto);
             return "post-update";
@@ -184,7 +216,7 @@ public class PostMvcController {
             return "post-update";
         }
         try {
-            Post newPost = modelMapper.fromDto(id, post);
+            Post newPost = postMapper.fromDto(id, post);
             postService.modify(newPost, user);
             return "redirect:/posts";
         } catch (EntityNotFoundException e) {
