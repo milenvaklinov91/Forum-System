@@ -79,4 +79,16 @@ public class PostFilterOptions {
     public Optional<String> getSortOrder() {
         return sortOrder;
     }
+
+    public void setMostRecently(Optional<String> mostRecently) {
+        this.mostRecently = mostRecently;
+    }
+
+    public void setMostComments(Optional<String> mostComments) {
+        this.mostComments = mostComments;
+    }
+
+    public void setMostLiked(Optional<String> mostLiked) {
+        this.mostLiked = mostLiked;
+    }
 }

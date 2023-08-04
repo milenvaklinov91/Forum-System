@@ -4,7 +4,9 @@ import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelp
 import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
 import com.telerikacademy.domesticappliencesforum.models.Post;
 import com.telerikacademy.domesticappliencesforum.models.User;
+import com.telerikacademy.domesticappliencesforum.models.dtos.PostFilterDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,16 @@ import java.util.List;
 @RequestMapping("/")
 public class HomeMvcController {
     private final PostService postService;
+
+    private final PostRepository postRepository;
     private final UserService userService;
     AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public HomeMvcController(PostService postService, UserService userService,
+    public HomeMvcController(PostService postService, PostRepository postRepository, UserService userService,
                              AuthenticationHelper authenticationHelper) {
         this.postService = postService;
+        this.postRepository = postRepository;
         this.userService = userService;
         this.authenticationHelper= authenticationHelper;
     }
@@ -48,18 +53,13 @@ public class HomeMvcController {
     }
 
     @GetMapping
-    public String showHomePage(Model model) {
-        PostFilterOptions topCommentedOption = new PostFilterOptions();
-        topCommentedOption.getMostComments();
-        List<Post> topCommentedPosts = postService.getAllPosts(topCommentedOption);
+    public String showHomePage(@ModelAttribute("filter") PostFilterDto filter,Model model) {
 
-        PostFilterOptions latestPostsOption = new PostFilterOptions();
-        latestPostsOption.getLastTen();
-        List<Post> latestPosts = postService.getAllPosts(latestPostsOption);
+        List<Post> topCommentedPosts = postRepository.getMostCommented();
 
-        PostFilterOptions mostLikedPostsOption = new PostFilterOptions();
-        mostLikedPostsOption.getMostLiked();
-        List<Post> mostLikedPost = postService.getAllPosts(mostLikedPostsOption);
+        List<Post> latestPosts = postRepository.getLastTenCreatedPosts();
+
+        List<Post> mostLikedPost = postRepository.getMostLiked();
 
 
         Long numberOfUsers = userService.countAllUsers();

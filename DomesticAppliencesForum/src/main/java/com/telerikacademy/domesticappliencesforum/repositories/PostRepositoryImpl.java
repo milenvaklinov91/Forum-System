@@ -76,6 +76,46 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
+    public List<Post> getLastTenCreatedPosts() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p FROM Post p ORDER BY p.postId DESC", Post.class);
+            query.setMaxResults(10);
+            List<Post> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("Posts", "post");
+            }
+            return result;
+        }
+    }
+
+    public List<Post> getMostCommented() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p FROM Post p LEFT JOIN FETCH p.comments c GROUP BY p.id ORDER BY COUNT(c) DESC", Post.class);
+            query.setMaxResults(10);
+            List<Post> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("Posts", "post");
+            }
+            return result;
+        }
+    }
+
+    public List<Post> getMostLiked() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p FROM Post p " +
+                    "LEFT JOIN p.votes v " +
+                    "WHERE v.type ='1' " +
+                    "GROUP BY p " +
+                    "ORDER BY COUNT(v) DESC", Post.class);
+            query.setMaxResults(10);
+                List<Post> result = query.list();
+                if (result.size() == 0) {
+                    throw new EntityNotFoundException("Posts", "post");
+                }
+                return result;
+            }
+    }
+
 
     public int getPostLikes(int postId) {
         try (Session session = sessionFactory.openSession()) {
