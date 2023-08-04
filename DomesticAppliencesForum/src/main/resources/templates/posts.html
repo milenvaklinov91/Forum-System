@@ -13,7 +13,7 @@
 
 <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
     <input type="text" placeholder="Title" th:field="*{title}" />
-    <input type="text" placeholder="Content" th:field="*{content}" />
+    <input type="text" placeholder="Username" th:field="*{username}" />
 
 
     <select th:field="*{sortBy}">
@@ -49,9 +49,9 @@
             <div class="cell"><a th:text="#{post.label.title}"
                                  th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
                                  th:href="${urlBuilder.replaceQueryParam('sortBy', 'title').toUriString()}">Title</a></div>
-            <div class="cell"><a th:text="#{post.label.content}"
+            <!--<div class="cell"><a th:text="#{post.label.username}"
                                  th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-                                 th:href="${urlBuilder.replaceQueryParam('sortBy', 'content').toUriString()}">Content</a></div>
+                                 th:href="${urlBuilder.replaceQueryParam('sortBy', 'username').toUriString()}">Username</a></div>-->
             <div class="cell"><a th:text="#{post.label.tag}"
                                  th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
                                  th:href="${urlBuilder.replaceQueryParam('sortBy', 'tag').toUriString()}">Tag</a></div>

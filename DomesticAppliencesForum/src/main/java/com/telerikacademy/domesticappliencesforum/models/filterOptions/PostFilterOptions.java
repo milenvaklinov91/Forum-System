@@ -5,7 +5,7 @@ import java.util.Optional;
 public class PostFilterOptions {
 
     private Optional<String> title;
-    private Optional<String> content;
+    private Optional<String> username;
     private Optional<String> localDate;
     private Optional<Integer> lastTen;
     private Optional<Integer> tagId;
@@ -20,7 +20,7 @@ public class PostFilterOptions {
                 null, null, null, null);
     }
 
-    public PostFilterOptions(String title, String content,
+    public PostFilterOptions(String title, String username,
                              String localDate,
                              Integer lastTen,
                              Integer tagId, String mostRecently,
@@ -28,8 +28,8 @@ public class PostFilterOptions {
                              String mostLiked,
                              String sortBy, String sortOrder) {
         this.title = Optional.ofNullable(title);
-        this.localDate = Optional.ofNullable(content);
-        this.content = Optional.ofNullable(localDate);
+        this.username = Optional.ofNullable(username);
+        this.localDate = Optional.ofNullable(localDate);
         this.lastTen = Optional.ofNullable(lastTen);
         this.tagId = Optional.ofNullable(tagId);
         this.mostRecently = Optional.ofNullable(mostRecently);
@@ -44,8 +44,8 @@ public class PostFilterOptions {
         return title;
     }
 
-    public Optional<String> getContent() {
-        return content;
+    public Optional<String> getUsername() {
+        return username;
     }
 
     public Optional<String> getLocalDate() {

@@ -2,7 +2,7 @@ package com.telerikacademy.domesticappliencesforum.models.dtos;
 
 public class PostFilterDto {
     private String title;
-    private String content;
+    private String username;
     private String localDate;
     private Integer lastTen;
     private Integer tagId;
@@ -23,12 +23,12 @@ public class PostFilterDto {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getUsername() {
+        return username;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLocalDate() {

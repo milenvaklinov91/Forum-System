@@ -68,7 +68,7 @@ public class PostMvcController {
     public String showAllPosts(@ModelAttribute("filter") PostFilterDto filter, Model model) {
         PostFilterOptions filterOptions = new PostFilterOptions(
                 filter.getTitle(),
-                filter.getContent(),
+                filter.getUsername(),
                 filter.getLocalDate(),
                 filter.getLastTen(),
                 filter.getTagId(),

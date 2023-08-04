@@ -33,17 +33,23 @@ public class PostRepositoryImpl implements PostRepository {
                 filters.add("p.title LIKE :title");
                 params.put("title", String.format("%%%s%%", value));
             });
-            filterOptions.getContent().ifPresent(value -> {
-                filters.add("p.content LIKE :content");
-                params.put("content", String.format("%%%s%%", value));
-            });
+            /*filterOptions.getUsername().ifPresent(value -> {
+                filters.add("p.username LIKE :username");
+                params.put("username", String.format("%%%s%%", value));
+            });*/
+            if (filterOptions.getUsername().isPresent() && !filterOptions.getUsername().get().isEmpty()) {
+                hqlBuilder.append(" LEFT JOIN p.createdBy c");
+                filters.add("c.username like :username");
+                params.put("username", String.format("%%%s%%", filterOptions.getUsername().get()));
+            }
             filterOptions.getTagId().ifPresent(tagId -> {
                 filters.add("p.tag.tagTypeId = :tagId");
                 params.put("tagId", tagId);
             });
 
             if (filterOptions.getMostComments().isPresent()) {
-                hqlBuilder = new StringBuilder("SELECT p FROM Post p LEFT JOIN FETCH p.comments c GROUP BY p ORDER BY COUNT(c) DESC");
+                hqlBuilder = new StringBuilder("SELECT p FROM Post p LEFT JOIN FETCH" +
+                        " p.comments c GROUP BY p ORDER BY COUNT(c) DESC");
             } else if (filterOptions.getLastTen().isPresent()) {
                 hqlBuilder.append(" ORDER BY p.postId DESC");
             } else if (filterOptions.getMostLiked().isPresent()) {
@@ -65,6 +71,7 @@ public class PostRepositoryImpl implements PostRepository {
 
             Query<Post> query = session.createQuery(hqlBuilder.toString(), Post.class);
             query.setProperties(params);
+            System.out.println(hqlBuilder);
             return query.list();
         }
     }
@@ -191,8 +198,8 @@ public class PostRepositoryImpl implements PostRepository {
             case "title":
                 orderBy = "title";
                 break;
-            case "content":
-                orderBy = "content";
+            case "username":
+                orderBy = "username";
                 break;
             case "createTime":
                 orderBy = "p.createTime";
@@ -204,13 +211,13 @@ public class PostRepositoryImpl implements PostRepository {
                 orderBy = "p.comments.size DESC";
                 break;
             case "lastTen":
-                orderBy = "p.postId DESC";
+                orderBy = "p.postId";
                 break;
             case "mostLiked":
-                orderBy = "(SELECT COUNT(v) FROM Vote v WHERE v.post = p AND v.type = 1) DESC";
+                orderBy = "p.";
                 break;
             default:
-                orderBy = "id";
+                orderBy = "p.postId";
         }
 
         orderBy = String.format(" ORDER BY %s ", orderBy);
