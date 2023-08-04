@@ -19,7 +19,6 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
-
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -66,7 +66,6 @@ public class PostMvcController {
 
     @GetMapping
     public String showAllPosts(@ModelAttribute("filter") PostFilterDto filter, Model model) {
-
         PostFilterOptions filterOptions = new PostFilterOptions(
                 filter.getTitle(),
                 filter.getContent(),

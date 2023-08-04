@@ -16,15 +16,6 @@
     <input type="text" placeholder="Content" th:field="*{content}" />
 
 
-    <!--<select th:field="*{styleId}">
-        <option value="">Any Style</option>
-        <option th:each="style : ${styles}"
-                th:value="${style.getId()}"
-                th:text="${style.getName()}">
-            BeerStyleOne
-        </option>
-    </select>-->
-
     <select th:field="*{sortBy}">
         <option value="">Default Sort</option>
         <option value="localDate">Created Time</option>
@@ -52,7 +43,6 @@
 </div>
 <div th:unless="${posts.isEmpty()}">
     <h2 th:text="#{posts.title}">All Posts</h2>
-
 
     <div class="table">
         <div class="header">
