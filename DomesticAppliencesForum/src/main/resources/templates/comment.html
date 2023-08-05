@@ -11,17 +11,6 @@
 
 <h2 th:text="${comment.getComment()}">Comment</h2>
 
-<!--<h2>Comments:</h2>
-<ul th:if="${comment != null and comment.getComment() > 0}">
-    <li th:each="comment : ${comment.getComment()}">
-        <p th:text="${comment.getComment()()}"></p>
-        <p>
-            <span th:text="'Created by: ' + ${comment.getCreatedByUser().getUsername()()}"></span>
-        </p>
-    </li>
-</ul>-->
-<p th:unless="${comment != null and comment.getComment() > 0}">No comments</p>
-
 
 <p th:if="${commentLikes != null or commentDisLikes != null}">
     <span th:if="${commentLikes != null}">

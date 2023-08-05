@@ -7,7 +7,7 @@
 </head>
 <body>
 <h2>New Comment</h2>
-<form th:fragment="comment-form" action="#" th:action="@{/posts/{postId}(postId=${postId})}" th:object="${postId}" method="post">
+<form th:fragment="comment-form" action="#" th:action="@{/comments/new}" th:object="${comment}" method="post">
 
 </form>
     <label th:text="#{comment.label.comment}">Comment</label>

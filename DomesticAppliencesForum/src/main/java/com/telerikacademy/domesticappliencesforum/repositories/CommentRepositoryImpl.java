@@ -194,9 +194,7 @@ public class CommentRepositoryImpl implements CommentRepository {
             );
             query.setParameter("comment_id", commentId);
             Long likeCount = (Long) query.uniqueResult();
-            if (likeCount == 0) {
-                throw new EntityNotFoundException("This comment doesn't have any likes!");
-            }
+
             return likeCount.intValue();
         }
     }
@@ -210,9 +208,7 @@ public class CommentRepositoryImpl implements CommentRepository {
             );
             query.setParameter("comment_id", commentId);
             Long likeCount = (Long) query.uniqueResult();
-            if (likeCount == 0) {
-                throw new EntityNotFoundException("This comment doesn't have any dislikes!");
-            }
+
             return likeCount.intValue();
         }
     }

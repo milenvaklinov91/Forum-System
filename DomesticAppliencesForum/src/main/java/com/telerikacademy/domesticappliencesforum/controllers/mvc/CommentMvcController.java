@@ -94,9 +94,9 @@ public class CommentMvcController {
         return "comment-new";
     }
 
-    @PostMapping("/new/{postId}")
-    public String createNewComment(@PathVariable int postId, @Valid @ModelAttribute("comment")CommentDto commentDto, PostDto postDto,
-                                   BindingResult errors, Model model, HttpSession session) {
+    @PostMapping("/new")
+    public String createNewComment( @Valid @ModelAttribute("comment") CommentDto commentDto, PostDto postDto,
+                                    BindingResult errors, Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
@@ -104,19 +104,16 @@ public class CommentMvcController {
             return "redirect:auth/login";
         }
         if (errors.hasErrors()) {
-            return "redirect:/posts/" + postId;
+            return "redirect:/posts/";
         }
         try {
             Comment newComment = commentMapper.fromCommentDto(commentDto);
-            Post newPost = postMapper.fromPostDto(postDto);
-            commentService.create(newComment,newPost,user);
-            return "redirect:/comments";
+            commentService.create(newComment,user);
+            int postId=newComment.getPostId().getPostId();
+            return "redirect:/posts/" + postId;
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
-        } catch (EntityDuplicateException e) {
-            errors.rejectValue("name", "duplicate_comment", e.getMessage());
-            return "comment-new";
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";

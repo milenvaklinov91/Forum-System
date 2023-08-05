@@ -40,9 +40,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void create(Comment comment, Post post, User user) {
+    public void create(Comment comment, User user) {
         comment.setCreatedByUser(user);
-        comment.setPostId(post);
         if(comment.getCreatedByUser().isBlocked()){
             throw new UnauthorizedOperationException("You`re blocked!");
         }        commentRepository.create(comment);

@@ -66,8 +66,8 @@ public class CommentController {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Comment comment = commentMapper.fromCommentDto(commentDto);
-            Post post = postMapper.fromPostDto(postDto);
-            commentService.create(comment,post, user);
+         //   Post post = postMapper.fromPostDto(postDto);
+            commentService.create(comment,user);
             return comment;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.FOUND, e.getMessage());
