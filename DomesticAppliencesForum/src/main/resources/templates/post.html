@@ -50,6 +50,7 @@
 <p th:unless="${post.getComments().size() > 0}">No comments</p>
 
 <form action="/comments/new"  th:object="${comment}" method="post">
+    <input type="hidden" name="postId" th:value="${post.getPostId()}">
     <textarea name="comment" rows="4" cols="50" placeholder="Add your comment here"></textarea>
     <br>
     <input type="submit" value="Add Comment">

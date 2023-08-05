@@ -155,31 +155,7 @@ public class PostMvcController {
         }
     }
 
-  /*  @PostMapping("/{postId}/")
-    public String createNewComment( @Valid @ModelAttribute("comment") CommentDto commentDto, PostDto postDto,
-                                   BindingResult errors, Model model, HttpSession session) {
-        User user;
-        try {
-            user = authenticationHelper.tryGetCurrentUser(session);
-        } catch (AuthorizationException e) {
-            return "redirect:auth/login";
-        }
-        if (errors.hasErrors()) {
-            return "redirect:/posts/";
-        }
-        try {
-            Comment newComment = commentMapper.fromCommentDto(commentDto);
-            commentService.create(newComment,user);
-            int postId=newComment.getPostId().getPostId();
-            return "redirect:/posts/" + postId;
-        } catch (EntityNotFoundException e) {
-            model.addAttribute("error", e.getMessage());
-            return "not-found";
-        } catch (UnauthorizedOperationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "AccessDeniedView";
-        }
-    }*/
+
 
     @GetMapping("/{id}/update")
     public String showEditPostPage(@PathVariable int id, Model model, HttpSession session) {

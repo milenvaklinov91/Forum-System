@@ -99,8 +99,10 @@ public class CommentMvcController {
     }
 
     @PostMapping("/new")
-    public String createNewComment( @RequestParam("comment") String comment, @Valid @ModelAttribute("comment") CommentDto commentDto, PostDto postDto,
-                                    BindingResult errors, Model model, HttpSession session) {
+    public String createNewComment(@RequestParam("postId") Integer postId,
+                                   @RequestParam("comment") String comment,
+                                   @Valid @ModelAttribute("comment") CommentDto commentDto,
+                                   BindingResult errors, Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
@@ -111,15 +113,15 @@ public class CommentMvcController {
             return "redirect:/posts/";
         }
         try {
-            model.addAttribute("comment",comment);
+            model.addAttribute("comment", comment);
+            model.addAttribute("postId",postId);
             Comment newComment = new Comment();
             newComment.setComment(comment);
             newComment.setCreatedByUser(user);
-            Post post=postRepository.getPostById(1);
+            Post post = postRepository.getPostById(postId);
             newComment.setPostId(post);
-            commentService.create(newComment,user);
-            int postId=post.getPostId();
-            return "redirect:/posts/" +postId  ;
+            commentService.create(newComment, user);
+            return "redirect:/posts/" + postId;
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
