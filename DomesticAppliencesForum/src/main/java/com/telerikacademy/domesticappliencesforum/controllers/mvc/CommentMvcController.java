@@ -216,6 +216,8 @@ public class CommentMvcController {
         return "vote";
     }
 
+    //todo
+
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;

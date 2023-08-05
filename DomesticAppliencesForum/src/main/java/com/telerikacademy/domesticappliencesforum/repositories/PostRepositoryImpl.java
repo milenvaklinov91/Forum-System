@@ -33,10 +33,6 @@ public class PostRepositoryImpl implements PostRepository {
                 filters.add("p.title LIKE :title");
                 params.put("title", String.format("%%%s%%", value));
             });
-            /*filterOptions.getUsername().ifPresent(value -> {
-                filters.add("p.username LIKE :username");
-                params.put("username", String.format("%%%s%%", value));
-            });*/
             if (filterOptions.getUsername().isPresent() && !filterOptions.getUsername().get().isEmpty()) {
                 hqlBuilder.append(" LEFT JOIN p.createdBy c");
                 filters.add("c.username like :username");
@@ -71,7 +67,6 @@ public class PostRepositoryImpl implements PostRepository {
 
             Query<Post> query = session.createQuery(hqlBuilder.toString(), Post.class);
             query.setProperties(params);
-            System.out.println(hqlBuilder);
             return query.list();
         }
     }
