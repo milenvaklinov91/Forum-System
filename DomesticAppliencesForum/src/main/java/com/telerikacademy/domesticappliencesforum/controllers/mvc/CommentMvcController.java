@@ -7,15 +7,12 @@ import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundExcep
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
-import com.telerikacademy.domesticappliencesforum.models.Comment;
-import com.telerikacademy.domesticappliencesforum.models.Post;
-import com.telerikacademy.domesticappliencesforum.models.User;
-import com.telerikacademy.domesticappliencesforum.models.Vote;
+import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.CommentRepositoryImpl;
-import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImpl;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteCommentRepository;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +30,7 @@ import java.util.List;
 public class CommentMvcController {
     private final CommentService commentService;
 
-    private final VoteRepositoryImpl voteRepository;
+    private final VoteCommentRepository voteCommentRepository;
     private final CommentRepositoryImpl commentRepository;
     private final AuthenticationHelper authenticationHelper;
     private final CommentMapper commentMapper;
@@ -41,9 +38,9 @@ public class CommentMvcController {
 
     @Autowired
     public CommentMvcController(CommentService commentService
-            , VoteRepositoryImpl voteRepository, CommentRepositoryImpl commentRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper, PostMapper postMapper) {
+            , VoteCommentRepository voteCommentRepository, CommentRepositoryImpl commentRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper, PostMapper postMapper) {
         this.commentService = commentService;
-        this.voteRepository = voteRepository;
+        this.voteCommentRepository = voteCommentRepository;
         this.commentRepository = commentRepository;
         this.authenticationHelper = authenticationHelper;
         this.commentMapper = commentMapper;
@@ -55,6 +52,16 @@ public class CommentMvcController {
         try {
             Comment comment = commentService.getCommentById(id);
             model.addAttribute("comment", comment);
+
+            int commentLikes = commentRepository.getCommentLikes(id);
+            if (commentLikes > 0) {
+                model.addAttribute("commentLikes", commentLikes);
+            }
+
+            int commentDisLikes = commentRepository.getCommentDisLikes(id);
+            if (commentDisLikes > 0) {
+                model.addAttribute("commentDisLikes", commentDisLikes);
+            }
             return "comment";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -186,7 +193,7 @@ public class CommentMvcController {
     @GetMapping("/{id}/seeVotes")
     public String seeCommentVotes(@PathVariable int id, Model model) {
         try {
-            List<Vote> votes = voteRepository.getVotesByPostId(id);
+            List<VoteComment> votes = voteCommentRepository.getVoteCommentByCommentId(id);
             Comment comment = commentService.getCommentById(id);
 
             int likes = 0;
@@ -194,11 +201,11 @@ public class CommentMvcController {
             List<String> usersWhoLiked = new ArrayList<>();
             List<String> usersWhoDisliked = new ArrayList<>();
 
-            for (Vote vote : votes) {
-                if (vote.getType().getVoteTypeID() == 1) {
+            for (VoteComment vote : votes) {
+                if (vote.getTypeId().getVoteTypeID() == 1) {
                     likes++;
                     usersWhoLiked.add(vote.getCreatedBy().getUsername());
-                } else if (vote.getType().getVoteTypeID() == 2) {
+                } else if (vote.getTypeId().getVoteTypeID() == 2) {
                     dislikes++;
                     usersWhoDisliked.add(vote.getCreatedBy().getUsername());
                 }
@@ -213,7 +220,7 @@ public class CommentMvcController {
         } catch (EntityNotFoundException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
-        return "vote";
+        return "voteForComments";
     }
 
     //todo

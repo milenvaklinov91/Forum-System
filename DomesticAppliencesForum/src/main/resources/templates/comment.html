@@ -23,22 +23,22 @@
 <p th:unless="${comment != null and comment.getComment() > 0}">No comments</p>
 
 
-<p th:if="${likes != null or disLikes != null}">
-    <span th:if="${likes != null}">
-        Likes: <span th:text="${likes}"></span>
+<p th:if="${commentLikes != null or commentDisLikes != null}">
+    <span th:if="${commentLikes != null}">
+        Likes: <span th:text="${commentLikes}"></span>
     </span>
-    <span th:if="${disLikes != null}">
-        Dislikes: <span th:text="${disLikes}"></span>
+    <span th:if="${commentDisLikes != null}">
+        Dislikes: <span th:text="${commentDisLikes}"></span>
     </span>
 </p>
 
-<div th:if="${likes != null or disLikes != null}">
+<div th:if="${commentLikes != null or commentDisLikes != null}">
     <a href="/comments/{commentId}/seeVotes" th:href="@{'/comments/' + ${comment.getCommentId()} + '/seeVotes'}">See votes</a>
 </div>
 
 <h3>
-    <a th:if="${isAuthenticated}" th:href="@{'/posts/' + ${post.id} + '/update'}">Update</a>
-    <a th:if="${isAuthenticated}" th:href="@{'/posts/' + ${post.id} + '/delete'}">Delete</a>
+    <a th:if="${isAuthenticated}" th:href="@{'/comments/' + ${comment.getCommentId()} + '/update'}">Update</a>
+    <a th:if="${isAuthenticated}" th:href="@{'/comments/' + ${comment.getCommentId()} + '/delete'}">Delete</a>
 </h3>
 
 </body>

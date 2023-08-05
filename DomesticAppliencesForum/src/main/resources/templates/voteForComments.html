@@ -1,26 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Post Likes</title>
+    <meta charset="UTF-8">
+    <title>Comments Votes</title>
   <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
 </head>
 <body>
-<ul>
-  <li><h3><a href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></h3></li>
-</ul>
-<ul>
-  <li><h3><a href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></h3></li>
-</ul>
 <h2>
-  <span th:text="'Likes for Post :' + ${post.getTitle()}"></span>
+  <span th:text="'Likes for Comment :' + ${comment.getComment()}"></span>
 </h2>
 <p> <span th:text="'Total likes:' + ${likes}"></span></p>
 <p>Users Who Liked: <span th:each="user : ${usersWhoLiked}" th:text="${user} + ' '"></span></p>
 <p> <span th:text="'Total dislikes:' + ${dislikes}"></span></p>
 <p>Users Who Disliked: <span th:each="user : ${usersWhoDisliked}" th:text="${user} + ' '"></span></p>
-
-
-</body>
 </body>
 </html>
