@@ -71,7 +71,7 @@ public class PostMvcController {
                 filter.getUsername(),
                 filter.getLocalDate(),
                 filter.getLastTen(),
-                filter.getTagId(),
+                filter.getTag(),
                 filter.getMostRecently(),
                 filter.getMostComments(),
                 filter.getMostLiked(),
@@ -260,7 +260,7 @@ public class PostMvcController {
         return "vote";
     }
     @PostMapping("{postId}/like")
-    public String likePost(@PathVariable("postId") int postId, Model model, HttpSession session) {
+    public String likePost(@PathVariable("postId") int postId,Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);

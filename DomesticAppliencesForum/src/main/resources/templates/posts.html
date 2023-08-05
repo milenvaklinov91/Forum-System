@@ -14,6 +14,7 @@
 <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
     <input type="text" placeholder="Title" th:field="*{title}" />
     <input type="text" placeholder="Username" th:field="*{username}" />
+    <input type="text" placeholder="Tag" th:field="*{tag}" />
 
 
     <select th:field="*{sortBy}">

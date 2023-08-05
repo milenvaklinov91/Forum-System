@@ -8,7 +8,7 @@ public class PostFilterOptions {
     private Optional<String> username;
     private Optional<String> localDate;
     private Optional<Integer> lastTen;
-    private Optional<Integer> tagId;
+    private Optional<String> tag;
     private Optional<String> mostRecently;
     private Optional<String> mostComments;
     private Optional<String> mostLiked;
@@ -23,7 +23,7 @@ public class PostFilterOptions {
     public PostFilterOptions(String title, String username,
                              String localDate,
                              Integer lastTen,
-                             Integer tagId, String mostRecently,
+                             String tag, String mostRecently,
                              String mostComments,
                              String mostLiked,
                              String sortBy, String sortOrder) {
@@ -31,7 +31,7 @@ public class PostFilterOptions {
         this.username = Optional.ofNullable(username);
         this.localDate = Optional.ofNullable(localDate);
         this.lastTen = Optional.ofNullable(lastTen);
-        this.tagId = Optional.ofNullable(tagId);
+        this.tag = Optional.ofNullable(tag);
         this.mostRecently = Optional.ofNullable(mostRecently);
         this.mostComments = Optional.ofNullable(mostComments);
         this.mostLiked = Optional.ofNullable(mostLiked);
@@ -56,8 +56,8 @@ public class PostFilterOptions {
         return lastTen;
     }
 
-    public Optional<Integer> getTagId() {
-        return tagId;
+    public Optional<String> getTagId() {
+        return tag;
     }
 
     public Optional<String> getMostRecently() {

@@ -110,7 +110,7 @@ public class CommentMvcController {
             return "redirect:auth/login";
         }
         if (errors.hasErrors()) {
-            return "redirect:/posts/";
+            return "comment-new";
         }
         try {
             model.addAttribute("comment", comment);

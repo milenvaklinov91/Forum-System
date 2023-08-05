@@ -5,7 +5,7 @@ public class PostFilterDto {
     private String username;
     private String localDate;
     private Integer lastTen;
-    private Integer tagId;
+    private String tag;
     private String mostRecently;
     private String mostComments;
     private String mostLiked;
@@ -47,12 +47,16 @@ public class PostFilterDto {
         this.lastTen = lastTen;
     }
 
-    public Integer getTagId() {
+/*    public Integer getTagId() {
         return tagId;
     }
 
     public void setTagId(Integer tagId) {
         this.tagId = tagId;
+    }*/
+
+    public String getTag() {
+        return tag;
     }
 
     public String getMostRecently() {

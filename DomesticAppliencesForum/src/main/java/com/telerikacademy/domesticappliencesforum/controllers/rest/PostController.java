@@ -41,7 +41,7 @@ public class PostController {
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String localDate,
             @RequestParam(required = false) Integer lastTen,
-            @RequestParam(required = false) Integer tagId,
+            @RequestParam(required = false) String tagId,
             @RequestParam(required = false) String mostRecently,
             @RequestParam(required = false) String mostComments,
             @RequestParam(required = false) String topLiked,

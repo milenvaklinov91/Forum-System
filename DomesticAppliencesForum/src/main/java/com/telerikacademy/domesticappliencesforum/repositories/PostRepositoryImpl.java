@@ -38,9 +38,9 @@ public class PostRepositoryImpl implements PostRepository {
                 filters.add("c.username like :username");
                 params.put("username", String.format("%%%s%%", filterOptions.getUsername().get()));
             }
-            filterOptions.getTagId().ifPresent(tagId -> {
-                filters.add("p.tag.tagTypeId = :tagId");
-                params.put("tagId", tagId);
+            filterOptions.getTagId().ifPresent(tag -> {
+                filters.add("p.tag like = :tag");
+                params.put("tag", String.format("%%%s%%", filterOptions.getTagId()));
             });
 
             if (filterOptions.getMostComments().isPresent()) {
@@ -209,7 +209,7 @@ public class PostRepositoryImpl implements PostRepository {
                 orderBy = "p.postId";
                 break;
             case "mostLiked":
-                orderBy = "p.";
+                orderBy = "p.votes";
                 break;
             default:
                 orderBy = "p.postId";

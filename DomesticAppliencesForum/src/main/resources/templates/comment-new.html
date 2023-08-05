@@ -7,9 +7,10 @@
 </head>
 <body>
 <h2>New Comment</h2>
-<form th:fragment="comment-form" action="#" th:action="@{/comments/new}" th:object="${comment}" method="post">
+<form action="/comments/new"  th:object="${comment}" method="post">
     <label th:text="#{comment.label.comment}">Comment</label>
     <br/>
+    <input type="hidden" name="postId" th:value="${comment.getPostId()}">
     <textarea rows="4" cols="50" th:field="*{comment}" placeholder="Add your comment here"></textarea>
     <label class="error" th:errors="*{comment}">Comment error placeholder</label>
     <br/><br/>
