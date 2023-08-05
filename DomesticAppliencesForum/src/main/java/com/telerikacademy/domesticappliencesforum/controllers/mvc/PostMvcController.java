@@ -8,7 +8,6 @@ import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperati
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
-import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostFilterDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
@@ -17,6 +16,7 @@ import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImp
 import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,12 +40,13 @@ public class PostMvcController {
     private final PostRepositoryImpl postRepository;
     private final VoteRepositoryImpl voteRepository;
     private final AuthenticationHelper authenticationHelper;
+    private final VoteService voteService;
 
     @Autowired
     public PostMvcController(PostService postService,
                              TagTypesService tagTypesService,
                              CommentService commentService, PostMapper postMapper, CommentMapper commentMapper, PostRepositoryImpl postRepository,
-                             VoteRepositoryImpl voteRepository, AuthenticationHelper authenticationHelper) {
+                             VoteRepositoryImpl voteRepository, AuthenticationHelper authenticationHelper, VoteService voteService) {
         this.postService = postService;
         this.tagTypesService = tagTypesService;
         this.commentService = commentService;
@@ -54,6 +55,7 @@ public class PostMvcController {
         this.postRepository = postRepository;
         this.voteRepository = voteRepository;
         this.authenticationHelper = authenticationHelper;
+        this.voteService = voteService;
     }
 
     @ModelAttribute("tags")
@@ -256,6 +258,65 @@ public class PostMvcController {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         return "vote";
+    }
+    @PostMapping("{postId}/like")
+    public String likePost(@PathVariable("postId") int postId, Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:auth/login";
+        }
+        try {
+            Post post = postService.getById(postId);
+
+            VoteTypes voteType=new VoteTypes();
+            voteType.setVoteTypeID(1);
+
+            Vote vote = new Vote();
+            vote.setPost(post);
+            vote.setType(voteType);
+            vote.setCreatedBy(user);
+            voteService.votePost(vote, user);
+        } catch (  EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/posts/" + postId;
+        }
+
+        return "redirect:/posts/" + postId;
+    }
+
+
+
+    @PostMapping("{postId}/dislike")
+    public String dislikePost(@PathVariable("postId") int postId, Model model, HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:auth/login";
+        }
+        try {
+            Post post = postService.getById(postId);
+
+            VoteTypes voteType=new VoteTypes();
+            voteType.setVoteTypeID(2);
+
+            Vote vote = new Vote();
+            vote.setPost(post);
+            vote.setType(voteType);
+            vote.setCreatedBy(user);
+            voteService.votePost(vote, user);
+        } catch (
+                EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+
+        return "redirect:/posts/" + postId;
     }
 
     @ModelAttribute("isAuthenticated")

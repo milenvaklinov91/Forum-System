@@ -18,6 +18,15 @@
     <span th:text="'#' + ${post.getTag().getType()}"></span>
 </h2>
 
+<form  th:action="@{/posts/{postId}/like(postId=${post.postId})}"  method="post">
+    <button type="submit">Like</button>
+</form>
+
+
+<form  th:action="@{/posts/{postId}/like(postId=${post.postId})}" method="post">
+    <button type="submit">Dislike</button>
+</form>
+
 <p th:if="${likes != null or disLikes != null}">
     <span th:if="${likes != null}">
         Likes: <span th:text="${likes}"></span>
