@@ -12,6 +12,7 @@ import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.CommentRepositoryImpl;
+import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteCommentRepository;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ import java.util.List;
 public class CommentMvcController {
     private final CommentService commentService;
 
+    private final PostRepository postRepository;
+
     private final VoteCommentRepository voteCommentRepository;
     private final CommentRepositoryImpl commentRepository;
     private final AuthenticationHelper authenticationHelper;
@@ -38,8 +41,9 @@ public class CommentMvcController {
 
     @Autowired
     public CommentMvcController(CommentService commentService
-            , VoteCommentRepository voteCommentRepository, CommentRepositoryImpl commentRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper, PostMapper postMapper) {
+            , PostRepository postRepository, VoteCommentRepository voteCommentRepository, CommentRepositoryImpl commentRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper, PostMapper postMapper) {
         this.commentService = commentService;
+        this.postRepository = postRepository;
         this.voteCommentRepository = voteCommentRepository;
         this.commentRepository = commentRepository;
         this.authenticationHelper = authenticationHelper;
@@ -95,7 +99,7 @@ public class CommentMvcController {
     }
 
     @PostMapping("/new")
-    public String createNewComment( @Valid @ModelAttribute("comment") CommentDto commentDto, PostDto postDto,
+    public String createNewComment( @RequestParam("comment") String comment, @Valid @ModelAttribute("comment") CommentDto commentDto, PostDto postDto,
                                     BindingResult errors, Model model, HttpSession session) {
         User user;
         try {
@@ -107,10 +111,15 @@ public class CommentMvcController {
             return "redirect:/posts/";
         }
         try {
-            Comment newComment = commentMapper.fromCommentDto(commentDto);
+            model.addAttribute("comment",comment);
+            Comment newComment = new Comment();
+            newComment.setComment(comment);
+            newComment.setCreatedByUser(user);
+            Post post=postRepository.getPostById(1);
+            newComment.setPostId(post);
             commentService.create(newComment,user);
-            int postId=newComment.getPostId().getPostId();
-            return "redirect:/posts/" + postId;
+            int postId=post.getPostId();
+            return "redirect:/posts/" +postId  ;
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

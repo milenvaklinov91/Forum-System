@@ -49,8 +49,8 @@
 
 <p th:unless="${post.getComments().size() > 0}">No comments</p>
 
-<form action="/comments/new" method="post">
-    <textarea name="commentText" rows="4" cols="50" placeholder="Add your comment here"></textarea>
+<form action="/comments/new"  th:object="${comment}" method="post">
+    <textarea name="comment" rows="4" cols="50" placeholder="Add your comment here"></textarea>
     <br>
     <input type="submit" value="Add Comment">
 </form>
