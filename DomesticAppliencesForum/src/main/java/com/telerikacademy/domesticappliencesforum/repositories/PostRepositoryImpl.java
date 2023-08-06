@@ -38,9 +38,9 @@ public class PostRepositoryImpl implements PostRepository {
                 filters.add("c.username like :username");
                 params.put("username", String.format("%%%s%%", filterOptions.getUsername().get()));
             }
-            filterOptions.getTagId().ifPresent(tag -> {
+            filterOptions.getTagId().ifPresent(value -> {
                 filters.add("p.tag like = :tag");
-                params.put("tag", String.format("%%%s%%", filterOptions.getTagId()));
+                params.put("tag", String.format("%%%s%%", value));
             });
 
             if (filterOptions.getMostComments().isPresent()) {

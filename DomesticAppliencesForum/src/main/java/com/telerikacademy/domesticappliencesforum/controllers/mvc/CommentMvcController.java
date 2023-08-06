@@ -150,7 +150,9 @@ public class CommentMvcController {
     }
 
     @PostMapping("/{id}/update")
-    public String updateComment(@PathVariable int postId, @PathVariable int id, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult errors,
+    public String updateComment(@PathVariable int postId, @PathVariable int id,
+                                @Valid @ModelAttribute("comment") CommentDto commentDto,
+                                BindingResult errors,
                                 Model model, HttpSession session) {
         User user;
         try {
