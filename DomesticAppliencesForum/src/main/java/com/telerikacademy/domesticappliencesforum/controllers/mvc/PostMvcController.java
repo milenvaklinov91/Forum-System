@@ -79,7 +79,14 @@ public class PostMvcController {
     }
 
     @GetMapping("/{id}")
-    public String showSinglePost(@PathVariable int id, Model model) {
+    public String showSinglePost(@PathVariable int id, Model model,HttpSession session) {
+        User user;
+        try {
+            user = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
         try {
             Post post = postService.getById(id);
             model.addAttribute("post", post);

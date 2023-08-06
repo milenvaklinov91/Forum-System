@@ -54,15 +54,15 @@
                                 on <span th:text="${post.getCreateTime()}"></span>
                             </span>
                     <p th:if="${likes != null or disLikes != null}">
-    <span class="alert-info" th:if="${likes != null}">
+    <span class="card-img" th:if="${likes != null}">
         Likes: <span th:text="${likes}"></span>
     </span>
                         <span th:if="${disLikes != null}">
         Dislikes: <span class="meta" th:text="${disLikes}"></span>
     </span>
                     </p>
-                    <div class="navbar-nav ms-auto py-4 py-lg-0" th:if="${likes != null or disLikes != null}">
-                        <a href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See
+                    <div class="vote-navbar" th:if="${likes != null or disLikes != null}">
+                        <a class="vote-button" href="/posts/{id}/seeVotes" th:href="@{'/posts/' + ${post.getPostId()} + '/seeVotes'}">See
                             votes</a>
                     </div>
                     <div class="votes">
@@ -76,10 +76,10 @@
                     </div>
                     <ul class="navbar-nav">
                         <li>
-                            <a th:if="${isAuthenticated}" href="#"
+                            <a class="update-link" th:if="${isAuthenticated}" href="#"
                                th:href="@{__${#httpServletRequest.requestURI}__/update}">Update</a>
 
-                            <a th:if="${isAuthenticated}" href="#"
+                            <a class="delete-link" th:if="${isAuthenticated}" href="#"
                                th:href="@{__${#httpServletRequest.requestURI}__/delete}">Delete</a>
                         </li>
                     </ul>
@@ -95,13 +95,13 @@
                         </p>
                         <ul class="navbar-nav">
                             <li>
-                                <a th:if="${isAuthenticated}" href="#"
+                                <a class="update-link" th:if="${isAuthenticated}" href="#"
                                    th:href="@{/posts/{postId}/comments/{commentId}/update/(postId=${post.getPostId()}, commentId=${comment.commentId})}"
-                                   class="btn">Update</a>
+                                   >Update</a>
 
-                                <a th:if="${isAuthenticated}" href="#"
+                                <a class="delete-link" th:if="${isAuthenticated}" href="#"
                                    th:href="@{/posts/{postId}/comments/{commentId}/delete/(postId=${post.getPostId()}, commentId=${comment.commentId})}"
-                                   class="btn">Delete</a>
+                                   >Delete</a>
                             </li>
                         </ul>
                        <!-- <ul class="navbar-nav">

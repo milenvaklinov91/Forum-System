@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>New Post</title>
-    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
-<body>
+<body style="background-image: url('../assets/img/post-bg.jpg'); background-size: cover;">
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#" th:href="@{/}"
+                                        th:text="#{navigation.home}">Home</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#" th:href="@{/posts}"
+                                        th:text="#{navigation.posts}">See all posts</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="margin-left: 50%; transform: translateX(-75%);">
 <h2>New Post</h2>
 <form th:fragment="post-form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${post}"
       method="post">
@@ -17,7 +35,7 @@
 
     <label th:text="#{post.label.content}">Content</label>
     <br/>
-    <input type="text" th:field="*{content}"/>
+    <textarea class="content-textarea" rows="5" cols="50" th:field="*{content}" ></textarea>
     <label class="error" th:errors="*{content}">Content error placeholder</label>
     <br/><br/>
 
@@ -35,5 +53,6 @@
 
     <input type="submit" value="Save"/>
 </form>
+    </div>
 </body>
 </html>

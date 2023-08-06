@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>New Tag</title>
-    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+    <link href="../static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
-<body>
+<body style="background-image: url('../assets/img/post-bg.jpg'); background-size: cover;">
 <h2>New Tag</h2>
 <form action="#" th:action="@{/tags/new}" th:object="${tag}" method="post">
     <label th:text="#{tag.label.title}">Tag</label>

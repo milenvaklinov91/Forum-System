@@ -163,7 +163,7 @@ body {
   display: inline-block;
   position: relative;
   font-size: 14px;
-  color: white;
+ /* color: white;*/
   text-decoration: none;
   padding: 5px 10px;
 }
@@ -174,20 +174,26 @@ body {
   right: -5px;
   top: 50%;
   transform: translateY(-50%);
-  color: white;
+}
+.update-link {
+  color: green;
+}
+
+.delete-link {
+  color: red;
 }
 
 .comments-container {
-  width: 80%; /* Ширина на контейнера с коментарите (може да се промени според вашите нужди) */
-  margin: 0 auto; /* Поставяме контейнера в средата на страницата */
+  width: 80%;
+  margin: 0 auto;
 }
 .comment-box {
-  margin-bottom: 10px; /* Разстояние между коментарите */
+  margin-bottom: 10px;
 }
 
 .comment-box p {
   margin: 0;
-  color: black;
+  color: white;
   font-size: 25px;
   font-weight: bold;
 }
@@ -197,9 +203,30 @@ body {
   font-size: 35px;
   font-weight: bold;
   font-style: italic;
-  color: #333;
+  color: white;
+}
+.vote-navbar {
 }
 
+.vote-button {
+  color: #2980b9;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.vote-button:hover {
+  color: blue;
+}
+.error {
+  color: red;
+}
+.content-textarea {
+  font-size: 16px;
+  height: 100px;
+  width: 400px;
+  padding-top: 10px;
+  resize: none;
+}
 
 
 hr {
