@@ -276,7 +276,7 @@ public class PostMvcController {
             return "not-found";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
-            return "redirect:/posts/" + postId;
+            return "AccessDeniedView";
         }
 
         return "redirect:/posts/" + postId;

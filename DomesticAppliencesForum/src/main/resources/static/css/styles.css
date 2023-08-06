@@ -103,6 +103,104 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.username-info {
+  color: white;
+  font-size: x-small;
+  margin: 10px 0;
+  border-bottom: 1px solid white;
+  padding-bottom: 5px;
+}
+.post-info,.user-info {
+  color: white;
+  font-size: x-small;
+  margin: 10px 0;
+}
+
+.user-info::before, .post-info::before{
+  content: "\2022";
+  padding-right: 5px;
+}
+.votes {
+  padding-top: 10px;
+  padding-bottom: 5px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  width: 150px;
+}
+
+.votes form {
+  display: inline-block;
+}
+
+.votes button {
+  background-color: transparent;
+  color: #2980b9;
+  border: none;
+  padding: 0;
+  margin: 0px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.votes button:hover {
+  text-decoration: underline;
+}
+.navbar-nav {
+  list-style: none;
+  padding: 0;
+}
+
+.navbar-nav li {
+  display: inline-block;
+}
+
+.navbar-nav li:not(:last-child) {
+  margin-right: 10px;
+}
+
+.navbar-nav li a {
+  display: inline-block;
+  position: relative;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+.navbar-nav li a::after {
+  content: "/";
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+}
+
+.comments-container {
+  width: 80%; /* Ширина на контейнера с коментарите (може да се промени според вашите нужди) */
+  margin: 0 auto; /* Поставяме контейнера в средата на страницата */
+}
+.comment-box {
+  margin-bottom: 10px; /* Разстояние между коментарите */
+}
+
+.comment-box p {
+  margin: 0;
+  color: black;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.comments-heading {
+  margin-top: 30px;
+  font-size: 35px;
+  font-weight: bold;
+  font-style: italic;
+  color: #333;
+}
+
+
 
 hr {
   margin: 1rem 0;
