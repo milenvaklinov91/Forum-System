@@ -5,7 +5,6 @@ import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationExcept
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
-import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
@@ -13,7 +12,6 @@ import com.telerikacademy.domesticappliencesforum.models.dtos.PostFilterDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.PostFilterOptions;
 import com.telerikacademy.domesticappliencesforum.repositories.PostRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.repositories.VoteRepositoryImpl;
-import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.TagTypesService;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.VoteService;
@@ -34,24 +32,19 @@ import java.util.List;
 public class PostMvcController {
     private final PostService postService;
     private final TagTypesService tagTypesService;
-    private final CommentService commentService;
     private final PostMapper postMapper;
-    private final CommentMapper commentMapper;
     private final PostRepositoryImpl postRepository;
     private final VoteRepositoryImpl voteRepository;
     private final AuthenticationHelper authenticationHelper;
     private final VoteService voteService;
 
     @Autowired
-    public PostMvcController(PostService postService,
-                             TagTypesService tagTypesService,
-                             CommentService commentService, PostMapper postMapper, CommentMapper commentMapper, PostRepositoryImpl postRepository,
+    public PostMvcController(PostService postService, TagTypesService tagTypesService,
+                             PostMapper postMapper, PostRepositoryImpl postRepository,
                              VoteRepositoryImpl voteRepository, AuthenticationHelper authenticationHelper, VoteService voteService) {
         this.postService = postService;
         this.tagTypesService = tagTypesService;
-        this.commentService = commentService;
         this.postMapper = postMapper;
-        this.commentMapper = commentMapper;
         this.postRepository = postRepository;
         this.voteRepository = voteRepository;
         this.authenticationHelper = authenticationHelper;
@@ -158,7 +151,6 @@ public class PostMvcController {
     }
 
 
-
     @GetMapping("/{id}/update")
     public String showEditPostPage(@PathVariable int id, Model model, HttpSession session) {
         try {
@@ -259,8 +251,9 @@ public class PostMvcController {
         }
         return "vote";
     }
+
     @PostMapping("{postId}/like")
-    public String likePost(@PathVariable("postId") int postId,Model model, HttpSession session) {
+    public String likePost(@PathVariable("postId") int postId, Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
@@ -270,7 +263,7 @@ public class PostMvcController {
         try {
             Post post = postService.getById(postId);
 
-            VoteTypes voteType=new VoteTypes();
+            VoteTypes voteType = new VoteTypes();
             voteType.setVoteTypeID(1);
 
             Vote vote = new Vote();
@@ -278,17 +271,16 @@ public class PostMvcController {
             vote.setType(voteType);
             vote.setCreatedBy(user);
             voteService.votePost(vote, user);
-        } catch (  EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             return "redirect:/posts/" + postId;
         }
 
         return "redirect:/posts/" + postId;
     }
-
 
 
     @PostMapping("{postId}/dislike")
@@ -302,7 +294,7 @@ public class PostMvcController {
         try {
             Post post = postService.getById(postId);
 
-            VoteTypes voteType=new VoteTypes();
+            VoteTypes voteType = new VoteTypes();
             voteType.setVoteTypeID(2);
 
             Vote vote = new Vote();

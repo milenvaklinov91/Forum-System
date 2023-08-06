@@ -72,7 +72,7 @@ public class PostServiceImpl implements PostService {
     }
 
     public List<Comment> getAllComments(int id) {
-        Set<Comment> allComments = postRepository.getPostById(id).getComments();
+        List<Comment> allComments = postRepository.getPostById(id).getComments();
         if (allComments.isEmpty()) {
             throw new EntityNotFoundException("This post dont have comments");
         }

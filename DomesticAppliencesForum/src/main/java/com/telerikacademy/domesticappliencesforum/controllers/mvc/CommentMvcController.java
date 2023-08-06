@@ -2,19 +2,18 @@ package com.telerikacademy.domesticappliencesforum.controllers.mvc;
 
 import com.telerikacademy.domesticappliencesforum.controllers.AuthenticationHelper;
 import com.telerikacademy.domesticappliencesforum.exceptions.AuthorizationException;
-import com.telerikacademy.domesticappliencesforum.exceptions.EntityDuplicateException;
 import com.telerikacademy.domesticappliencesforum.exceptions.EntityNotFoundException;
 import com.telerikacademy.domesticappliencesforum.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.domesticappliencesforum.mappers.CommentMapper;
 import com.telerikacademy.domesticappliencesforum.mappers.PostMapper;
 import com.telerikacademy.domesticappliencesforum.models.*;
 import com.telerikacademy.domesticappliencesforum.models.dtos.CommentDto;
-import com.telerikacademy.domesticappliencesforum.models.dtos.PostDto;
 import com.telerikacademy.domesticappliencesforum.models.filterOptions.FilterOptionsComment;
 import com.telerikacademy.domesticappliencesforum.repositories.CommentRepositoryImpl;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.PostRepository;
 import com.telerikacademy.domesticappliencesforum.repositories.interfaces.VoteCommentRepository;
 import com.telerikacademy.domesticappliencesforum.services.interfaces.CommentService;
+import com.telerikacademy.domesticappliencesforum.services.interfaces.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/comments")
+@RequestMapping("/posts/{postId}/comments")
 public class CommentMvcController {
     private final CommentService commentService;
-
-    private final PostRepository postRepository;
-
+    private final PostService postService;
     private final VoteCommentRepository voteCommentRepository;
     private final CommentRepositoryImpl commentRepository;
     private final AuthenticationHelper authenticationHelper;
@@ -41,9 +38,12 @@ public class CommentMvcController {
 
     @Autowired
     public CommentMvcController(CommentService commentService
-            , PostRepository postRepository, VoteCommentRepository voteCommentRepository, CommentRepositoryImpl commentRepository, AuthenticationHelper authenticationHelper, CommentMapper commentMapper, PostMapper postMapper) {
+            , PostService postService, VoteCommentRepository voteCommentRepository,
+                                CommentRepositoryImpl commentRepository,
+                                AuthenticationHelper authenticationHelper,
+                                CommentMapper commentMapper, PostMapper postMapper) {
         this.commentService = commentService;
-        this.postRepository = postRepository;
+        this.postService = postService;
         this.voteCommentRepository = voteCommentRepository;
         this.commentRepository = commentRepository;
         this.authenticationHelper = authenticationHelper;
@@ -52,7 +52,7 @@ public class CommentMvcController {
     }
 
     @GetMapping("/{id}")
-    public String showSingleComment(@PathVariable int id, Model model) {
+    public String showSingleComment(@PathVariable int postId,@PathVariable int id, Model model) {
         try {
             Comment comment = commentService.getCommentById(id);
             model.addAttribute("comment", comment);
@@ -73,15 +73,15 @@ public class CommentMvcController {
         }
     }
 
-    @GetMapping
-    public String showAllComments(Model model) {
+   /* @GetMapping
+    public String showAllComments(@PathVariable int postId,Model model) {
         List<Comment> comments = commentService.getAllComments(new FilterOptionsComment());
         model.addAttribute("comments", comments);
         return "comments";
-    }
+    }*/
 
-    @GetMapping("/new")
-    public String showNewCommentPage(Model model, HttpSession session) {
+    /*@GetMapping("/new")
+    public String showNewCommentPage(@PathVariable int postId, Model model, HttpSession session) {
         CommentDto comment = (CommentDto) session.getAttribute("currentComment");
         try {
             authenticationHelper.tryGetCurrentUser(session);
@@ -95,11 +95,11 @@ public class CommentMvcController {
             return "redirect:auth/login";
         }
         model.addAttribute("comment", comment);
-        return "comment-new";
-    }
+        return "redirect:/posts/" + postId;
+    }*/
 
     @PostMapping("/new")
-    public String createNewComment(@RequestParam("postId") Integer postId,
+    public String createNewComment(@PathVariable int postId,
                                    @RequestParam("comment") String comment,
                                    @Valid @ModelAttribute("comment") CommentDto commentDto,
                                    BindingResult errors, Model model, HttpSession session) {
@@ -110,15 +110,12 @@ public class CommentMvcController {
             return "redirect:auth/login";
         }
         if (errors.hasErrors()) {
-            return "comment-new";
+            return "redirect:/posts/" + postId;
         }
         try {
-            model.addAttribute("comment", comment);
-            model.addAttribute("postId",postId);
-            Comment newComment = new Comment();
-            newComment.setComment(comment);
+            Comment newComment = commentMapper.fromCommentDto(commentDto); // Map CommentDto to Comment
             newComment.setCreatedByUser(user);
-            Post post = postRepository.getPostById(postId);
+            Post post = postService.getById(postId);
             newComment.setPostId(post);
             commentService.create(newComment, user);
             return "redirect:/posts/" + postId;
@@ -132,13 +129,15 @@ public class CommentMvcController {
     }
 
     @GetMapping("/{id}/update")
-    public String showEditCommentPage(@PathVariable int id, Model model, HttpSession session) {
+    public String showEditCommentPage(@PathVariable int postId, @PathVariable int id, Model model, HttpSession session) {
         try {
             authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
             return "redirect:auth/login";
         }
         try {
+            Post post = postService.getById(postId);
+            model.addAttribute("post",post);
             Comment comment = commentService.getCommentById(id);
             CommentDto commentDto = commentMapper.toDto(comment);
             model.addAttribute("commentId", id);
@@ -151,7 +150,7 @@ public class CommentMvcController {
     }
 
     @PostMapping("/{id}/update")
-    public String updateComment(@PathVariable int id, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult errors,
+    public String updateComment(@PathVariable int postId, @PathVariable int id, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult errors,
                                 Model model, HttpSession session) {
         User user;
         try {
@@ -165,21 +164,21 @@ public class CommentMvcController {
         try {
             Comment newComment = commentMapper.fromCommentDtoWithID(id, commentDto);
             commentService.modify(newComment, user);
-            return "redirect:/comments";
+            return "redirect:/posts/" + postId;
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
-        } catch (EntityDuplicateException e) {
+        } /*catch (EntityDuplicateException e) {
             errors.rejectValue("name", "duplicate_comment", e.getMessage());
             return "comment-update";
-        } catch (UnauthorizedOperationException e) {
+        }*/ catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
         }
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteComment(@PathVariable int id, Model model, HttpSession session) {
+    public String deleteComment(@PathVariable int postId,@PathVariable int id, Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
@@ -188,7 +187,7 @@ public class CommentMvcController {
         }
         try {
             commentService.delete(id, user);
-            return "redirect:/comments";
+            return "redirect:/posts/" + postId;
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";

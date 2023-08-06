@@ -225,7 +225,7 @@ public class PostServiceImplTests {
         // Arrange
         int postId = 1;
         Post mockPost = createMockPost();
-        Set<Comment> comments = new HashSet<>();
+        List<Comment> comments = new ArrayList<>();
         Comment comment1 = Helper.createMockComment();
         Comment comment2 = Helper.createMockComment();
         comments.add(comment1);
@@ -249,7 +249,7 @@ public class PostServiceImplTests {
         // Arrange
         int postId = 1;
         Post mockPost = createMockPost();
-        mockPost.setComments(new HashSet<>());
+        mockPost.setComments(new ArrayList<>());
 
         when(postRepository.getPostById(postId)).thenReturn(mockPost);
 

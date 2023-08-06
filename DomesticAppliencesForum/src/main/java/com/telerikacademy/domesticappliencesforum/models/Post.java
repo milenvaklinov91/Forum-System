@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,7 +32,7 @@ public class Post {
     private TagTypes tag;
     @JsonIgnore
     @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    private List<Comment> comments;
 
     @JsonIgnore
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
@@ -73,11 +74,11 @@ public class Post {
         this.content = content;
     }
 
-    public Set<Comment> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Set<Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 

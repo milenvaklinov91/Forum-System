@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -29,10 +30,11 @@
     <a href="/comments/{commentId}/seeVotes" th:href="@{'/comments/' + ${comment.getCommentId()} + '/seeVotes'}">See votes</a>
 </div>
 
-<h3>
+&lt;!&ndash;<h3>
     <a th:if="${isAuthenticated}" th:href="@{'/comments/' + ${comment.getCommentId()} + '/update'}">Update</a>
     <a th:if="${isAuthenticated}" th:href="@{'/comments/' + ${comment.getCommentId()} + '/delete'}">Delete</a>
-</h3>
+</h3>&ndash;&gt;
 
 </body>
 </html>
+-->
