@@ -33,10 +33,10 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:if="${isAdmin}" href="#" th:href="@{/admin}" th:text="#{navigation.admin}">AdminPortal</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:if="${isAuthenticated}" th:href="@{/auth/login}" href="#">Profile</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:unless="${isAuthenticated}" th:href="@{/auth/login}" href="#">Login</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:unless="${isAuthenticated}" th:href="@{/auth/register}" href="#">Register</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:if="${isAuthenticated}" th:href="@{/auth/logout}" href="#">Logout</a></li>
-                        <!--<li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:if="${isAuthenticated}" href="#" th:href="@{/posts}" th:text="#{navigation.posts}">See all posts</a></li>-->
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:if="${isAuthenticated}" href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post}">Create a new post</a></li>
                     </ul>
                 </div>

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>All Users</title>
-    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+    <link href="../static/css/allUsers.css" th:href="@{/css/allUsers.css}" rel="stylesheet"/>
 </head>
 <body>
-<ul>
+<!--<ul>
     <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
     <li><h3><a th:href="@{/auth/logout}" href="#">Logout</a></h3></li>
 </ul>
@@ -33,6 +33,35 @@
             <div class="cellSingleUser" th:text="${user.getEmail}">Email</div>
         </div>
     </div>
+</div>-->
+
+
+                                                       <!--NEW-->
+
+<div class="container">
+    <table>
+        <thead >
+        <tr >
+            <th class="black-text" >Username</th>
+            <th class="black-text">FirstName</th>
+            <th class="black-text">LastName</th>
+            <th class="black-text">Email</th>
+            <!--<th>Column 5</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+
+            <td> <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a></td>
+            <td><div class="cellSingleUser" th:text="${user.getFirstName}">FirstName</div></td>
+            <td><div class="cellSingleUser" th:text="${user.getLastName}">LastName</div></td>
+            <td><div class="cellSingleUser" th:text="${user.getEmail}">Email</div></td>
+            <!--<td>Cell 5</td>-->
+        </tr>
+        </tbody>
+    </table>
 </div>
+
+
 </body>
 </html>
