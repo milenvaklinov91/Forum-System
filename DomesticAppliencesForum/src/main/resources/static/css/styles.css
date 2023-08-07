@@ -239,7 +239,6 @@ body {
 }
 
 .cellSingleUser {
-  color: black;
   flex-basis: 20%;
   margin: 10px;
 }
@@ -263,7 +262,7 @@ body {
   height: 100%;
   background-color: white;
 }
-.form-posts{
+/*.form-posts{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -279,7 +278,7 @@ body {
   width: calc(50% - 10px);
   border: 1px solid #ccc;
   border-radius: 4px;
-}
+}*/
 
 .input[type="submit"] {
   padding: 10px 20px;

@@ -16,11 +16,20 @@
         <link href="../static/css/singleUser.css" th:href="@{/css/singleUser.css}" rel="stylesheet" />
     </head>
     <body id="page-top">
+
+    <div class="container_but">
+        <div style="position: absolute; top: 20px; right: 100px;">
+            <a href="/" th:text="#{navigation.home}" style="background-color: transparent; padding: 5px 10px; font-size: 32px; color: #bd5d38; text-decoration: none; display: inline-block;">Home</a>
+            <a href="/" th:text="#{navigation.profile}" style="background-color: transparent; padding: 5px 10px; font-size: 32px; color: #bd5d38; text-decoration: none; display: inline-block;">Profile</a>
+            <a href="#" th:href="@{/users}" th:text="#{navigation.allUsers}"style="background-color: transparent; padding: 5px 10px; font-size: 32px; color: #bd5d38; text-decoration: none; display: inline-block;">Users</a>
+            <a th:if="${isAuthenticated}" th:href="@{/auth/logout}" style="background-color: transparent; padding: 5px 10px; font-size: 32px; color: #bd5d38; text-decoration: none; display: inline-block;">Logout</a>
+        </div>
+    </div>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">Clarence Taylor</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="..." /></span>
+               <!-- <span class="d-block d-lg-none">Clarence Taylor</span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="..." /></span>-->
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -28,9 +37,9 @@
 
                    <!-- <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a>-->
 
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getUsername()}">FirstName</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getFirstName}">FirstName</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getLastName}">LastName</a></li>
+                    <!--<li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getUsername()}">FirstName</a></li>-->
+                    <!--<li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getFirstName}">FirstName</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getLastName}">LastName</a></li>-->
 
 
                 </ul>
@@ -39,7 +48,10 @@
         <!-- Page Content-->
         <div class="container-fluid p-0">
             <!-- About-->
+
+
             <section class="resume-section" id="about">
+                <div style="margin-top: -30% ">
                 <div class="resume-section-content">
                     <h1 class="mb-0">
                         <span class="text-primary" th:text="${user.getFirstName()}">FirstName</span>
@@ -49,6 +61,23 @@
                         <a> <span th:text="'Admin: ' + ${user.isAdmin()}"></span></a><!--<a href="text" th:text="${user.isAdmin()}">Admin</a>--> · <a> <span th:text="'Blocked: ' + ${user.isBlocked()}"></span></a> · (317) 585-8468 ·
                         <a> <span  href="mailto:name@email.com" th:text="${user.getEmail()}"</span></a>
                     </div>
+
+                    <div>
+
+                        <h4>
+                            <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/block(id=${user.getId()})}" th:object="${user}"
+                               methods="get">Block</a>
+                            <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/unblock(id=${user.getId()})}" th:object="${user}"
+                               methods="get">Unblock</a>
+                            <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/make-admin(id=${user.getId()})}" th:object="${user}"
+                               methods="get">MakeAdmin</a>
+                            <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/demote-admin(id=${user.getId()})}" th:object="${user}"
+                               methods="get">DemoteAdmin</a>
+                        </h4>
+
+                    </div>
+
+                </div>
 
                 </div>
             </section>

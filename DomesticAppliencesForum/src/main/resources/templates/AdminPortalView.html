@@ -31,6 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#" th:href="@{/}" th:text="#{navigation.home}">Home</a></h3></li></a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:if="${isAuthenticated}" th:href="@{/auth/login}" href="#">Profile</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#" th:href="@{/users}" th:text="#{navigation.allUsers}">Users</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" th:if="${isAuthenticated}" th:href="@{/auth/logout}" href="#">Logout</a></li>
 

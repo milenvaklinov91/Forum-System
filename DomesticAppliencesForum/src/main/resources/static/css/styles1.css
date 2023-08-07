@@ -62,7 +62,7 @@
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
     --bs-body-color: #212529;
-    --bs-body-bg: #fff;
+    --bs-body-bg: #151516;
     --bs-border-width: 1px;
     --bs-border-style: solid;
     --bs-border-color: #dee2e6;
@@ -99,7 +99,7 @@ body {
     line-height: var(--bs-body-line-height);
     color: var(--bs-body-color);
     text-align: var(--bs-body-text-align);
-    background-image: url('../assets/img/converted_image.jpg');
+    background-image: url('../assets/img/admin.jpg');
     background-size: cover;
     width: 100%;
     background-attachment: fixed;
@@ -111,7 +111,7 @@ body {
     color: white;
     font-size: x-small;
     margin: 10px 0;
-    border-bottom: 1px solid white;
+   /* border-bottom: 1px solid white;*/
     padding-bottom: 5px;
 }
 .post-info,.user-info {
