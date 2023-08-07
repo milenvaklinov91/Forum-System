@@ -71,21 +71,23 @@ public class TagTypesServiceImplTests {
         TagTypes existingTagType = Helper.createTag();
 
         TagTypes newTagType = Helper.createTag();
+        User user=Helper.createMockUser();
 
         when(tagRepository.getByName(newTagType.getType())).thenReturn(existingTagType);
 
         // Act & Assert
-        assertThrows(EntityDuplicateException.class, () -> tagService.create(newTagType));
+        assertThrows(EntityDuplicateException.class, () -> tagService.create(newTagType,user));
     }
 
     @Test
     public void testCreate_Should_CreateTagType_When_TagTypeDoesNotExist() {
         // Arrange
         TagTypes newTagType = Helper.createTag();
+        User user=Helper.createMockUser();
 
         when(tagRepository.getByName(newTagType.getType())).thenThrow(EntityNotFoundException.class);
         // Act
-        tagService.create(newTagType);
+        tagService.create(newTagType,user);
 
         // Assert
         verify(tagRepository).create(newTagType);

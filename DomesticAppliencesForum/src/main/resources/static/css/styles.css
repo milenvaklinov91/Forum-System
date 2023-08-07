@@ -227,6 +227,102 @@ body {
   padding-top: 10px;
   resize: none;
 }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.post {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.cellSingleUser {
+  flex-basis: 20%;
+  margin: 10px;
+}
+.body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url('../assets/img/post.jpg');
+  background-repeat: no-repeat;
+  background-size: 50% auto;
+  background-position: right;
+}
+
+.body::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  background-color: white;
+}
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
+.input[type="text"],
+.select {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: calc(50% - 10px);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form > * {
+  margin-right: 10px;
+}
+
+
+.form > input[type="text"],
+.form > select {
+}
+.row {
+  margin-bottom: 20px;
+}
+
+.cellSingleUser1 {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.rowGroup {
+  display: table-row-group;
+}
+
+.row {
+  display: table-row;
+}
+
+.cellSingleUser {
+  display: table-cell;
+  width: 24%;
+}
+
 
 
 hr {
@@ -1860,6 +1956,9 @@ progress {
   .gy-xxl-5 {
     --bs-gutter-y: 3rem;
   }
+}
+.table-new{
+  display: table;
 }
 .table {
   --bs-table-color: var(--bs-body-color);

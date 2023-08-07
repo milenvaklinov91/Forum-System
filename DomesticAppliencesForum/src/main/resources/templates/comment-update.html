@@ -5,7 +5,7 @@
   <title>Edit Comment</title>
   <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
 </head>
-<body>
+<body  style="background-image: url('../assets/img/post-bg.jpg')" >
 <h2 th:text="#{comment.edit}">Edit Comment</h2>
 
 <form th:action="@{/posts/{postId}/comments/{commentId}/update/(postId=${post.getPostId()}, commentId=${commentId})}"
