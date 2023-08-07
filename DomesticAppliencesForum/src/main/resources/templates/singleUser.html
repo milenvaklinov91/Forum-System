@@ -1,55 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Single User</title>
-    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
-</head>
-<body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Single User</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="../static/css/singleUser.css" th:href="@{/css/singleUser.css}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <span class="d-block d-lg-none">Clarence Taylor</span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="..." /></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav">
 
-<ul>
-    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
-    <li><h3><a th:href="@{/auth/logout}" href="#">Logout</a></h3></li>
-</ul>
+                   <!-- <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a>-->
 
-<div> <h1 th:text="#{users.singleUserTitle}">Singe User</h1> </div>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getUsername()}">FirstName</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getFirstName}">FirstName</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" th:text="${user.getLastName}">LastName</a></li>
 
-<div class="table">
-    <div class="header">
 
-        <div class="cellSingleUser" th:text="#{user.label.username}">Username</div>
-        <div class="cellSingleUser" th:text="#{user.label.firstName}">FirstName</div>
-        <div class="cellSingleUser" th:text="#{user.label.lastName}">LastName</div>
-        <div class="cellSingleUser" th:text="#{user.label.email}">Email</div>
-        <div class="cellSingleUser" th:text="#{user.label.banStatus}">BanStatus</div>
-        <div class="cellSingleUser" th:text="#{user.label.userStatus}">UserStatus</div>
+                </ul>
+            </div>
+        </nav>
+        <!-- Page Content-->
+        <div class="container-fluid p-0">
+            <!-- About-->
+            <section class="resume-section" id="about">
+                <div class="resume-section-content">
+                    <h1 class="mb-0">
+                        <span class="text-primary" th:text="${user.getFirstName()}">FirstName</span>
+                        <span class="text-primary" th:text="${user.getLastName()}">LastName</span>
+                    </h1>
+                    <div class="subheading mb-5">
+                        <a> <span th:text="'Admin: ' + ${user.isAdmin()}"></span></a><!--<a href="text" th:text="${user.isAdmin()}">Admin</a>--> · <a> <span th:text="'Blocked: ' + ${user.isBlocked()}"></span></a> · (317) 585-8468 ·
+                        <a> <span  href="mailto:name@email.com" th:text="${user.getEmail()}"</span></a>
+                    </div>
 
-    </div>
+                </div>
+            </section>
+            <hr class="m-0" />
 
-    <div class="cellSingleUser">
-        <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a>
-    </div>
-    <div class="cellSingleUser" th:text="${user.getFirstName}">FirstName</div>
-    <div class="cellSingleUser" th:text="${user.getLastName}">LastName</div>
-    <div class="cellSingleUser" th:text="${user.getEmail}">Email</div>
-    <div class="cellSingleUser" th:text="${user.isBlocked()}">BanStatus</div>
-    <div class="cellSingleUser" th:text="${user.isAdmin()}">UserStatus</div>
-</div>
-</div>
-
-<div>
-
-    <h4>
-        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/block(id=${user.getId()})}" th:object="${user}"
-           methods="get">Block</a>
-        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/unblock(id=${user.getId()})}" th:object="${user}"
-           methods="get">Unblock</a>
-        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/make-admin(id=${user.getId()})}" th:object="${user}"
-           methods="get">MakeAdmin</a>
-        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/demote-admin(id=${user.getId()})}" th:object="${user}"
-           methods="get">DemoteAdmin</a>
-    </h4>
-
-</div>
-</body>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
 </html>

@@ -11012,6 +11012,25 @@ a:focus {
         height: calc(20rem - 43px) !important
     }
 }
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    margin-right: 10px;
+}
+
+.form-group input {
+    flex: 1;
+}
 
 .bg-login-image {
     background: url('../assets/img/registerUser.jpg');
@@ -11118,11 +11137,15 @@ form.user .btn-user {
 }
 
 .error {
-    color: #5a5c69;
-    font-size: 7rem;
-    position: relative;
-    line-height: 1;
-    width: 12.5rem
+    color: red;
+    font-weight: bold;
+    font-size: 1rem; /* Можете да промените този размер според вашите предпочитания */
+    position: absolute; /* Променено от relative на absolute */
+    line-height: 1.2; /* Променено на желания от вас размер на line-height */
+    width: 12.5rem;
+    margin-left: 35px; /* Променете тази стойност за да позиционирате грешките до прозорците хоризонтално */
+    margin-top: -40px; /* Променете тази стойност за да позиционирате грешките до прозорците вертикално */
+    /* или използвайте padding вместо margin, ако предпочитате */
 }
 
 @-webkit-keyframes noise-anim {

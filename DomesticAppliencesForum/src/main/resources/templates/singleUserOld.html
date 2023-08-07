@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Single User</title>
+    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<ul>
+    <li><h3><a href="/" th:text="#{navigation.home}">Home</a></h3></li>
+    <li><h3><a th:href="@{/auth/logout}" href="#">Logout</a></h3></li>
+</ul>
+
+<div> <h1 th:text="#{users.singleUserTitle}">Singe User</h1> </div>
+
+<div class="table">
+    <div class="header">
+
+        <div class="cellSingleUser" th:text="#{user.label.username}">Username</div>
+        <div class="cellSingleUser" th:text="#{user.label.firstName}">FirstName</div>
+        <div class="cellSingleUser" th:text="#{user.label.lastName}">LastName</div>
+        <div class="cellSingleUser" th:text="#{user.label.email}">Email</div>
+        <div class="cellSingleUser" th:text="#{user.label.banStatus}">BanStatus</div>
+        <div class="cellSingleUser" th:text="#{user.label.userStatus}">UserStatus</div>
+
+    </div>
+
+    <div class="cellSingleUser">
+        <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a>
+    </div>
+    <div class="cellSingleUser" th:text="${user.getFirstName}">FirstName</div>
+    <div class="cellSingleUser" th:text="${user.getLastName}">LastName</div>
+    <div class="cellSingleUser" th:text="${user.getEmail}">Email</div>
+    <div class="cellSingleUser" th:text="${user.isBlocked()}">BanStatus</div>
+    <div class="cellSingleUser" th:text="${user.isAdmin()}">UserStatus</div>
+</div>
+</div>
+
+<div>
+
+    <h4>
+        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/block(id=${user.getId()})}" th:object="${user}"
+           methods="get">Block</a>
+        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/unblock(id=${user.getId()})}" th:object="${user}"
+           methods="get">Unblock</a>
+        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/make-admin(id=${user.getId()})}" th:object="${user}"
+           methods="get">MakeAdmin</a>
+        <a th:if="${isAdmin}" href="#" th:href="@{/users/{id}/demote-admin(id=${user.getId()})}" th:object="${user}"
+           methods="get">DemoteAdmin</a>
+    </h4>
+
+</div>
+</body>
+</html>
