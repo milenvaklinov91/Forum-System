@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>All Posts</title>
-    <link href="../static/css/allposts.css" th:href="@{/css/allposts.css}" rel="stylesheet" />
+    <link href="../static/css/allposts.css.css" th:href="@{/css/allposts.css}" rel="stylesheet" />
 </head>
 <body>
 <div class="container_but">
@@ -12,7 +12,7 @@
         <a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post}" style="background-color: transparent; padding: 10px; color: white; text-decoration: none; display: inline-block;">Create a new post</a>
 
     </div>
-
+</div>
 
     <div class="filter-banner-posts">
         <form class="form-posts" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
@@ -44,22 +44,16 @@
         </form>
     </div>
 
-    <div th:if="${posts.isEmpty()}">
-        <h2 th:text="#{posts.title.empty}">No Posts</h2>
-    </div>
-    <div th:unless="${posts.isEmpty()}">
-        <h2 th:text="#{posts.title}">All Posts</h2>
-
         <div class="container">
             <table>
                 <thead >
-                <tr >
+               <!-- <tr >
                     <div class="cellSingleUser">Title</div>
                     <div class="cellSingleUser">Content</div>
                     <div class="cellSingleUser">Tag</div>
                     <div class="cellSingleUser">Creator</div>
                     <div class="cellSingleUser">Created Date</div>
-                </tr>
+                </tr>-->
                 </thead>
                 <tbody>
                 <tr th:each="post : ${posts}">
@@ -98,7 +92,7 @@
             </div>
         </div>-->
        <!-- </div>-->
-    </div>
-</div>
+<!--    </div>
+</div>-->
 </body>
 </html>
