@@ -3,88 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <title>All Posts</title>
-    <link href="../static/Styles.css" th:href="@{/Styles.css}" rel="stylesheet"/>
+    <link href="../static/css/allposts.css" th:href="@{/css/allposts.css}" rel="stylesheet" />
 </head>
-<body class="body" style="background-image: url('../assets/img/post.jpg'); background-size: cover;">>
-<div style="position: absolute; top: 20px; right: 20px;">
-    <ul style="list-style: none; margin: 0; padding: 0;">
-        <li style="float: right; margin-left: 10px;">
-            <h3 style="font-family: 'YourCustomFont', sans-serif;">
-                <a href="/" th:text="#{navigation.home}" style="background-color: transparent; padding: 10px; color: white; text-decoration: none; display: inline-block;">Home</a>
-            </h3>
-        </li>
-        <li style="float: right;">
-            <h3 style="font-family: 'YourCustomFont', sans-serif;">
-                <a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post}" style="background-color: transparent; padding: 10px; color: white; text-decoration: none; display: inline-block;">Create a new post</a>
-            </h3>
-        </li>
-    </ul>
-</div>
+<body>
+<div class="container_but">
+    <div style="position: absolute; top: 20px; right: 20px;">
+        <a href="/" th:text="#{navigation.home}" style="background-color: transparent; padding: 10px; color: white; text-decoration: none; display: inline-block;">Home</a>
+        <a href="#" th:href="@{/posts/new}" th:text="#{navigation.create-post}" style="background-color: transparent; padding: 10px; color: white; text-decoration: none; display: inline-block;">Create a new post</a>
+
+    </div>
 
 
-<form class="form" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
-    <input type="text" placeholder="Title" th:field="*{title}" />
-    <input type="text" placeholder="Username" th:field="*{username}" />
-    <input type="text" placeholder="Tag" th:field="*{tag}" />
+    <div class="filter-banner-posts">
+        <form class="form-posts" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
+            <input type="text" placeholder="Title" th:field="*{title}" />
+            <input type="text" placeholder="Username" th:field="*{username}" />
+            <input type="text" placeholder="Tag" th:field="*{tag}" />
 
 
-    <select th:field="*{sortBy}">
-        <option value="">Default Sort</option>
-        <option value="localDate">Created Time</option>
-        <option value="lastTen">Last Ten</option>
-        <option value="tagId">Tag</option>
-        <option value="mostRecently">Most Recently</option>
-        <option value="mostComment">Most Comment</option>
-        <option value="mostLiked">Most Liked</option>
-    </select>
+            <select th:field="*{sortBy}">
+                <option value="">Default Sort</option>
+                <option value="localDate">Created Time</option>
+                <option value="lastTen">Last Ten</option>
+                <option value="tagId">Tag</option>
+                <option value="mostRecently">Most Recently</option>
+                <option value="mostComment">Most Comment</option>
+                <option value="mostLiked">Most Liked</option>
+            </select>
 
-    <select th:field="*{sortOrder}">
-        <option value="asc">Asc</option>
-        <option value="desc">Desc</option>
-    </select>
+            <select th:field="*{sortOrder}">
+                <option value="asc">Asc</option>
+                <option value="desc">Desc</option>
+            </select>
 
-    <input type="submit" value="Search">
-</form>
+            <input type="submit" value="Search">
+        </form>
 
-<form action="#" th:action="@{/posts}" method="get">
-    <input type="submit" value="Reset">
-</form>
+        <form action="#" th:action="@{/posts}" method="get">
+            <input type="submit" value="Reset">
+        </form>
+    </div>
 
-<div th:if="${posts.isEmpty()}">
-    <h2 th:text="#{posts.title.empty}">No Posts</h2>
-</div>
-<div th:unless="${posts.isEmpty()}">
-    <h2 th:text="#{posts.title}">All Posts</h2>
+    <div th:if="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title.empty}">No Posts</h2>
+    </div>
+    <div th:unless="${posts.isEmpty()}">
+        <h2 th:text="#{posts.title}">All Posts</h2>
 
- <!--   <div class="table">
-        <div class="header">
-            <div class="cellSingleUser"><a th:text="#{post.label.title}"
-                                           th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-                                           th:href="${urlBuilder.replaceQueryParam('sortBy', 'title').toUriString()}">Title</a></div>
-            <div class="cellSingleUser"><a th:text="#{post.label.content}"
-                                           th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-                                           th:href="${urlBuilder.replaceQueryParam('sortBy', 'content').toUriString()}">Content</a></div>
-            <div class="cellSingleUser"><a th:text="#{post.label.tag}"
-                                           th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-                                           th:href="${urlBuilder.replaceQueryParam('sortBy', 'tag').toUriString()}">Tag</a></div>
-            <div class="cellSingleUser"><a th:text="#{post.label.createdBy}"
-                                           th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-                                           th:href="${urlBuilder.replaceQueryParam('sortBy', 'creator').toUriString()}">Creator</a></div>
-            <div class="cellSingleUser"><a th:text="#{post.label.createdDate}"
-                                           th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-                                           th:href="${urlBuilder.replaceQueryParam('sortBy', 'created').toUriString()}">Created</a></div>
-        </div>-->
-        <div class="cellSingleUser1" th:each="post : ${posts}">
-            <div class="cellSingleUser">
-                <a href="#" th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}">Post</a>
-            </div>
-            <div class="cellSingleUser" th:text="${post.getContent()}">Content</div>
-            <div class="cellSingleUser" th:text="${post.getTag().getType()}">Tag</div>
-            <div class="cellSingleUser">
-                <a th:href="@{/users/{userId}(userId=${post.getCreatedBy().getId()})}" th:text="${post.getCreatedBy().getUsername()}">Creator</a>
-            </div>
-            <div class="cellSingleUser" th:text="${post.getCreateTime()}">Created Date</div>
+        <div class="container">
+            <table>
+                <thead >
+                <tr >
+                    <div class="cellSingleUser">Title</div>
+                    <div class="cellSingleUser">Content</div>
+                    <div class="cellSingleUser">Tag</div>
+                    <div class="cellSingleUser">Creator</div>
+                    <div class="cellSingleUser">Created Date</div>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="post : ${posts}">
+
+                    <td> <a href="#" th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}">Post</a></td>
+                    <td><div class="cellSingleUser" th:text="${post.getContent()}">Content</div></td>
+                    <td><div class="cellSingleUser" th:text="${post.getTag().getType()}">Tag</div></td>
+                    <td> <a th:href="@{/users/{userId}(userId=${post.getCreatedBy().getId()})}" th:text="${post.getCreatedBy().getUsername()}">Creator</a></td>
+                    <td><div  class="cellSingleUser" th:text="${post.getCreateTime()}">Created Date</div></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+
+<!--
+        <div class="table">
+            <div class="post-column">
+                <div class="cellSingleUser">Title</div>
+                <div class="cellSingleUser">Content</div>
+                <div class="cellSingleUser">Tag</div>
+                <div class="cellSingleUser">Creator</div>
+                <div class="cellSingleUser">Created Date</div>
+            </div>
+            <div class="cellSingleUser1" th:each="post : ${posts}">
+                <div class="post-row">
+                    <div class="cellSingleUser">
+                        <a href="#" th:href="@{/posts/{id}(id=${post.getPostId()})}" th:text="${post.getTitle()}">Post</a>
+                    </div>
+                    <div class="cellSingleUser" th:text="${post.getContent()}">Content</div>
+                    <div class="cellSingleUser" th:text="${post.getTag().getType()}">Tag</div>
+                    <div class="cellSingleUser">
+                        <a th:href="@{/users/{userId}(userId=${post.getCreatedBy().getId()})}" th:text="${post.getCreatedBy().getUsername()}">Creator</a>
+                    </div>
+                    <div class="cellSingleUser" th:text="${post.getCreateTime()}">Created Date</div>
+                </div>
+            </div>
+        </div>-->
+       <!-- </div>-->
     </div>
 </div>
 </body>
