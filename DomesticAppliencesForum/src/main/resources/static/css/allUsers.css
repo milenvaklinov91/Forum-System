@@ -4,12 +4,21 @@ body {
 }
 
 body {
-    background-image:  url('../assets/img/home2.jpeg');
+    background-image:  url('../assets/img/seeallusers.jpg');
     background-size: cover;
     width: 100%;
     background-attachment: fixed;
     background-position: center;
 }
+
+.container_but {
+    color: black;
+    font-size: large;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
 
 .black-text{
     color: black;
@@ -40,13 +49,22 @@ th {
     text-align: left;
 }
 
-thead
+/*thead{
+    color: black;
+}*/
 
 th {
     background-color: #55608f;
 }
 
+.cellSingleUser{
+    color: #ffffff;
+    font-weight: bold;
+}
 
+.thead-body{
+    background-color: #39467b;
+}
 
 tbody
 tr
